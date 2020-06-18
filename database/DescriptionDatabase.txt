@@ -1,0 +1,37 @@
+1. categories: 
+	+ chuyên mục lớn của các bài viết(ex: điện thoại, máy tính)
+2. sub_categories: 
+	+ chuyên mục nhỏ của các bài viết (ex: điện thoại: iphone,samsuung; máy tính: macbook, dell)
+3. cat_editor:
+	+ chỉ định người chỉnh sửa chuyên mục.(một người có thể chỉnh sửa nhiều chuyên mục( thêm xoá sửa))
+4. post_categories:
+	+ chuyên mục bài viết: bài viết nằm trong chuyên mục lớn và chuyên mục nhỏ
+5. post:
+ các thuộc tính cơ bản: Id, Author(tác giả), abtract(mô tả), Views(lượt xem), ranks(xếp hạng), postdate(ngày đăng)
+	+ PostContent(một đoạn html, thầy có hướng dẫn wysiwyg)
+	+ hasavatar(ảnh đại diện để show trên card-view), bigavatar(show trên toàn bộ nội dung)
+	+ status : trạng thái của bài viết
+	+ ranks: xếp hạng(số càng nhỏ thứ hạng càng lớn, mặc định khi thêm bài viết rank = 10(số khác cũng đc))
+6. tag: tên tag và tagID
+7. post_tag: để lưu cho một bài viết có thể có nhiều tag
+8. status: lưu tên trạng thái của bài viết
+9. comment: bình luận về bài viết:
+	+ UserId: người dùng bình luận
+	+ postID: bài viết
+	+ commentcontent: nội dung bình luận
+	+ commentdate: ngày viết bình luận
+	* một bài viết sẽ có nhiều bình luận từ một người nên khoá chính sẽ bao gồm cả thời gian bình luận
+10. censorship: kiểm duyệt bài viết
+	+userId: chỉ có editor hoặc  admin mới có quyền kiểm duyệt
+	+ postID: bài viết,
+	+ StatusId: lấy status tại bảng status
+	+ Reasson nếu bài viết bị từ chối thì phải có lý do.
+11. user:
+
+12.: permission: phân quyền người dùng:
+ (0. admin, 1.editor, 2. writer, 3. UserPremium, 4.người dùng thường(chỉ xem đc vài bài viết))
+*userpremium: có thể xem tất cả bài viết được xuất bài và có thể tải bản pdf
+13. premium user: lưu thời gian gia hạn tài khoản premium
+	
+	
+	
