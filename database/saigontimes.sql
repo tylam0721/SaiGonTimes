@@ -421,8 +421,7 @@ INSERT INTO `sub_categories`(`SubCatID`, `CatID`, `SubCatName`) VALUES ('18','6'
 INSERT INTO `sub_categories`(`SubCatID`, `CatID`, `SubCatName`) VALUES ('19','7','Bệnh đàn ông');
 INSERT INTO `sub_categories`(`SubCatID`, `CatID`, `SubCatName`) VALUES ('20','7','Bệnh phụ nữ');
 INSERT INTO `sub_categories`(`SubCatID`, `CatID`, `SubCatName`) VALUES ('21','7','Sức khỏe giơi tính');
-INSERT INTO `sub_categories`(`SubCatID`, `CatID`, `SubCatName`) VALUES ('22','8','Hài Kịch');
-INSERT INTO `sub_categories`(`SubCatID`, `CatID`, `SubCatName`) VALUES ('23','8','Nghệ thuật');
+
 
 
 
