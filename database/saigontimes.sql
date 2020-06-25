@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `saigontimes`
 --
+CREATE DATABASE saigontime;
+USE saigontime;
 
 -- --------------------------------------------------------
 
@@ -390,6 +392,7 @@ ALTER TABLE `users`
 COMMIT;
 
 
+BEGIN;
 -- insert categories
 INSERT INTO `categories`(`CatID`, `CatName`) VALUES (Null,'Chính trị');
 INSERT INTO `categories`(`CatID`, `CatName`) VALUES (Null,'Bóng đá');
@@ -425,7 +428,7 @@ INSERT INTO `sub_categories`(`SubCatID`, `CatID`, `SubCatName`) VALUES ('21','7'
 
 
 
---insert permission
+-- insert permission
 INSERT INTO `permission`(`PerID`, `PermissionName`) VALUES ('1','Quản trị viên');
 INSERT INTO `permission`(`PerID`, `PermissionName`) VALUES ('2','Độc giả');
 INSERT INTO `permission`(`PerID`, `PermissionName`) VALUES ('3','Biên tập viên');
@@ -434,7 +437,7 @@ INSERT INTO `permission`(`PerID`, `PermissionName`) VALUES ('5','Độc giả v�
 
 
 
---insert users
+-- insert users
 INSERT INTO `users`(`UserID`, `EmailAdress`, `FullName`, `DOB`, `Permission`, `UserName`, `HashPassword`, `Ranks`, `NickName`, `Phone`, `Status`) 
 VALUES ('1','baoan123@gmail.com','Lâm Nhật Ty','1999-2-1','1','lamnhatty','123','1','ty','012346789','1');
 
@@ -451,75 +454,20 @@ INSERT INTO `users`(`UserID`, `EmailAdress`, `FullName`, `DOB`, `Permission`, `U
 VALUES ('5','nam123@gmail.com','Trần Đình Nam','1999-6-1','5','trandinhnam','123','5','nam','0123467892','1');
 
 
---insert tags
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('1','Báo gia đình');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('2','Chính trị Việt nam');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('3','bóng đá thế giới');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('4','ronaldo');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('5','đồ ăn dinh dưỡng cho bé');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('6','hoai linh');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('7','công dụng của mật ong');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('8','luật hôn nhân');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('9','luật lao động');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('10','Sức khỏe');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('11','showbiz');
-INSERT INTO `tag`(`TagID`, `Name`) VALUES ('12','thế giới');
-
-
-
---insert post_tags
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('1','10');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('2','4');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('3','10');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('4','1');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('5','1');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('6','11');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('7','11');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('8','11');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('9','12');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('10','12');
-INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('11','10');
-
-
-
-
---insert premiumusers
-INSERT INTO `premiumusers`(`UserID`, `TimeEnd`) VALUES ('2','5040');
-
-
-
-
---insert status
+-- insert status
 INSERT INTO `status`(`StatusID`, `StatusName`) VALUES ('1','Đã duyệt');
 INSERT INTO `status`(`StatusID`, `StatusName`) VALUES ('2','đang chờ duyệt');
 INSERT INTO `status`(`StatusID`, `StatusName`) VALUES ('3','Không được duyệt');
 
 
+-- insert cat_editor
+INSERT INTO `cat_editor`(`UserID`, `CatID`) VALUES ('1','1');
+INSERT INTO `cat_editor`(`UserID`, `CatID`) VALUES ('1','2');
+INSERT INTO `cat_editor`(`UserID`, `CatID`) VALUES ('1','3');
+INSERT INTO `cat_editor`(`UserID`, `CatID`) VALUES ('1','4');
 
 
---insert post-categories
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('1','3','12');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('2','2','2');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('3','3','12');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('4','3','11');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('5','3','12');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('6','8','22');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('7','8','23');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('8','8','23');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('9','5','5');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('10','5','5');
-INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('11','7','19')
-
-
-
-
--- insert censorship
-INSERT INTO `censorship`(`PostID`, `UserID`, `StatusID`, `Date`, `Reason`) VALUES ('1','1','1','2020-06-19','pass');
-INSERT INTO `censorship`(`PostID`, `UserID`, `StatusID`, `Date`, `Reason`) VALUES ('2','1','1','2020-06-19','pass');
-INSERT INTO `censorship`(`PostID`, `UserID`, `StatusID`, `Date`, `Reason`) VALUES ('3','2','1','2020-06-19','pass');
-
-
-
+-- insert posts
 INSERT INTO `posts`(`PostID`, `Abtract`, `PostContent`, `Author`, `HasAvatar`, `BigAvatar`, `PostDate`, `Views`, `Ranks`, `Status`) VALUES ('1','Lơ là chủ quan có thể khiến bạn “mất mạng như chơi” vì căn bệnh quen thuộc trong mùa mưa này','<div class="updTm updTmD mrT5">Thứ Năm, ng&agrave;y 18/06/2020 17:58 PM (GMT+7)</div>
 <div class="bmTpSeoBlk bmTpSeoBlkD clF">
 <div class="icoSocial icoSocialx txtRt flRt"><a class="icoSocialCm" title="Chia sẻ tr&ecirc;n Fanpage" href="http://www.facebook.com/fan24h" target="_blank" rel="noopener">&nbsp;</a></div>
@@ -784,7 +732,60 @@ sinh hoạt khoa học, l&agrave;nh mạnh&hellip;.</p>','2','2020-03-15','100',
 
 
 
+-- insert tags
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('1','Báo gia đình');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('2','Chính trị Việt nam');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('3','bóng đá thế giới');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('4','ronaldo');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('5','đồ ăn dinh dưỡng cho bé');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('6','hoai linh');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('7','công dụng của mật ong');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('8','luật hôn nhân');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('9','luật lao động');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('10','Sức khỏe');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('11','showbiz');
+INSERT INTO `tag`(`TagID`, `Name`) VALUES ('12','thế giới');
 
+
+
+-- insert post_tags
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('1','10');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('2','4');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('3','10');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('4','1');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('5','1');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('6','11');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('7','11');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('8','11');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('9','12');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('10','12');
+INSERT INTO `post_tag`(`PostID`, `TagID`) VALUES ('11','10');
+
+
+
+-- insert premiumusers
+INSERT INTO `premiumusers`(`UserID`, `TimeEnd`) VALUES ('2','5040');
+
+
+
+-- insert post-categories
+INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('1','3','12');
+INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('2','2','2');
+INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('3','3','12');
+INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('4','3','11');
+INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('5','3','12');
+INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('9','5','5');
+INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('10','5','5');
+INSERT INTO `post_categories`(`PostID`, `CatID`, `SubCatID`) VALUES ('11','7','19');
+
+
+
+-- insert censorship
+INSERT INTO `censorship`(`PostID`, `UserID`, `StatusID`, `Date`, `Reason`) VALUES ('1','2','1','2020-06-19','pass');
+INSERT INTO `censorship`(`PostID`, `UserID`, `StatusID`, `Date`, `Reason`) VALUES ('2','1','1','2020-06-19','pass');
+INSERT INTO `censorship`(`PostID`, `UserID`, `StatusID`, `Date`, `Reason`) VALUES ('3','2','1','2020-06-19','pass');
+
+COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
