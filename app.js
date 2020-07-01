@@ -12,7 +12,7 @@ app.get('/', function(req, res) {
 
 //use routes:
 app.use('/demo', require('./routes/demo-routes'));
-
+app.use('/account', require('./routes/account.routes'));
 //throw error:
 app.use(function (req, res) {
     res.render('404', { layout: false });
