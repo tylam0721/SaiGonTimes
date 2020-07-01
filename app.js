@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 //use middleware
+app.use('/public', express.static('public'));
 require('./middlewares/view.mdw')(app);
 
 //demo hello world:
