@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 //use middleware
+app.use('/public', express.static('public'));
 require('./middlewares/view.mdw')(app);
 
 //demo hello world:
@@ -11,7 +12,7 @@ app.get('/', function(req, res) {
 
 //use routes:
 app.use('/demo', require('./routes/demo-routes'));
-
+app.use('/account', require('./routes/account.routes'));
 //throw error:
 app.use(function (req, res) {
     res.render('404', { layout: false });
