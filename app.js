@@ -4,7 +4,7 @@ const app = express();
 //use middleware
 app.use('/public', express.static('public'));
 require('./middlewares/view.mdw')(app);
-
+require('./middlewares/session.mdw')(app);
 //demo hello world:
 app.get('/', function(req, res) {
     res.render('home');
