@@ -5,6 +5,21 @@ const app = express();
 app.use('/public', express.static('public'));
 require('./middlewares/view.mdw')(app);
 
+
+const cat = require('./models/categories.model')
+app.use(async function (req, res,next) {
+  const row = await cat.NewPost();
+  const row1 = await cat.NewpostByCat();
+  const row2 = await cat.AllUsers();
+  const row3 = await cat.AllCategories();
+
+  res.locals.newpost =row;
+  res.locals.newpostbycat=row1;
+  res.locals.allusers=row2;
+  res.locals.categories=row3;
+  next();
+})
+
 // const categories = require('./models/categories.model');
 
 // app.use( async function (req, res,next) {
@@ -16,33 +31,26 @@ require('./middlewares/view.mdw')(app);
 
 const { post } = require('./routes/demo-routes');
 
-const cat = require('./models/categories.model')
 
-app.get('/', async function(req, res) {
-    const listposts = await cat.PostsTrending();
-    const listcategories = await cat.AllCategories();
-    const catmostviews = await cat.CatMostView();
-    const newposts = await cat.NewPost();
-    const newpostbycats = await cat.NewpostByCat();
-    const allusers = await cat.AllUsers();
-    res.render('home',{
-      post : listposts,
-      categories : listcategories,
-      catmostview : catmostviews,
-      newpost : newposts,
-      newpostbycat : newpostbycats,
-      allusers : allusers,
-      empty : listposts.lenght === 0
-    });
+
+app.get('/', async function (req, res) {
+  const listposts = await cat.PostsTrending();
+  const catmostviews = await cat.CatMostView();
+  res.render('home', {
+    post: listposts,
+    catmostview: catmostviews,
+    empty: listposts.lenght === 0
+  });
 })
 
 //use routes:
 app.use('/demo', require('./routes/demo-routes'));
 app.use('/account', require('./routes/account.routes'));
-app.use ('/categories', require('./routes/categories.routes'));
+app.use('/posts', require('./routes/posts.routes'));
+
 //throw error:
 app.use(function (req, res) {
-    res.render('404', { layout: false });
+  res.render('404', { layout: false });
 })
 
 //run server:

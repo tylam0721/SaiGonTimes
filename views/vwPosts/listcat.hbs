@@ -1,0 +1,90 @@
+<div class="mag-posts-content mt-30 mb-30 p-30 box-shadow">
+    <div class="feature-video-posts mb-30">
+        <!-- Section Title -->
+        <div class="section-heading">
+            <h5>List News</h5>
+        </div>
+        <div class="featured-video-posts">
+            {{#if this.empty}}
+                <p>Not News</p>
+            {{else}}
+            <div class="row">
+                {{#each this.cats}}
+                <div class="col-sm-6">
+                    <!-- Single Featured Post -->
+                    <div class="single-featured-post">
+                        <!-- Thumbnail -->
+                        <div class="featured-video-posts-slide owl-carousel">
+
+                            <div class="single--slide">
+                                <!-- Single Blog Post -->
+                                <div class="single-blog-post d-flex style-100   ">
+                                    <div class="post-thumbnail">
+                                        <img src=" {{HasAvatar}} " alt="">
+                                    </div>
+                                    <div class="post-content">
+                                        <a href="/posts/{{PostID}}" class="post-title"> {{Abtract}} </a>
+                                        <div class="post-meta d-flex">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}} </a>
+                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                                {{Ranks}} </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="feature-video-posts mb-30">
+        <!-- Section Title -->
+        <div class="section-heading">
+            <h5>Most Views</h5>
+        </div>
+
+        <div class="featured-video-posts">
+            <div class="row">
+                {{#each this.catmostview}}
+                <div class="col-sm-6">
+                    <!-- Single Featured Post -->
+                    <div class="single-featured-post">
+                        <!-- Thumbnail -->
+
+                        <div class="featured-video-posts-slide owl-carousel">
+
+                            <div class="single--slide">
+                                <!-- Single Blog Post -->
+                                <div class="single-blog-post d-flex style-100   ">
+                                    <div class="post-thumbnail">
+                                        <img src=" {{HasAvatar}} " alt="">
+                                    </div>
+                                    <div class="post-content">
+                                        <a href="/posts/{{PostID}}" class="post-title"> {{Abtract}} </a>
+                                        <div class="post-meta d-flex">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}} </a>
+                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                                {{Ranks}} </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

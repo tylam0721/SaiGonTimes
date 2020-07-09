@@ -1,9 +1,10 @@
-<section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/40.jpg);">
+<div class="mag-posts-content mt-30 mb-30 box-shadow">
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/40.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcrumb-content">
-                        <h2>Login</h2>
+                        <h2>Login Form</h2>
                     </div>
                 </div>
             </div>
@@ -15,7 +16,7 @@
     <div class="mag-login-area py-5">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-12">
                     <div class="login-content bg-white p-30 box-shadow">
                         <!-- Section Title -->
                         <div class="section-heading">
@@ -24,15 +25,18 @@
 
                         <form action="index.html" method="post">
                             <div class="form-group">
-                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email or User Name">
+                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                    placeholder="Email or User Name">
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <input type="password" class="form-control" id="exampleInputPassword1"
+                                    placeholder="Password">
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox mr-sm-2">
                                     <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                                    <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
+                                    <label class="custom-control-label" for="customControlAutosizing">Remember
+                                        me</label>
                                 </div>
                             </div>
                             <button type="submit" class="btn mag-btn mt-30">Login</button>
@@ -42,3 +46,76 @@
             </div>
         </div>
     </div>
+
+    <div class="feature-video-posts mb-30 p-30">
+        <!-- Section Title -->
+        <div class="section-heading">
+            <h5>Top 10 Most views</h5>
+        </div>
+
+        <div class="featured-video-posts">
+            <div class="row">
+                {{#each this.catmostview}}
+                <div class="col-sm-6">
+                    <!-- Single Featured Post -->
+                    <div class="single-featured-post">
+                        <!-- Thumbnail -->
+
+                        <div class="featured-video-posts-slide owl-carousel">
+
+                            <div class="single--slide">
+                                <!-- Single Blog Post -->
+                                <div class="single-blog-post d-flex style-100   ">
+                                    <div class="post-thumbnail">
+                                        <img src=" {{HasAvatar}} " alt="">
+                                    </div>
+                                    <div class="post-content">
+                                        <a href="/posts/{{PostID}}" class="post-title"> {{Abtract}} </a>
+                                        <div class="post-meta d-flex">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}} </a>
+                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                                {{Ranks}} </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+    <div class="most-viewed-videos mb-30 p-30">
+        <!-- Section Title -->
+        <div class="section-heading">
+            <h5>New Posts</h5>
+        </div>
+
+        <div class="most-viewed-videos-slide owl-carousel">
+
+            {{#each this.newpostbycat}}
+            <div class="single-blog-post style-4">
+
+                <div class="post-thumbnail">
+                    <img src=" {{HasAvatar}} " alt="">
+                </div>
+                <div class="post-content mb-30">
+                    <a href="/posts/{{PostID}}" class="post-title"> {{Abtract}} </a>
+                    <div class="post-meta d-flex">
+                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}} </a>
+                        <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}} </a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+
+    </div>
+
+</div>
