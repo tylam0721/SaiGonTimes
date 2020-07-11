@@ -1,10 +1,17 @@
 {
   "mysql": {
     "host": "localhost",
+<<<<<<< HEAD
     "port": 3306,
     "user": "root",
     "password": "",
     "database": "saigontime",
+=======
+    "port":   3306,
+    "user": "root",
+    "password": "",
+    "database": "saigontimes",
+>>>>>>> ttmhieu
     "connectionLimit": 50
   },
   "pagination": {
