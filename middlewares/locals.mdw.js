@@ -1,5 +1,5 @@
 module.exports=function(app){
-    app.use(function(req,res){
+    app.use(function(req,res,next){
         if(req.session.isAutheticated==null){
             req.session.isAutheticated=false;
         }
