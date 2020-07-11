@@ -8,9 +8,11 @@ app.use(express.urlencoded({
 app.use('/public', express.static('public'));
 require('./middlewares/session.mdw')(app);
 require('./middlewares/view.mdw')(app);
-<<<<<<< HEAD
-
-
+require('./middlewares/locals.mdw')(app);
+//demo hello world:
+app.get('/', function(req, res) {
+    res.render('home');
+})
 const cat = require('./models/categories.model')
 app.use(async function (req, res,next) {
   const row = await cat.NewPost();
@@ -32,36 +34,15 @@ app.use(async function (req, res,next) {
 //   res.locals.lccategories = rows;
 //   next();
 // })
-=======
-require('./middlewares/locals.mdw')(app);
->>>>>>> ttmhieu
-//demo hello world:
-
-const { post } = require('./routes/demo-routes');
-
-
-
-app.get('/', async function (req, res) {
-  const listposts = await cat.PostsTrending();
-  const catmostviews = await cat.CatMostView();
-  res.render('home', {
-    post: listposts,
-    catmostview: catmostviews,
-    empty: listposts.lenght === 0
-  });
-})
-
 //use routes:
 app.use('/demo', require('./routes/demo-routes'));
 app.use('/account', require('./routes/account.routes'));
-app.use('/posts', require('./routes/posts.routes'));
-
 //throw error:
 app.get('/err', function (req, res) {
   throw new Error('beng beng');
 })
 app.use(function (req, res) {
-  res.render('404', { layout: false });
+    res.render('404', { layout: false });
 })
 app.use(function (err, req, res, next) {
   console.error(err.stack);
