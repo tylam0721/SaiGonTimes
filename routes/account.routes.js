@@ -7,14 +7,9 @@ const config = require('../config/default.json');
 
 const router = express.Router();
 
-router.get('/login', async function (req, res) {
-  const list = await mostview.CatMostView();
-  const list1 = await mostview.NewPost();
-  res.render('vwAccount/login',{
-    catmostview : list,
-    newpostbycat : list1,
-    empty : list.lenght ===0 
-  });
+router.get('/login', function (req, res) {
+
+  res.render('vwAccount/login')
 })
 router.post('/login', async function(req, res){
   const user=await userModel.singleByUserNameorEmail(req.body.username, req.body.username);
