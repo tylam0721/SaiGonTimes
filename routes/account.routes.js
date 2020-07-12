@@ -58,7 +58,6 @@ router.post('/register', async function(req, res){
   
 })
 router.get('/profile', restrict, async function (req, res) {
-  console.log(req.session.authUser);
   res.render('vwAccount/profile');
 })
 

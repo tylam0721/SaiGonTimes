@@ -1,18 +1,17 @@
 const express = require('express');
 const app = express();
+
 require('express-async-errors');
 app.use(express.urlencoded({
   extended: true
 }));
 //use middleware
 app.use('/public', express.static('public'));
+
 require('./middlewares/session.mdw')(app);
 require('./middlewares/view.mdw')(app);
 require('./middlewares/locals.mdw')(app);
-//demo hello world:
-app.get('/', function(req, res) {
-    res.render('home');
-})
+
 const cat = require('./models/categories.model')
 app.use(async function (req, res,next) {
   const row = await cat.NewPost();
@@ -26,17 +25,10 @@ app.use(async function (req, res,next) {
   res.locals.categories=row3;
   next();
 })
-
-// const categories = require('./models/categories.model');
-
-// app.use( async function (req, res,next) {
-//   const rows = await categories.AllCat();
-//   res.locals.lccategories = rows;
-//   next();
-// })
-//use routes:
-app.use('/demo', require('./routes/demo-routes'));
-app.use('/account', require('./routes/account.routes'));
+//use controller
+app.use('/',require('./routes/home.routes'));//home route
+app.use('/demo', require('./routes/demo-routes'));//
+app.use('/account', require('./routes/account.routes'));//account route
 //throw error:
 app.get('/err', function (req, res) {
   throw new Error('beng beng');

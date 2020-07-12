@@ -1,10 +1,12 @@
 const db = require('../utils/db');
-
+const TBL_CAT='categories';
 module.exports = {
     PostsTrending: function () {
         return db.load(`select * from posts  p order by p.Views desc LIMIT 0,4`);
     },
-
+    all: async function(){
+        return db.load(`select * from ${TBL_CAT}`);
+    },
     NewPost: function () {
         return db.load(`SELECT c.CatName,p.PostID,p.Abtract,p.Views,p.Ranks, p.PostDate ,p.HasAvatar,p.BigAvatar           
         from post_categories pc ,posts p , categories c 

@@ -11,7 +11,11 @@ module.exports = function (app) {
       section: hbs_sections(),
       format_number: function (value) {
         return numeral(value).format('0,0');
-      }
+      },
+      isAdmin: (account) => account.Permission === 1,
+      isEditor: (account) => account.Permission === 2,
+      isWriter: (account) => account.Permission === 3,
+      isPremium: (account) => account.Permission === 4,
     }
   }));
   app.set('view engine', 'hbs');
