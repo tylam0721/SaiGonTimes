@@ -31,12 +31,17 @@
 
         <!-- Navbar Area -->
         {{> nav}}
-    </header>
-    <!-- ##### Header Area End ##### -->
-    {{slider}}
-    
-        {{{body}}}
+     </header>
+        {{> slide}}
+
+    <section class="mag-posts-area d-flex flex-wrap">
+        {{> left-sidebar}}
         
+        {{{body}}}
+        {{> right-sidebar}}
+    </section>
+        
+
     {{> footer}}
 
     <!-- jQuery-2.2.4 js -->

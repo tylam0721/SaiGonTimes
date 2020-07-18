@@ -10,7 +10,7 @@ router.get('/:PostID', async function (req, res) {
     });
 })
 
-router.get('/Categories/:CatID', async function (req, res) {
+router.get('/byCat/:CatID', async function (req, res) {
     const list = await productModel.AllbyCat(req.params.CatID);
     const list1 = await productModel.CatMostView();
     res.render('vwPosts/listcat',{
@@ -19,5 +19,10 @@ router.get('/Categories/:CatID', async function (req, res) {
         empty : list.length === 0 
     });
 })
-
+router.get('/detail/:PostID', async function (req, res) {
+    const rows = await productModel.single(req.params.PostID);
+    res.render('vwPosts/deatail',{
+        posts : rows[0]
+    });
+})
 module.exports = router;
