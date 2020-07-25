@@ -16,18 +16,43 @@
 <form method="post" class="writer_form">
   <div class="card">
     <div class="card-header">
-      WYSIWYG HTML Editor
+      <h2>Đăng bài</h2>
     </div>
     <div class="card-body">
+      {{!-- Type title --}}
       <div class="form-group">
-        <label for=""></label>
+        <label for="title">Tiêu đề</label>
+        <input type="text" class="form-control" name="title" id="title" placeholder="Nhập tiêu đề cho bài báo">
+      </div>
+
+      {{!-- Select category --}}
+      <div class="form-group category">
+        <label for="postCat">Thể loại</label>
+        <select class="form-control" name="postCat" id="postCat">
+          {{#each categories}}
+            <option value={{this.CatID}}>{{this.CatName}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      {{!-- Select adstract --}}
+      <div class="form-group adstract">
+        <label for="abstract">Mô tả</label>
+        <input type="text" class="form-control" name="abstract" id="abstract" placeholder="Nhập mô tả cho bài báo">
+      </div>
+
+      {{!-- Main content --}}
+      <div class="form-group main_content">
+        <label for="">Nội dung chính</label>
         <textarea name="FullDes" id="txtFullDes" class="form-control" cols="30" rows="10"></textarea>
       </div>
     </div>
+
+    {{!-- Submit --}}
     <div class="card-footer">
       <button type="submit" class="btn btn-lg btn-success btn-block">
         <i class="fa fa-check" aria-hidden="true"></i>
-        Submit
+        Đăng
       </button>
     </div>
   </div>
