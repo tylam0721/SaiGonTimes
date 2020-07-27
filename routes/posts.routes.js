@@ -28,7 +28,7 @@ router.get('/detail/:postID', async function(req, res){
         post: rows[0],
     
     });
-    
+    postModel.updateViews(req.params.postID);
   })
 
 module.exports = router;

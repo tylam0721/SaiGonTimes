@@ -57,10 +57,28 @@ router.post('/register', async function(req, res){
   res.render('vwAccount/register');
   
 })
-router.get('/profile', restrict, async function (req, res) {
-  res.render('vwAccount/profile');
+router.get('/profile/:userID', restrict, async function (req, res) {
+  const rows=await userModel.single(req.params.userID);
+  res.render('vwAccount/profile',{
+    user: rows[0]
+  });
 })
-
+router.post('/profile/update', async function(req, res){
+  const DOB=moment(req.body.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');
+  const HashPassword=bcrypt.hashSync(req.body.password, config.authentication.saltRounds);
+  const entity={
+    EmailAdress: req.body.email,
+    FullName: req.body.fullname,
+    DOB,
+    Permission: req.body.Permission,
+    UserName: req.body.username,
+    HashPassword,
+    Phone: req.body.phone
+  }
+  await userModel.add(entity);
+  res.render('vwAccount/profile');
+  
+})
 router.get('/is-available', async function (req, res) {
   const user = await userModel.singleByUserName(req.query.user);
   if (!user) {

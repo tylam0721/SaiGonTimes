@@ -10,7 +10,7 @@
     <title>Mag - Video &amp; Magazine HTML Template</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="/public/img/core-img/favicon.ico">
+    <link rel="icon" href="/public/img/core-img/title.ico">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="/public/style.css" type="text/css">
@@ -85,10 +85,26 @@
                                     <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
                                 </form>
                             </div>
-                            <!-- Login -->
-                            <a href="login.html" class="login-btn"><i class="fa fa-user" aria-hidden="true"></i></a>
-                            <!-- Submit Video -->
-                            <a href="submit-video.html" class="submit-video"><span><i class="fa fa-cloud-upload"></i></span> <span class="video-text">Submit Video</span></a>
+                             <form id="frmLogout" action="/account/logout" method="POST"></form>
+                            {{#if lcIsAuthenticated}}
+                                <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <b>{{lcAuthUser.UserName}}!</b>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="/account/profile/{{lcAuthUser.UserID}}">Profile</a>
+                                    <a class="dropdown-item" href="javascript: $('#frmLogout').submit()">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                        Logout
+                                    </a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div> 
+                                </div>
+                            {{else}}
+                                <a href="/account/login" class="login-btn"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                <a href="/account/register" class="login-btn"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            {{/if}}
+    
                         </div>
                     </div>
                 </nav>
@@ -147,18 +163,11 @@
                             <h4 class="post-title">{{this.post.Abtract}}</h4>
                             <!-- Post Meta -->
                             <div class="post-meta-2">
-                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{this.post.Views}}</a>
+                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{this.post.Ranks}}</a>
+                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> {{this.post.num_of_com}}</a>
                             </div>
                             {{{this.post.PostContent}}}
-                            
-                            <!-- Like Dislike Share -->
-                            <div class="like-dislike-share my-5">
-                                <h4 class="share">240<span>Share</span></h4>
-                                <a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
-                                <a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
-                            </div>
 
                             <!-- Post Author -->
                             <div class="post-author d-flex align-items-center">
@@ -172,78 +181,12 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Related Post Area -->
-                    <div class="related-post-area bg-white mb-30 px-30 pt-30 box-shadow">
-                        <!-- Section Title -->
-                        <div class="section-heading">
-                            <h5>Related Post</h5>
-                        </div>
-
-                        <div class="row">
-                            <!-- Single Blog Post -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="single-blog-post style-4 mb-30">
-                                    <div class="post-thumbnail">
-                                        <img src="/public/img/bg-img/29.jpg" alt="">
-                                    </div>
-                                    <div class="post-content">
-                                        <a href="single-post.html" class="post-title">Dentists Are Smiling Over Painless Veneer</a>
-                                        <div class="post-meta d-flex">
-                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Blog Post -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="single-blog-post style-4 mb-30">
-                                    <div class="post-thumbnail">
-                                        <img src="/public/img/bg-img/30.jpg" alt="">
-                                        <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
-                                        <span class="video-duration">09:27</span>
-                                    </div>
-                                    <div class="post-content">
-                                        <a href="single-post.html" class="post-title">Will The Democrats Be Able To Reverse</a>
-                                        <div class="post-meta d-flex">
-                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Blog Post -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="single-blog-post style-4 mb-30">
-                                    <div class="post-thumbnail">
-                                        <img src="/public/img/bg-img/28.jpg" alt="">
-                                    </div>
-                                    <div class="post-content">
-                                        <a href="single-post.html" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                        <div class="post-meta d-flex">
-                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
                     <!-- Comment Area Start -->
                     <div class="comment_area clearfix bg-white mb-30 p-30 box-shadow">
                         <!-- Section Title -->
                         <div class="section-heading">
                             <h5>COMMENTS</h5>
                         </div>
-
                         <ol>
                             <!-- Single Comment Area -->
                             <li class="single_comment_area">
@@ -265,27 +208,6 @@
                                     </div>
                                 </div>
 
-                                <ol class="children">
-                                    <li class="single_comment_area">
-                                        <!-- Comment Content -->
-                                        <div class="comment-content d-flex">
-                                            <!-- Comment Author -->
-                                            <div class="comment-author">
-                                                <img src="/public/img/bg-img/54.jpg" alt="author">
-                                            </div>
-                                            <!-- Comment Meta -->
-                                            <div class="comment-meta">
-                                                <a href="#" class="comment-date">27 Aug 2019</a>
-                                                <h6>Britney Millner</h6>
-                                                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius</p>
-                                                <div class="d-flex align-items-center">
-                                                    <a href="#" class="like">like</a>
-                                                    <a href="#" class="reply">Reply</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ol>
                             </li>
 
                             <!-- Single Comment Area -->

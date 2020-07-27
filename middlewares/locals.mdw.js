@@ -13,8 +13,10 @@ module.exports=function(app){
     app.use(async function(req,res,next){
         const list= await catModel.all();
         const listdetail=await catModel.allWithDetails();
+        const listSubcat=await catModel.AllsubCat();
         res.locals.lcAllcatdetail=listdetail;
         res.locals.lcCategories=list;
+        res.locals.lcAllSubCat=listSubcat;
         next();
     })
     app.use(async function(req,res,next){

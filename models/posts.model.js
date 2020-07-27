@@ -21,7 +21,9 @@ module.exports = {
     return rows[0].total;
   },
   single: async function (id) {
-    return db.load(`select * from ${TBL_POSTS} where PostID = ${id}`);
+    return db.load(`select p.*, count(c.PostID) as num_of_com 
+    from ${TBL_POSTS} p join comments c on p.PostID=c.PostID
+    where p.PostID = ${id}`);
   },
   topMostView: async function(){
     return db.load(`SELECT * FROM ${TBL_POSTS} ORDER BY Views DESC LIMIT 10`);
@@ -31,5 +33,9 @@ module.exports = {
   },
   topPostWeek: async function(){
     return db.load(`SELECT * from ${TBL_POSTS} p where TIMESTAMPDIFF(week,p.PostDate,CURDATE()) <= 1`)
+  },
+  updateViews: function(id)
+  {
+    return db.load(`UPDATE ${TBL_POSTS} SET VIEWS=VIEWS+1 WHERE PostID=${id}`)
   }
 };
