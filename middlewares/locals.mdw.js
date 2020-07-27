@@ -12,6 +12,8 @@ module.exports=function(app){
     })
     app.use(async function(req,res,next){
         const list= await catModel.all();
+        const listdetail=await catModel.allWithDetails();
+        res.locals.lcAllcatdetail=listdetail;
         res.locals.lcCategories=list;
         next();
     })
@@ -19,7 +21,7 @@ module.exports=function(app){
         const listview= await postModel.topMostView();
         const listdate=await postModel.topPostWeek();
         const listnewest=await postModel.topLastest();
-        const allPost=await postModel.all();
+        const allPost=await postModel.allPostsDetail();
         res.locals.lcTopviewposts=listview;
         res.locals.lcTopnewposts=listdate;
         res.locals.lcLatestpost=listnewest;

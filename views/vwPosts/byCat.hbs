@@ -1,0 +1,30 @@
+
+<div class="mag-posts-content mt-30 mb-30 p-30 box-shadow">
+    <div class="archive-posts-area bg-white p-30 mb-30 box-shadow">
+        {{#each this.posts as |alias|}}
+    <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+        <div class="post-thumbnail bg-img" style="background-image: url(/public/img/bg-img/24.jpg);">
+            <a href="/post/detail/{{PostID}}" ></a>
+        </div>
+
+        <!-- Post Contetnt -->
+        <div class="post-content">
+            <div class="post-meta">
+                <a href="#">MAY 8, 2018</a>
+                <a href="archive.html">lifestyle</a>
+            </div>
+            <a href="video-post.html" class="post-title">{{Abtract}}</a>
+            <!-- Post Meta -->
+            <div class="post-meta-2">
+                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+            </div>
+            <p>{{Abtract}}</p>
+        </div>
+    </div>
+{{/each}}
+    </div>
+
+</div>

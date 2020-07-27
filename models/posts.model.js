@@ -9,6 +9,10 @@ module.exports = {
   allByCat: function (catId) {
     return db.load(`select * from ${TBL_POSTS} where CatID = ${catId}`);
   },
+  allPostsDetail: function(){
+    return db.load(`select p.*, count(c.PostID) as num_of_com 
+    from ${TBL_POSTS} p left join comments c on p.PostID=c.PostID group by p.PostID`)
+  },
 //   pageByCat: function (catId, limit, offset) {
 //     return db.load(`select * from ${TBL_POSTS} where CatID = ${catId} limit ${limit} offset ${offset}`);
 //   },
@@ -17,7 +21,7 @@ module.exports = {
     return rows[0].total;
   },
   single: async function (id) {
-    return db.load(`select * from ${TBL_POSTS} where ProID = ${id}`);
+    return db.load(`select * from ${TBL_POSTS} where PostID = ${id}`);
   },
   topMostView: async function(){
     return db.load(`SELECT * FROM ${TBL_POSTS} ORDER BY Views DESC LIMIT 10`);

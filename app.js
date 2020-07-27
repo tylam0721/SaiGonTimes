@@ -17,6 +17,7 @@ require('./middlewares/locals.mdw')(app);
 app.use('/',require('./routes/home.routes'));//home route
 app.use('/demo', require('./routes/demo-routes'));//
 app.use('/account', require('./routes/account.routes'));//account route
+app.use('/post', require('./routes/posts.routes'));
 //throw error:
 app.get('/err', function (req, res) {
   throw new Error('beng beng');

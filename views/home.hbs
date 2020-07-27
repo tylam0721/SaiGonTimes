@@ -14,7 +14,7 @@
                     <img src="/public/img/bg-img/20.jpg" alt="">
                     <div class="post-content">
                         <a href="#" class="post-cata">Sức khoẻ</a>
-                        <a href="video-post.html" class="post-title">{{Abtract}}</a>
+                        <a href="/post/detail/{{PostID}}" class="post-title">{{Abtract}}</a>
                     </div>
                 </div>
             {{/each}}
@@ -81,11 +81,18 @@
                                         <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">{{Abtract}}</a>
+                                        <a href="/post/detail/{{PostID}}" class="post-title">{{Abtract}}</a>
                                         <div class="post-meta d-flex">
-                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
+                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
+                                            <a href="#">
+                                                
+                                                <i class="fa fa-comments-o" aria-hidden="true">
+                                                    {{#if num_of_com}}
+                                                        {{num_of_com}}
+                                                {{/if}}
+                                                </i> 
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -100,11 +107,18 @@
                                         <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">{{Abtract}}</a>
+                                        <a href="/post/detail/{{PostID}}" class="post-title">{{Abtract}}</a>
                                         <div class="post-meta d-flex">
-                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
+                                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
+                                            <a href="#">
+                                                
+                                                <i class="fa fa-comments-o" aria-hidden="true">
+                                                    {{#if num_of_com}}
+                                                        {{num_of_com}}
+                                                {{/if}}
+                                                </i> 
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -136,11 +150,18 @@
                         
                     </div>
                     <div class="post-content">
-                        <a href="single-post.html" class="post-title">{{Abtract}}</a>
+                        <a href="/post/detail/{{PostID}}" class="post-title">{{Abtract}}</a>
                         <div class="post-meta d-flex">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
+                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
+                            <a href="#">
+                                
+                                <i class="fa fa-comments-o" aria-hidden="true">
+                                    {{#if num_of_com}}
+                                        {{num_of_com}}
+                                {{/if}}
+                                </i> 
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -169,26 +190,39 @@
                             <a href="#">MAY 8, 2018</a>
                             <a href="archive.html">lifestyle</a>
                         </div>
-                        <a href="video-post.html" class="post-title">A Closer Look At Our Front Porch Items From Lowe’s</a>
+                        <a href="/post/detail/{{PostID}}" class="post-title">A Closer Look At Our Front Porch Items From Lowe’s</a>
                         <p>{{Abtract}}</p>
                     </div>
                     <!-- Post Share Area -->
                     <div class="post-share-area d-flex align-items-center justify-content-between">
                         <!-- Post Meta -->
                         <div class="post-meta pl-3">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
+                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
+                            <a href="#">
+                                
+                                <i class="fa fa-comments-o" aria-hidden="true">
+                                    {{#if num_of_com}}
+                                        {{num_of_com}}
+                                {{/if}}
+                                </i> 
+                            </a>
                         </div>
                         <!-- Share Info -->
                         <div class="share-info">
                             <a href="#" class="sharebtn"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
                             <!-- All Share Buttons -->
                             <div class="all-share-btn d-flex">
-                                <a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                <a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="#" class="google-plus"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                                <a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
+                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
+                                <a href="#">
+                                    
+                                    <i class="fa fa-comments-o" aria-hidden="true">
+                                        {{#if num_of_com}}
+                                            {{num_of_com}}
+                                    {{/if}}
+                                    </i> 
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -205,11 +239,18 @@
                             <img src="/public/img/bg-img/31.jpg" alt="">
                         </div>
                         <div class="post-content">
-                            <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
+                            <a href="/post/detail/{{PostID}}" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
                             <div class="post-meta d-flex">
-                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
+                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
+                                <a href="#">
+                                    
+                                    <i class="fa fa-comments-o" aria-hidden="true">
+                                        {{#if num_of_com}}
+                                            {{num_of_com}}
+                                    {{/if}}
+                                    </i> 
+                                </a>
                             </div>
                         </div>
                     </div>

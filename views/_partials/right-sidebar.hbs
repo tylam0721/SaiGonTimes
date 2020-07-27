@@ -21,8 +21,17 @@
             <h5>Categories</h5>
         </div>
         <ul class="catagory-widgets">
-            {{#each lcCategories }}
-                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{CatName}}  </span> <span>35</span></a></li>
+            {{#each lcAllcatdetail }}
+                <li>
+                    <a href="/post/byCat/{{CatID}}"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{CatName}}  </span>
+                    {{#if num_of_posts}}
+                        <span>
+                            {{num_of_posts}}
+                        </span>
+                    {{/if}}
+                        
+                    </a>
+                </li>
             {{/each}}
         </ul>
     </div>
@@ -41,7 +50,7 @@
         {{#each lcAllpost as |alias|}}
             <div class="single-youtube-channel d-flex">
                 <div class="youtube-channel-thumbnail">
-                    <img src="/public/img/bg-img/18.jpg" alt="">
+                    <img src="/public/img/bg-img/{{CatID}}.jpg" alt="">
                 </div>
                 <div class="youtube-channel-content">
                     <a href="single-post.html" class="channel-title">LifeStyle Channel</a>

@@ -10,10 +10,12 @@ module.exports = {
     allWithDetails: function () {
         return db.load(`
             select c.*, count(p.PostID) as num_of_posts
-            from ${TBL_CATEGORIES} c left join posts p on c.CatID = p.CatID
+            from ${TBL_CAT} c left join posts p on c.CatID = p.CatID
             group by c.CatID, c.CatName`);
     },
+    addComment: function(){
 
+    },
     NewpostByCat: function () {
         return db.load(`select * from posts p order by p.PostDate desc limit 0,10`);
     },
