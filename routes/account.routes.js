@@ -4,9 +4,9 @@ const bcrypt = require('bcryptjs');
 const userModel = require('../models/account.model');
 const restrict = require('../middlewares/auth.mdw');
 const config = require('../config/default.json');
-
+const mailer=require('../misc/mailer');
 const router = express.Router();
-
+const randomstring=require('randomstring');
 router.get('/login', function (req, res) {
 
   res.render('vwAccount/login')
@@ -86,5 +86,22 @@ router.get('/is-available', async function (req, res) {
   }
 
   res.json(false);
+})
+router.get('/identify' , function(req,res){
+  res.render('vwAccount/identify',
+    {
+      layout: false
+    }
+    );
+  
+})
+router.post('/identify',function(req, res,next){
+  const token=randomstring.generate({
+    length: 6,
+    charset: 'numeric'
+  })
+  const user=userModel.single(req.body.email);
+
+  const html = `Dear `
 })
 module.exports = router;

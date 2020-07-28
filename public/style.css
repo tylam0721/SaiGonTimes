@@ -1647,7 +1647,7 @@ blockquote {
 .footer-area {
   position: relative;
   z-index: 1;
-  background-color: #020e47ba;
+  background-color: #111111;
   padding-top: 80px; }
   .footer-area .footer-widget {
     position: relative;
