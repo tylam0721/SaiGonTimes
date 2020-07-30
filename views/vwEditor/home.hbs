@@ -1,0 +1,69 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="/public/css/bootstrap-toggle.min.css">
+{{/section}}
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Writer name</th>
+                <th>Abtract</th>
+                <th>Post date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this.editor}}
+            <tr>
+                <td hidden id="Id">{{PostID}}</td>
+                <td>1</td>
+                <td>{{UserName}}</td>
+                <td>{{Abtract}}</td>
+                <td>{{PostDate}}</td>
+                <td><a class="Status" href="" data-toggle="modal" data-target="#modalStatus">{{StatusName}}</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="modalStatus" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <select id="select-status">
+            <option>Đã duyệt</option>
+            <option>Đang chờ duyệt</option>
+            <option>Không được duyệt</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <form method="post">
+            <p hidden name="hiddenstatus"></p><p hidden name="hiddenid"></p>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" id="saveStatus">Save changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{#section 'js'}}
+<script src="/public/js/bootstrap/bootstrap-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<script>
+    $("table td .Status").click(function(){
+        var t=$(this);
+        $("#select-status").val(t.text());
+        $("#saveStatus").click(function(){
+            $(t).text($("#select-status").find(":selected").text());
+            $('p [name ="hiddenstatus"]').text($("#select-status").find(":selected").text());
+            $('p [name ="hiddenid"]').text($("#Id").text());
+        })
+    });
+</script>
+{{/section}}
