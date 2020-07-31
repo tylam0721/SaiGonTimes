@@ -1,4 +1,5 @@
 const express = require('express');
+const flash=require('connect-flash');
 const app = express();
 
 require('express-async-errors');
@@ -12,7 +13,7 @@ require('./middlewares/session.mdw')(app);
 require('./middlewares/view.mdw')(app);
 require('./middlewares/locals.mdw')(app);
 
-
+app.use(flash());
 //use controller
 app.use('/',require('./routes/home.routes'));//home route
 app.use('/demo', require('./routes/demo-routes'));//

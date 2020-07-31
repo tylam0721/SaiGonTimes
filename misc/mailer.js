@@ -1,10 +1,11 @@
 const nodemailer=require('nodemailer');
 
 const transport = nodemailer.createTransport({
-    service: 'Mailgun',
-    auth:{
-        user: 'mailserver@gmail.com',
-        pass: 'password'
+
+    service:'Gmail',
+    auth: {
+        user: 'tn397032@gmail.com',
+        pass: '11112222AAAA'
     },
     tls:{
         rejectUnauthorized: false
@@ -12,7 +13,7 @@ const transport = nodemailer.createTransport({
 });
 
 module.exports = {
-    sendEmail(from,to, subject,html){
+    async sendEmail(from,to,subject,html){
         return new Promise((resolve, reject)=>{
             transport.sendMail({from, subject, to, html}, (err, info)=>{
                 if(err)reject(err);

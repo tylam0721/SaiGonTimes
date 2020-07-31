@@ -37,7 +37,7 @@ router.post('/logout', restrict, function (req, res) {
   req.session.authUser = null;
   res.redirect(req.headers.referer);
 })
-
+//register
 router.get('/register', function(req, res){
   res.render('vwAccount/register');
 })
@@ -57,6 +57,7 @@ router.post('/register', async function(req, res){
   res.render('vwAccount/register');
   
 })
+//profile
 router.get('/profile/:userID', restrict, async function (req, res) {
   const rows=await userModel.single(req.params.userID);
   res.render('vwAccount/profile',{
@@ -87,6 +88,7 @@ router.get('/is-available', async function (req, res) {
 
   res.json(false);
 })
+//otp verify
 router.get('/identify' , function(req,res){
   res.render('vwAccount/identify',
     {
@@ -95,13 +97,44 @@ router.get('/identify' , function(req,res){
     );
   
 })
-router.post('/identify',function(req, res,next){
+router.post('/identify',async function(req, res,next){
   const token=randomstring.generate({
     length: 6,
     charset: 'numeric'
   })
-  const user=userModel.single(req.body.email);
+  //const user=userModel.single(req.body.email);
+  console.log(req.body.email);
+  console.log(token);
+  const html = `Dear <br/>
+                Please verify your Email  bty typing the following token: <br/>
+                Token: <b>${token}</b></br> on the Follwing page: <br/>
+                <a href="http://localhost:3000/account/verify">http://localhost:3000/account/verify</a>
+                <br/><br/>
+                Have a pleasant day.`
+   await mailer.sendEmail('admin@gmail.com', req.body.email, 'please check your email', html);
+   req.flash('success', 'please check your email!');
+   res.redirect('/account/identify');
+})
+router.get('/verify', function(req,res){
+  res.render('vwAccount/verify',{
+    layout: false
+  })
+})
+router.post('/verify', function(req, res){
+  
+})
+//reset
+router.get('/reset', function(req, res){
 
-  const html = `Dear `
+})
+router.post('/reset', function(req, res){
+
+})
+//premium
+router.get('/premium', function(req, res){
+
+})
+router.post('/premium', function(req, res){
+
 })
 module.exports = router;
