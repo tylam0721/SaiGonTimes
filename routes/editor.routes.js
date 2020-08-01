@@ -11,11 +11,14 @@ router.get('/', async function(req, res) {
     });
 });
 router.post('/', async function(req, res) {
-    console.log("hello");
-    if (req.body.hiddenstatus == 'Đã duyệt') req.body.hiddenstatus = 1;
-    else if (req.body.hiddenstatus == 'Đang chờ duyệt') req.body.hiddenstatus = 1;
-    else req.body.hiddenstatus = 3;
-    const sql = await postModel.updateStatus(req.body.hiddenstatus, req.body.hiddenid);
+    var s;
+    if (req.body.status == 'Đã duyệt') s = 1;
+    else if (req.body.status == 'Đang chờ duyệt') s = 2;
+    else s = 3
+    var en = { Status: s };
+    var con = { PostID: req.body.id };
+    res.render('vwEditor/home');
+    const sql = await postModel.updateStatus(en, con);
     console.log(sql);
-})
+});
 module.exports = router;
