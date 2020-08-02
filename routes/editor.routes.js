@@ -6,19 +6,29 @@ const router = express.Router();
 
 router.get('/', async function(req, res) {
     const editor = await editorModel.select();
+    let listStatus = await postModel.loadstatuspost()
     res.render('vwEditor/home', {
-        editor: editor
+        editor,listStatus
     });
 });
 router.post('/', async function(req, res) {
-    var s;
-    if (req.body.status == 'Đã duyệt') s = 1;
-    else if (req.body.status == 'Đang chờ duyệt') s = 2;
-    else s = 3
-    var en = { Status: s };
-    var con = { PostID: req.body.id };
-    res.render('vwEditor/home');
-    const sql = await postModel.updateStatus(en, con);
-    console.log(sql);
+    if(req.body.statusid==3)
+    { 
+        //await postModel.updateStatus({Status:req.body.statusid}, {PostID:req.body.postid});
+        var d=new Date();
+        today=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+(d.getHours()+1)+':'+(d.getMinutes()+1)+':'+((d.getSeconds()+1));
+        var data={
+            StatusID:req.body.statusid,
+            UserID:3, PostID:req.body.postid,
+            Reason:req.body.reason,
+            Date:today
+        }
+        console.log(data);
+        await editorModel.updatereason(data);
+        res.render('vwEditor/home');
+    }
+    else {
+        res.render('vwEditor/home');
+    }
 });
 module.exports = router;

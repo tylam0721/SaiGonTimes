@@ -16,11 +16,12 @@
             {{#each this.editor}}
             <tr>
                 <td hidden class="Id">{{PostID}}</td>
+                <td hidden class="statusid">{{Status}}</td>
                 <td>1</td>
                 <td>{{UserName}}</td>
                 <td>{{Abtract}}</td>
                 <td>{{PostDate}}</td>
-                <td><a class="Status" href="" data-toggle="modal" data-target="#modalStatus">{{StatusName}}</a></td>
+                <td><a class="statusname" href="" data-toggle="modal" data-target="#modalStatus">{{StatusName}}</a></td>
             </tr>
             {{/each}}
         </tbody>
@@ -35,45 +36,43 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <select id="select-status">
-            <option>Đã duyệt</option>
-            <option>Đang chờ duyệt</option>
-            <option>Không được duyệt</option>
-        </select>
-      </div>
-      <div class="modal-footer">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="select-status">Example select</label>
+              <select id="select-status" class="form-control">
+                {{#each listStatus}}
+                  <option value="{{StatusID}}">{{StatusName}}</option>
+                {{/each}}
+              </select>
+          </div>
+          <div class="form-group" hidden id="notAllow">
+            <label for="reason">Reason</label>
+            <textarea class="form-control" id="reason" rows="3"></textarea>
+          </div>
+          <div class="form-group" hidden id="Allow">
+            <label for="">Tag</label>
+            <select id="select-status" class="form-control">
+                {{#each listStatus}}
+                  <option value="{{StatusID}}">{{StatusName}}</option>
+                {{/each}}
+            </select>
+            <label for="">Categories</label>
+            <select id="select-status" class="form-control">
+                {{#each listStatus}}
+                  <option value="{{StatusID}}">{{StatusName}}</option>
+                {{/each}}
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" id="saveStatus">Save changes</button>
-      </div>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveStatus">Save changes</button>
+        </div>
     </div>
   </div>
 </div>
 {{#section 'js'}}
 <script src="/public/js/bootstrap/bootstrap-toggle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-<script>
-    $("table td .Status").click(function(){
-        var t=$(this);
-        $("#select-status").val(t.text());
-        $("#saveStatus").click(function(){
-           var id=$(t).parent().siblings('.Id').text();
-          var status=$("#select-status").find(":selected").text();
-          $(t).text(status);
-          $.ajax({
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            url: 'http://localhost:3000/editor',
-            type: 'post',
-            data: JSON.stringify({'id':id,'status':status}),
-            async: false,
-            error: function(d) {
-            var fullError = JSON.stringify(d);
-            console.log(fullError);
-            }   
-          });
-        })
-    }); 
-</script>
+<script src="/public/js/editor.js"></script>
 {{/section}}
