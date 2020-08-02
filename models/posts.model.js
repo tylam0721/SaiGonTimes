@@ -47,6 +47,6 @@ module.exports = {
     join tag t on t.tagid=pt.tagid where t.tagid=${id}`)
   },
   allBySubCat: async function(id){
-    return db.load(`SELECT p.* from ${TBL_POSTS} p join sub_categories sc on sc.CatID = p.CatID where sc.SubCatID=${id}`)
-  }
-};
+      return db.load(`SELECT p.* from ${TBL_POSTS} p join sub_categories sc on sc.CatID = p.CatID where sc.SubCatID=${id}`)
+    }
+  };

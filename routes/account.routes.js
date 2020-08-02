@@ -103,8 +103,6 @@ router.post('/identify',async function(req, res,next){
     charset: 'numeric'
   })
   //const user=userModel.single(req.body.email);
-  console.log(req.body.email);
-  console.log(token);
   const html = `Dear <br/>
                 Please verify your Email  bty typing the following token: <br/>
                 Token: <b>${token}</b></br> on the Follwing page: <br/>
@@ -114,6 +112,8 @@ router.post('/identify',async function(req, res,next){
    await mailer.sendEmail('admin@gmail.com', req.body.email, 'please check your email', html);
    req.flash('success', 'please check your email!');
    res.redirect('/account/identify');
+   res.locals.lcOtp=token;
+   
 })
 router.get('/verify', function(req,res){
   res.render('vwAccount/verify',{
@@ -121,20 +121,27 @@ router.get('/verify', function(req,res){
   })
 })
 router.post('/verify', function(req, res){
+  const message='hello';
+  const check=false;
+  if(req.body.otpcode==lcOtp)
+  {
+    check=true;
+    res.render('vwAccount/reset')
+  }
   
 })
-//reset
-router.get('/reset', function(req, res){
+// //reset
+// router.get('/reset', function(req, res){
 
-})
-router.post('/reset', function(req, res){
+// })
+// router.post('/reset', function(req, res){
 
-})
-//premium
-router.get('/premium', function(req, res){
+// })
+// //premium
+// router.get('/premium', function(req, res){
 
-})
-router.post('/premium', function(req, res){
+// })
+// router.post('/premium', function(req, res){
 
-})
+// })
 module.exports = router;

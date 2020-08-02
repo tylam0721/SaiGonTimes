@@ -30,8 +30,8 @@ module.exports = {
         return db.load(`SELECT * FROM posts p
                             WHERE p.PostID= ${postid}`);
     },
-    AllsubCat: function(id){
-        return db.load(`SELECT * FROM sub_categories where CatID=${id}`);
+    AllsubCat: function(){
+        return db.load(`SELECT * FROM sub_categories`);
     }
 
 }
