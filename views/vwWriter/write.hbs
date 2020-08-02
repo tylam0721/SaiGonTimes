@@ -1,5 +1,8 @@
 {{#section 'js'}}
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fa/theme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/locales/vi.min.js"></script>
 <script>
   tinymce.init({
     selector: '#txtFullDes',
@@ -10,10 +13,20 @@
       'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
     ],
   });
+  $('#avatar').fileinput({
+    theme: 'fa',
+    showCaption: true,
+    dropZoneEnabled: true,
+    allowedFileExtensions: ['png', 'jpg', 'gif'],
+    language: 'vi'
+  });
 </script>
 {{/section}}
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css">
+{{/section}}
 
-<form method="post" class="writer_form">
+<form method="post" class="writer_form" enctype="multipart/form-data" action="">
   <div class="card">
     <div class="card-header">
       <h2>Đăng bài</h2>
@@ -30,15 +43,26 @@
         <label for="postCat">Thể loại</label>
         <select class="form-control" name="postCat" id="postCat">
           {{#each categories}}
-            <option value={{this.CatID}}>{{this.CatName}}</option>
+            <optgroup label={{this.CatName}}>
+              {{#each subCats}}
+                <option value={{this.SubCatID}}>{{this.SubCatName}}</option>
+              {{/each}}
+            </optgroup>
           {{/each}}
         </select>
       </div>
 
-      {{!-- Select adstract --}}
+      {{!-- adstract --}}
       <div class="form-group adstract">
         <label for="abstract">Mô tả</label>
         <input type="text" class="form-control" name="abstract" id="abstract" placeholder="Nhập mô tả cho bài báo">
+      </div>
+
+      <div class="form-group">
+        <label for="avatar">Chọn avatar cho bài viết</label>
+        <div class="file-loading">
+          <input id="avatar" name="avatar" type="file">
+        </div>
       </div>
 
       {{!-- Main content --}}

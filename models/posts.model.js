@@ -6,6 +6,9 @@ module.exports = {
   all: async function () {
     return db.load(`select * from ${TBL_POSTS} limit 5`);
   },
+  insert: async function(entity) {
+    return db.add(TBL_POSTS, entity);
+  }
 //   allByCat: function (catId) {
 //     return db.load(`select * from ${TBL_POSTS} where CatID = ${catId}`);
 //   },

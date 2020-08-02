@@ -1,5 +1,6 @@
 const db = require('../utils/db');
 const TBL_CAT='categories';
+const TBL_SUBCAT='sub_categories';
 module.exports = {
     PostsTrending: function () {
         return db.load(`select * from posts  p order by p.Views desc LIMIT 0,4`);
@@ -35,6 +36,8 @@ module.exports = {
     AllbyCat: function (catid) {
         return db.load(`SELECT p.* FROM categories c, posts p , post_categories pc
         WHERE c.CatID=pc.CatID AND p.PostID=pc.PostID AND c.CatID= ${catid}`);
+    },
+    subCatsByCat: function(catID) {
+        return db.load(`select * from ${TBL_SUBCAT} where CatID = ${catID}`);
     }
-
 }
