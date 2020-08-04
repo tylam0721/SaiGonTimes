@@ -8,17 +8,15 @@ module.exports = {
     all: async function(){
         return db.load(`select * from ${TBL_CAT}`);
     },
-    NewPost: function () {
-        return db.load(`SELECT c.CatName,p.PostID,p.Abtract,p.Views,p.Ranks, p.PostDate ,p.HasAvatar,p.BigAvatar           
-        from post_categories pc ,posts p , categories c 
-        WHERE c.CatID=pc.CatID and pc.PostID= p.PostID 
-        group by c.CatName, c.CatID`);
+    allWithDetails: function () {
+        return db.load(`
+            select c.*, count(p.PostID) as num_of_posts
+            from ${TBL_CAT} c left join posts p on c.CatID = p.CatID
+            group by c.CatID, c.CatName`);
     },
-    AllCategories: function () {
-        return db.load(`select c.*,  COUNT(pc.CatID) AS CountCat from categories c LEFT JOIN post_categories pc on c.CatID= pc.CatID
-                            GROUP BY c.CatID, c.CatID`);
-    },
+    addComment: function(){
 
+    },
     NewpostByCat: function () {
         return db.load(`select * from posts p order by p.PostDate desc limit 0,10`);
     },
@@ -38,6 +36,9 @@ module.exports = {
         WHERE c.CatID=pc.CatID AND p.PostID=pc.PostID AND c.CatID= ${catid}`);
     },
     subCatsByCat: function(catID) {
-        return db.load(`select * from ${TBL_SUBCAT} where CatID = ${catID}`);
+        return db.load(`select * from ${TBL_SUBCAT} where CatID = ${catID}`)
+    },
+    AllsubCat: function(){
+        return db.load(`SELECT * FROM sub_categories`);
     }
 }

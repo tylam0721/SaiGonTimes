@@ -2,7 +2,10 @@
 <html>
 
 <head>
-  <title>404</title>
+   <title>SaigonTimes - Posts &amp; All aroundthe world</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/public/img/core-img/title.ico" >
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -29,19 +32,11 @@
       <div class="col-md-12">
         <div class="card w-50 shadow mx-auto">
           <div class="card-body text-center">
-            <h1 class="card-title">Oops!</h1>
-            <h2>404 Not Found</h2>
-            <div>Sorry, an error has occured. Requested page not found!</div>
-            <div class="my-4">
-              <a href="/" class="btn btn-primary btn-lg">
-                <i class="fa fa-home" aria-hidden="true"></i>
-                Take Me Home
-              </a>
-              <a href="#" class="btn btn-success btn-lg">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-                Contact Support
-              </a>
-            </div>
+            <form action="/account/identify" method="post">
+                <label for="txtEmail">Your email: </label>
+                <input type="text" name="email" id="txtEmail" placeholder="Email: acb@gmail.com">
+                <input type="submit" name="" id="" value="Send">
+            </form>
           </div>
         </div>
       </div>

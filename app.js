@@ -1,4 +1,5 @@
 const express = require('express');
+const flash=require('connect-flash');
 const app = express();
 
 require('express-async-errors');
@@ -12,25 +13,14 @@ require('./middlewares/session.mdw')(app);
 require('./middlewares/view.mdw')(app);
 require('./middlewares/locals.mdw')(app);
 
-const cat = require('./models/categories.model')
-app.use(async function (req, res,next) {
-  const row = await cat.NewPost();
-  const row1 = await cat.NewpostByCat();
-  const row2 = await cat.AllUsers();
-  const row3 = await cat.AllCategories();
-
-  res.locals.newpost =row;
-  res.locals.newpostbycat=row1;
-  res.locals.allusers=row2;
-  res.locals.categories=row3;
-  next();
-})
+app.use(flash());
 //use controller
 app.use('/',require('./routes/home.routes'));//home route
 app.use('/demo', require('./routes/demo-routes'));//
 app.use('/account', require('./routes/account.routes'));//account route
 app.use('/writer', require('./routes/writer.routes'));
 
+app.use('/post', require('./routes/posts.routes'));
 //throw error:
 app.get('/err', function (req, res) {
   throw new Error('beng beng');

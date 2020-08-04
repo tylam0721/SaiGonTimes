@@ -31,7 +31,7 @@ module.exports={
         return db.patch(TBL_USER, entity, condition);
     },
     del: function (id) {
-        const condition = { id }
+        const condition = {id}
         return db.del(TBL_USER, condition);
     }
 }
