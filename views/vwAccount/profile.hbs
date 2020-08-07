@@ -7,32 +7,13 @@
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script>
-  $('#txtDOB').datetimepicker({
+    $('#txtDOB').datetimepicker({
     format: 'd/m/Y',
     timepicker: false,
     mask: true,
   });
 
-  $('#frmRegister').on('submit', function (e) {
-    // alert('submit called');
-    e.preventDefault();
-    // if (validate())
-    //   $('#frmRegister').off('submit').submit();
-    validate();
-  })
 
-  function validate() {
-    // ... các lệnh validate khác
-
-    const user = $('#txtUserName').val();
-    $.getJSON(`/account/is-available?user=${user}`, function (data) {
-      if (data === true) {
-        $('#frmRegister').off('submit').submit();
-      } else {
-        alert('not available');
-      }
-    })
-  }
 </script>
 {{/section}}
 
@@ -48,22 +29,28 @@
 
                     <form method="POST" id="frmRegister">
                         <div class="form-group">
-                            <input type="email" class="form-control" id="txtEmail" name="email" placeholder="Email Address">
+                        
+                          <input type="text" class="form-control" id="txtUserID" name="UserID" readonly value="{{this.user.UserID}}">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="txtFullname" name="fullname" placeholder="Full name">
+                          <label for="">email</label>
+                            <input type="email" class="form-control" id="txtEmail" name="email" value="{{this.user.EmailAdress}}">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="txtPhone" name="phone" placeholder="Phone">
+                          <label for="">Full Name</label>
+                            <input type="text" class="form-control" id="txtFullname" name="fullname" value="{{this.user.FullName}}">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="txtDOB" name="dob">
+                          <label for="">Phone</label>
+                            <input type="text" class="form-control" id="txtPhone" name="phone" value="{{this.user.Phone}}">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="txtUserName" name="username" placeholder="User name">
+                          <label for="">Date of birth</label>
+                            <input type="text" class="form-control" id="txtDOB" name="dob" value="{{this.user.DOB}}">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="txtPassword" name="password" placeholder="Password">
+                          <label for="">User name</label>
+                            <input type="text" class="form-control" id="txtUserName" name="username" value="{{this.user.UserName}}">
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox mr-sm-2">
@@ -71,11 +58,15 @@
                                 <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
                             </div>
                         </div>
-                        <button type="submit" class="btn mag-btn mt-30">
+                        <button type="submit" class="btn mag-btn mt-30"  formaction="/account/profile/update">
                             
                             Save
                             
                         </button>
+                        <div class="form-group"> 
+                          <a href="/" class="">back</a>
+                        </div>
+                        
                     </form>
                 </div>
             </div>

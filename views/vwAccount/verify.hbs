@@ -49,3 +49,26 @@
 </body>
 
 </html>
+<script>
+
+  $('#frmRegister').on('submit', function (e) {
+    // alert('submit called');
+    e.preventDefault();
+    // if (validate())
+    //   $('#frmRegister').off('submit').submit();
+    validate();
+  })
+
+  function validate() {
+    // ... các lệnh validate khác
+
+    const user = $('#txtUsername').val();
+    $.getJSON(`/account/is-available?user=${user}`, function (data) {
+      if (data === true) {
+        $('#frmRegister').off('submit').submit();
+      } else {
+        alert('not available');
+      }
+    })
+  }
+</script> 

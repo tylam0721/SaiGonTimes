@@ -66,11 +66,14 @@
                                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                                 Logout
                             </a>
+                            <a class="dropdown-item" href="/account/reset/{{lcAuthUser.UserID}}">Reset Password</a>
+                            <a href="/account/premium" class="dropdown-item"></a>
                             <a class="dropdown-item" href="#">Something else here</a>
+                            
                         </div> 
                         </div>
                     {{else}}
-                        <a href="/account/login" class="login-btn"><i class="fa fa-user" aria-hidden="true"></i></a>
+                        <a href="/account/login" href="#login-area" class="login-btn"><i class="fa fa-user" aria-hidden="true"></i></a>
                         <a href="/account/register" class="login-btn"><i class="fa fa-plus" aria-hidden="true"></i></a>
                     {{/if}}
        
