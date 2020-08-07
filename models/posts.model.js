@@ -1,6 +1,8 @@
 const db = require('../utils/db');
 
 const TBL_POSTS = 'posts';
+const TBL_TAG = 'tag';
+const TBL_POST_TAG = 'post_tag';
 
 module.exports = {
     all: async function() {
@@ -12,16 +14,30 @@ module.exports = {
     allPostsDetail: function() {
         return db.load(`select p.*, count(c.PostID) as num_of_com 
     from ${TBL_POSTS} p left join comments c on p.PostID=c.PostID group by p.PostID`)
-    },
-    //   pageByCat: function (catId, limit, offset) {
-    //     return db.load(`select * from ${TBL_POSTS} where CatID = ${catId} limit ${limit} offset ${offset}`);
-    //   },
-    countByCat: async function(catId) {
-        const rows = await db.load(`select count(*) as total from ${TBL_POSTS} where CatID = ${catId}`);
-        return rows[0].total;
-    },
-    single: async function(id) {
-        return db.load(`select p.*, count(c.PostID) as num_of_com 
+  },
+  insert: async function(entity) {
+    return db.add(TBL_POSTS, entity);
+  },
+  insertPost_Tag: async function(postID, tagID) {
+    const entity = {
+      PostID: postID,
+      TagID: tagID
+    }
+    console.log(entity);
+    return db.add(TBL_POST_TAG, entity);
+  },
+//   allByCat: function (catId) {
+//     return db.load(`select * from ${TBL_POSTS} where CatID = ${catId}`);
+//   },
+//   pageByCat: function (catId, limit, offset) {
+//     return db.load(`select * from ${TBL_POSTS} where CatID = ${catId} limit ${limit} offset ${offset}`);
+//   },
+  countByCat: async function (catId) {
+    const rows = await db.load(`select count(*) as total from ${TBL_POSTS} where CatID = ${catId}`);
+    return rows[0].total;
+  },
+  single: async function (id) {
+    return db.load(`select p.*, count(c.PostID) as num_of_com 
     from ${TBL_POSTS} p join comments c on p.PostID=c.PostID
     where p.PostID = ${id}`);
     },
@@ -44,14 +60,20 @@ module.exports = {
     allByTag: async function(id) {
         return db.load(`SELECT p.* FROM ${TBL_POSTS} p join post_tag pt ON pt.PostID=p.PostID 
     join tag t on t.tagid=pt.tagid where t.tagid=${id}`)
+  },
+  allBySubCat: async function(id){
+      return db.load(`SELECT p.* from ${TBL_POSTS} p join sub_categories sc on sc.CatID = p.CatID where sc.SubCatID=${id}`)
     },
-    allBySubCat: async function(id) {
-        return db.load(`SELECT p.* from ${TBL_POSTS} p join sub_categories sc on sc.CatID = p.CatID where sc.SubCatID=${id}`)
-    },
-    loadstatuspost: function() {
-        return db.load('select * from status where StatusID=1 or StatusID=3');
-    },
-    updateStatus: async function(status, condition) {
-        return db.patch(TBL_POSTS, status, condition);
-    }
+  allTag: async function() {
+    return db.load(`SELECT * from ${TBL_TAG}`);
+  },
+  allBySubCat: async function(id) {
+      return db.load(`SELECT p.* from ${TBL_POSTS} p join sub_categories sc on sc.CatID = p.CatID where sc.SubCatID=${id}`)
+  },
+  loadstatuspost: function() {
+      return db.load('select * from status where StatusID=1 or StatusID=3');
+  },
+  updateStatus: async function(status, condition) {
+      return db.patch(TBL_POSTS, status, condition);
+  }
 };

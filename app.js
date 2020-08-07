@@ -17,9 +17,11 @@ require('./middlewares/locals.mdw')(app);
 
 app.use(flash());
 //use controller
-app.use('/', require('./routes/home.routes')); //home route
-app.use('/demo', require('./routes/demo-routes')); //
-app.use('/account', require('./routes/account.routes')); //account route
+app.use('/',require('./routes/home.routes'));//home route
+app.use('/demo', require('./routes/demo-routes'));//
+app.use('/account', require('./routes/account.routes'));//account route
+app.use('/writer', require('./routes/writer.routes'));
+
 app.use('/post', require('./routes/posts.routes'));
 app.use('/editor', require('./routes/editor.routes'));
 //throw error:
