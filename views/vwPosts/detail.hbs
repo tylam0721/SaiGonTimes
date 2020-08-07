@@ -162,11 +162,10 @@
                             </div>
                             <h4 class="post-title">{{this.post.Abtract}}</h4>
                             {{!-- tag list --}}
-                            <h4 class="post-title">
-                                {{#each tag as |alias|}}
-                                    
-                                {{/each}}
-                            </h4>
+                            <label for=""> <i>tag:</i> </label>
+                            {{#each this.tag as |alias|}}
+                                <label for="" style="background-color: brown;"><a href="/post/byTag/{{TagID}}">{{Name}}</a></label></label>
+                            {{/each}}
 
                             <!-- Post Meta -->
                             <div class="post-meta-2">
@@ -542,7 +541,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </body>
 
 </html>
-{{#section 'js'}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script>
@@ -572,5 +571,27 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       }
     })
   }
+    $(function(){
+
+    $(".comments-link").on("click", function( event ){
+        event.preventDefault();                // Prevents browser following #hash 
+        $(this).hide();                        // hide the button
+        $(".comment-form-container").show();   // Show the form parent
+    });
+
+    $(".comment-form-container form").on("submit", function( event ){
+        event.preventDefault();              // Don't send headers
+        alert( $(this).serialize() +"\nWILL BE SENT TO PHP" );
+        // $.ajax stuff
+    });
+    $.ajax({
+    type    : "POST",
+    url     : "saveComment.php",
+    data    : $(this).serialize(),      // `this` is our form
+    success : function( response ) {    // Response is the PHP echo
+        alert("PHP says: "+ response);
+        // Using jQuery append the message to 
+    }
+    });
+});
 </script>
-{{/section}}

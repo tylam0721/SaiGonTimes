@@ -51,6 +51,8 @@ router.post('/register', async function(req, res){
     Permission: 5,
     UserName: req.body.username,
     HashPassword,
+    Ranks: 0,
+    NickName:'',
     Phone: req.body.phone
   }
   await userModel.add(entity);
@@ -62,21 +64,20 @@ router.get('/profile/:userID', restrict, async function (req, res) {
   const rows=await userModel.single(req.params.userID);
   res.render('vwAccount/profile',{
     user: rows[0]
+
   });
 })
 router.post('/profile/update', async function(req, res){
   const DOB=moment(req.body.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');
-  const HashPassword=bcrypt.hashSync(req.body.password, config.authentication.saltRounds);
   const entity={
+    UserID:req.body.UserID,
     EmailAdress: req.body.email,
     FullName: req.body.fullname,
     DOB,
-    Permission: req.body.Permission,
     UserName: req.body.username,
-    HashPassword,
     Phone: req.body.phone
   }
-  await userModel.add(entity);
+  await userModel.patch(entity);
   res.render('vwAccount/profile');
   
 })
@@ -120,6 +121,14 @@ router.get('/verify', function(req,res){
     layout: false
   })
 })
+router.get('/check-otp',function(req, res){
+  
+  if (req.body.otpcode == lcOtp) {
+    return res.json(true);
+  }
+
+  res.json(false);
+})
 router.post('/verify', function(req, res){
   const message='hello';
   const check=false;
@@ -131,16 +140,30 @@ router.post('/verify', function(req, res){
   
 })
 // //reset
-// router.get('/reset', function(req, res){
+router.get('/reset/:id', function(req, res){
+  res.render('vwAccount/reset',{
+    layout: false
 
-// })
-// router.post('/reset', function(req, res){
-
-// })
+  })
+})
+router.post('/reset', async function(req, res){
+  const user=await userModel.singleByUserNameorEmail(req.body.username, req.body.username);
+  if(user===null){
+    return res.render('vwAccount/login',{
+      err: 'Invalid username or password.'
+    })
+  }
+  const rs = bcrypt.compareSync(req.body.password, user.HashPassword);
+  if (rs === false) {
+    return res.render('vwAccount/login', {
+      err: 'Invalid password.'
+    })
+  }
+})
 // //premium
-// router.get('/premium', function(req, res){
-
-// })
+router.get('/premium', function(req, res){
+  res.render('vwAccount/premium');
+})
 // router.post('/premium', function(req, res){
 
 // })

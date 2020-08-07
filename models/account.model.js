@@ -25,13 +25,14 @@ module.exports={
     },
     patch: function(entity){
         const condition = {
-            id: entity.id
+            UserID: entity.UserID
         }
-        delete entity.id;
+        delete entity.UserID;
         return db.patch(TBL_USER, entity, condition);
     },
     del: function (id) {
         const condition = {id}
         return db.del(TBL_USER, condition);
-    }
+    },
+   
 }
