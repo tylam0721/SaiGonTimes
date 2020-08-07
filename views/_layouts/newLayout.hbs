@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Mag - Video &amp; Magazine HTML Template</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/public/img/core-img/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/public/style.css" type="text/css">
+    {{{_sections.css}}}
+</head>
+
+<body>
+
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+
+        <!-- Navbar Area -->
+        {{> nav}}
+    </header>
+    <!-- ##### Header Area End ##### -->
+    {{>slider}}
+    
+        {{{body}}}
+        
+    {{> footer}}
+
+    <!-- jQuery-2.2.4 js -->
+    <script src="/public/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="/public/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="/public/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="/public/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/public/js/active.js"></script>
+    {{{_sections.js}}}
+</body>
+
+</html>
