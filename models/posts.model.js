@@ -2,6 +2,7 @@ const db = require('../utils/db');
 
 const TBL_POSTS = 'posts';
 const TBL_TAG = 'tag';
+const TBL_POST_TAG = 'post_tag';
 
 module.exports = {
   all: async function () {
@@ -16,6 +17,13 @@ module.exports = {
   },
   insert: async function(entity) {
     return db.add(TBL_POSTS, entity);
+  },
+  insertPost_Tag: async function(postID, tagID) {
+    const entity = {
+      PostID: postID,
+      TagID: tagID
+    }
+    return db.add(TBL_POST_TAG, entity);
   },
 //   allByCat: function (catId) {
 //     return db.load(`select * from ${TBL_POSTS} where CatID = ${catId}`);

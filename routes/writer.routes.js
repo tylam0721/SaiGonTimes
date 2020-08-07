@@ -35,6 +35,11 @@ router.post('/write', type, async function (req, res) {
   }
 
   const postID = await postModel.insert(entity);
+  console.log(req.body.tags);
+  for(let i = 0; i < req.body.tags.length; i++) {
+    await postModel.insertPost_Tag(postID.insertID, req.body.tags[i]);
+  }
+
   res.render('vwWriter/write');
 })
 
