@@ -51,7 +51,13 @@ router.post('/register', async function(req, res){
     Permission: 5,
     UserName: req.body.username,
     HashPassword,
-    Phone: req.body.phone
+    Phone: req.body.phone,
+    
+    // Ty handsome did it:
+    Ranks: 0,
+    NickName: '',
+    Status: 1,
+    Avatar: '',
   }
   await userModel.add(entity);
   res.render('vwAccount/register');

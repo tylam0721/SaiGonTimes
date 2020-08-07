@@ -20,26 +20,25 @@ router.get('/write', async function (req, res) {
 
 router.post('/write', type, async function (req, res) {
   const postDate = new Date();
-  const entity = {
-    Title: req.body.title,
-    Abtract: req.body.abstract,
-    // Author: res.locals.lcAuthUser.UserID,
-    Author: '1',
-    HasAvatar: '',
-    BigAvatar: (req.file) ? `${req.file.filename}.png` : '',
-    PostDate: `${postDate.getUTCFullYear()}-${postDate.getUTCMonth()+1}-${postDate.getUTCDate()}`,
-    Views: 0,
-    Status: 2,
-    Ranks: 10,
-    PostContent: req.body.FullDes
-  }
+  if(res.lcAuthUser) {
+    const entity = {
+      Title: req.body.title,
+      Abtract: req.body.abstract,
+      Author: res.locals.lcAuthUser.UserID,
+      HasAvatar: '',
+      BigAvatar: (req.file) ? `${req.file.filename}.png` : '',
+      PostDate: `${postDate.getUTCFullYear()}-${postDate.getUTCMonth()+1}-${postDate.getUTCDate()}`,
+      Views: 0,
+      Status: 2,
+      Ranks: 10,
+      PostContent: req.body.FullDes
+    }
 
-  const postID = await postModel.insert(entity);
-  console.log(req.body.tags);
-  for(let i = 0; i < req.body.tags.length; i++) {
-    await postModel.insertPost_Tag(postID.insertID, req.body.tags[i]);
+    const postID = await postModel.insert(entity);
+    for(let i = 0; i < req.body.tags.length; i++) {
+      await postModel.insertPost_Tag(postID.insertId, req.body.tags[i]);
+    }   
   }
-
   res.render('vwWriter/write');
 })
 
