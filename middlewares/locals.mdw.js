@@ -14,9 +14,11 @@ module.exports=function(app){
         const list= await catModel.all();
         const listdetail=await catModel.allWithDetails();
         const listSubcat=await catModel.AllsubCat();
+        const listpostcat=await postModel.newestofcat();
         res.locals.lcAllcatdetail=listdetail;
         res.locals.lcCategories=list;
         res.locals.lcAllSubCat=listSubcat;
+        res.locals.lcNewpostcat=listpostcat;
         next();
     })
     app.use(async function(req,res,next){

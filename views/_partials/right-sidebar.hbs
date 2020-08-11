@@ -36,25 +36,22 @@
         </ul>
     </div>
 
-    <!-- Sidebar Widget -->
-    <div class="single-sidebar-widget">
-        <a href="#" class="add-img"><img src="/public/img/bg-img/add2.png" alt=""></a>
-    </div>
+
 
     <!-- Sidebar Widget -->
     <div class="single-sidebar-widget p-30">
         <!-- Section Title -->
         <div class="section-heading">
-            <h5>Hot Channels</h5>
+            <h5>Newest post</h5>
         </div>
-        {{#each lcAllpost as |alias|}}
+        {{#each lcNewpostcat as |alias|}}
             <div class="single-youtube-channel d-flex">
                 <div class="youtube-channel-thumbnail">
                     <img src="/public/img/bg-img/{{CatID}}.jpg" alt="">
                 </div>
                 <div class="youtube-channel-content">
-                    <a href="single-post.html" class="channel-title">LifeStyle Channel</a>
-                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                    <a href="single-post.html" class="channel-title">{{CatName}}</a>
+                    
                 </div>
             </div>
         {{/each}}
@@ -62,19 +59,5 @@
     </div>
 
     <!-- Sidebar Widget -->
-    <div class="single-sidebar-widget p-30">
-        <!-- Section Title -->
-        <div class="section-heading">
-            <h5>Newsletter</h5>
-        </div>
-
-        <div class="newsletter-form">
-            <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
-            <form action="#" method="get">
-                <input type="search" name="widget-search" placeholder="Enter your email">
-                <button type="submit" class="btn mag-btn w-100">Subscribe</button>
-            </form>
-        </div>
-
-    </div>
+    
 </div>

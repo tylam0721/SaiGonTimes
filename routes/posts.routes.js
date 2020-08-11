@@ -2,7 +2,8 @@ const express = require('express');
 const catModel = require('../models/categories.model');
 const postModel=require('../models/posts.model');
 const router = express.Router();
-
+const moment=require('moment');
+const commentModel=require('../models/comment.model');
 // router.get('/:PostID', async function (req, res) {
 //     const list = await postModel.AllbyPost(req.params.PostID);
 //     res.render('vwPosts/listposts',{
@@ -37,6 +38,7 @@ router.get('/detail/:postID', async function(req, res){
         post: rows[0],
         tag: listTag,
     });
+    
     postModel.updateViews(req.params.postID);
   })
 router.get('/byTag/:TagID', async function(req, res){
@@ -46,5 +48,22 @@ router.get('/byTag/:TagID', async function(req, res){
         posts : list,
         empty : list.length === 0 
     });
+})
+router.post('/comment', function(req,res){
+    var info=""
+    try {
+        info=JSON.parse(req.body.info);
+    } catch (error) {
+        
+    }
+    const currendate=moment();
+    const content=info.dataSend.Content;
+    const entity={
+        User: user,
+        PostID: post,
+        Commentcontent: content,
+        CommentDate: currendate
+    }
+    commentModel.add(entity);
 })
 module.exports = router;

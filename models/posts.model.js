@@ -53,5 +53,9 @@ module.exports = {
     },
     updateStatus: async function(status, condition) {
         return db.patch(TBL_POSTS, status, condition);
+    },
+    newestofcat: async function(){
+        return db.load(`select p.*, cat.CatName from posts p join ( select max(p.PostID) as postiD from posts p join (select max(PostDate) as postdate, CatID from posts group by CatID limit 10) pc on (p.PostDate = pc.postdate and p.CatID = pc.CatID) group by p.CatID) pc on p.PostID = pc.postiD JOIN categories cat on p.CatID=cat.CatID`);
+        
     }
 };

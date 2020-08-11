@@ -37,8 +37,12 @@
                                     
                                 </ul>
                             </li>
-                            
-                            <li><a href="about.html">About</a></>
+                            {{#if lcIsAuthenticated}}
+                                <li><a href="/account/premium">premium</a></li>
+                            {{else}}
+                                <li><a href="/account/register">premium</a></li>
+                            {{/if}}
+                            <li><a href="about.html">About</a></li>
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </div>

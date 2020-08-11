@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/public/style.css" type="text/css">
 
 </head>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <body>
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
@@ -160,15 +160,25 @@
                                 <a href="#">MAY 8, 2018</a>
                                 <a href="archive.html">lifestyle</a>
                             </div>
+                            {{#if lcAuthUser}}
+                                {{#if (isPremium lcAuthUser)}}
+                                    <b>tải về</b>
+                                {{/if}}
+                            {{/if}}
+                            
+                            <h6></h6>
                             <h4 class="post-title">{{this.post.Abtract}}</h4>
                             {{!-- tag list --}}
                             <label for=""> <i>tag:</i> </label>
                             {{#each this.tag as |alias|}}
-                                <label for="" style="background-color: brown;"><a href="/post/byTag/{{TagID}}">{{Name}}</a></label></label>
+                                <label for="" style="background-color: brown;">
+                                    <a href="/post/byTag/{{TagID}}">{{Name}}</a>
+                                </label> &nbsp;&nbsp;
                             {{/each}}
 
                             <!-- Post Meta -->
                             <div class="post-meta-2">
+                                <input type="hidden" name="" id="txtPostID">
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{this.post.Views}}</a>
                                 <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{this.post.Ranks}}</a>
                                 <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> {{this.post.num_of_com}}</a>
@@ -193,7 +203,7 @@
                         <div class="section-heading">
                             <h5>COMMENTS</h5>
                         </div>
-                        <ol>
+                        <ol id="commentArea">
                             <!-- Single Comment Area -->
                             <li class="single_comment_area">
                                 <!-- Comment Content -->
@@ -248,14 +258,8 @@
 
                         <!-- Reply Form -->
                         <div class="contact-form-area">
-                            <form action="#" method="post">
+                            <form action="#" method="post" id="frmComment">
                                 <div class="row">
-                                    <div class="col-12 col-lg-6">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name*" required>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <input type="email" class="form-control" id="email" placeholder="Your Email*" required>
-                                    </div>
                                     <div class="col-12">
                                         <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message*" required></textarea>
                                     </div>
@@ -541,22 +545,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </body>
 
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
 <script>
-  $('#txtDOB').datetimepicker({
-    format: 'd/m/Y',
-    timepicker: false,
-    mask: true,
-  });
+ 
 
   $('#frmRegister').on('submit', function (e) {
     // alert('submit called');
     e.preventDefault();
     // if (validate())
     //   $('#frmRegister').off('submit').submit();
-    validate();
+    
+   // validate();
   })
 
   function validate() {
@@ -571,27 +570,36 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       }
     })
   }
-    $(function(){
-
-    $(".comments-link").on("click", function( event ){
-        event.preventDefault();                // Prevents browser following #hash 
-        $(this).hide();                        // hide the button
-        $(".comment-form-container").show();   // Show the form parent
-    });
-
-    $(".comment-form-container form").on("submit", function( event ){
-        event.preventDefault();              // Don't send headers
-        alert( $(this).serialize() +"\nWILL BE SENT TO PHP" );
-        // $.ajax stuff
-    });
+   function sendComment(){
+    var Comment;
+    var dataSend={comment: $("#message").val(), postID:$("#txtPostID").val()}
     $.ajax({
-    type    : "POST",
-    url     : "saveComment.php",
-    data    : $(this).serialize(),      // `this` is our form
-    success : function( response ) {    // Response is the PHP echo
-        alert("PHP says: "+ response);
-        // Using jQuery append the message to 
-    }
+        type    : "POST",
+        url     : "http://localhost:3000/posts/comment",
+        data    : $(this).serialize(),      // `this` is our form
+        success : function(data) {    // Response is the PHP echo
+           Comment=data;
+           $("#commentArea").append('<li class="single_comment_area">'
+                                    '<!-- Comment Content -->'
+                                '<div class="comment-content d-flex">'
+                                    '<div class="comment-author">'
+                                        '<img src="/public/img/bg-img/53.jpg" alt="author">'
+                                    '</div>'
+                                    
+                                    '<div class="comment-meta">'
+                                        '<a href="#" class="comment-date">27 Aug 2019</a>'
+                                        '<h6>Tomas Mandy</h6>'
+                                        '<p></p>'
+                                        '<div class="d-flex align-items-center">'     
+                                            '<a href="#" class="like">like</a>'
+                                            '<a href="#" class="reply">Reply</a>'
+                                        '</div>'
+                                    '</div>'
+                                '</div>'
+
+                            '</li>')
+            $("#message").val("");
+        }
     });
-});
+   }
 </script>

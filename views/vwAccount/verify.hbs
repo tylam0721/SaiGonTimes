@@ -32,8 +32,9 @@
       <div class="col-md-12">
         <div class="card w-50 shadow mx-auto">
           <div class="card-body text-center">
-            <form action="/account/verify" method="post">
+            <form method="POST" id="frmVerify">
                 <label for="txtOTP">OTP Code: </label>
+                <input type="hidden" name="" id="txtUser" value="{{this.user.UserID}}">
                 <input type="text" name="otpcode" id="txtOtpcode" placeholder="xxxxxxx">
                 <input type="submit" name="" id="" value="Send">
             </form>
@@ -51,24 +52,44 @@
 </html>
 <script>
 
-  $('#frmRegister').on('submit', function (e) {
+  $('#frmVerify').on('submit', function (e) {
     // alert('submit called');
     e.preventDefault();
     // if (validate())
     //   $('#frmRegister').off('submit').submit();
-    validate();
+    //validate();
+    verify();
   })
 
   function validate() {
     // ... các lệnh validate khác
 
-    const user = $('#txtUsername').val();
-    $.getJSON(`/account/is-available?user=${user}`, function (data) {
+    
+    $.getJSON(`/account/check-otp`, function (data) {
       if (data === true) {
-        $('#frmRegister').off('submit').submit();
+        $('#frmVerify').off('submit').submit();
       } else {
         alert('not available');
       }
     })
+  } 
+  
+  function verify(){
+
+    var dataSend = {otpCode: $("#txtOtpcode").val(), id:$("#txtUser").val()};
+    dataSend=JSON.stringify({dataSend});
+    $.ajax({
+      url:"http://localhost:3000/account/check-otp",
+      type:"POST",
+      data: 'info=' + dataSend,
+      success: function(data){
+        alert(data);
+        if(data=='check passed')
+        {
+          $('#frmVerify').off('submit').submit();
+        }
+      }
+    })
   }
+  
 </script> 

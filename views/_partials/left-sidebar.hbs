@@ -5,7 +5,7 @@
         <div class="section-heading">
             <h5>Most Popular</h5>
         </div>
-        {{#each lcAllpost }}
+        {{#each lcTopviewposts }}
             <div class="single-blog-post d-flex">
             <div class="post-thumbnail">
                 <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
@@ -29,10 +29,6 @@
         {{/each}}
     </div>
 
-    <!-- Sidebar Widget -->
-    <div class="single-sidebar-widget">
-        <a href="#" class="add-img"><img src="/public/img/bg-img/add.png" alt=""></a>
-    </div>
 
     <!-- Sidebar Widget -->
     <div class="single-sidebar-widget p-30">
@@ -40,7 +36,7 @@
         <div class="section-heading">
             <h5>Latest Posts</h5>
         </div>
-        {{#each lcAllpost }}
+        {{#each lcLatestpost}}
             <div class="single-blog-post d-flex">
             <div class="post-thumbnail">
                 <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">

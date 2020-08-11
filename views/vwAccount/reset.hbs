@@ -32,20 +32,34 @@
       <div class="col-md-12">
         <div class="card w-50 shadow mx-auto">
           <div class="card-body text-center">
-            <form action="/account/identify" method="post">
-                <div class="form-group">
+            <form action="" method="post" id="frmResetPass">
+                {{#if this.isEmpty}}
+                  <div class="form-group">
+                      <label for="txtEmail">Your new password: </label>
+                      <input type="text" name="newPass" id="txtNewPass">
+                  </div>
+                  <div class="form-group">
+                      <label for="txtEmail">Confirm new password: </label>
+                      <input type="text" name="confirmPass" id="txtConfirmPass">
+                  </div>
+                  <input type="submit" name="" id="" value="Save" formaction="/account/identify">
+                {{else}}
+                  <div class="form-group">
                     <label for="txtEmail">Your old password: </label>
-                    <input type="text" name="email" id="txtEmail">
-                </div>
-                <div class="form-group">
-                    <label for="txtEmail">Your new password: </label>
-                    <input type="text" name="email" id="txtEmail">
-                </div>
-                <div class="form-group">
-                    <label for="txtEmail">Confirm new password: </label>
-                    <input type="text" name="email" id="txtEmail">
-                </div>
-                <input type="submit" name="" id="" value="Save">
+                    <input type="text" name="oldPass" id="txtOldPass">
+                    <input type="hidden" name="userID" id="txtUserId" value="{{this.user.UserID}}">
+                  </div>
+                  <div class="form-group">
+                      <label for="txtEmail">Your new password: </label>
+                      <input type="text" name="newPass" id="txtNewPass">
+                  </div>
+                  <div class="form-group">
+                      <label for="txtEmail">Confirm new password: </label>
+                      <input type="text" name="confirmPass" id="txtConfirmPass">
+                  </div>
+                  <input type="submit" name="" id="" value="Save" formaction="/account/reset/{{this.user.UserID}}">
+                {{/if}}
+                
             </form>
           </div>
         </div>
@@ -61,24 +75,31 @@
 </html>
 <script>
 
-  $('#frmRegister').on('submit', function (e) {
+ // $('#frmResetPass').on('submit', function (e) {
     // alert('submit called');
-    e.preventDefault();
+   // e.preventDefault();
     // if (validate())
     //   $('#frmRegister').off('submit').submit();
-    validate();
-  })
+    //validate();
+  //})
 
   function validate() {
     // ... các lệnh validate khác
-
-    const user = $('#txtUsername').val();
-    $.getJSON(`/account/is-available?user=${user}`, function (data) {
+    const newPass=document.getElementById('txtNewPass').value;
+    const confirm=document.getElementById('txtConfirmPass').value;
+    if(newPass != confirm)
+    {
+      alert('confirm pass and new must be the same');
+      return false;
+    }
+     const id = $('#txtUserID').val();
+    $.getJSON(`/account/is-availableoldpass?id=${id}`, function (data) {
       if (data === true) {
-        $('#frmRegister').off('submit').submit();
+        $('#frmReset').off('submit').submit();
       } else {
-        alert('not available');
+        alert('old password not available');
       }
     })
+    
   }
 </script> 
