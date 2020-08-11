@@ -215,39 +215,30 @@ router.get('/is-availablepass', async function(req, res){
   var message="";
   
   const user=await userModel.single(info.dataSend.id);
-  const otpCode=info.dataSend.otpCode;
+  //const otpCode=info.dataSend.otpCode;
+  const data={
+    message,
+    key
+  }
   const userri=user[0];
-
-  if(otpCode!=userri.otpverify)
+  const check=bcrypt.compareSync(info.dataSend.oldPass, userri.HashPassword)
+  if(check==false)
   {
-    message="invalid otpcode";
+    data.message="invalid old pass";
+
   }
   else{
-    message="check passed";
+    message="Your new pass has been saved";
+    data.key=1;
   }
-  res.status(200).send(message);
-  // const user = await userModel.single(req.query.id)
-  // const check=bcrypt.compareSync(req.body.oldPass, user.HashPassword)
-  // if(check===false)
-  // {
-  //   return res.json(false)
-  // }
-  // res.json(true);
+  res.status(200).send(data);
+  
 })
 // save new passs
-router.post('/reset', async function(req, res){
-  const user=await userModel.singleByUserNameorEmail(req.body.username, req.body.username);
-  if(user===null){
-    return res.render('vwAccount/reset',{
-      err: 'Invalid username or password.'
-    })
-  }
-  const rs = bcrypt.compareSync(req.body.password, user.HashPassword);
-  if (rs === false) {
-    return res.render('vwAccount/reset', {
-      err: 'Invalid password.'
-    })
-  }
+router.post('/reset/:id', async function(req, res){
+  // const user=await userModel.singleByUserNameorEmail(req.body.username, req.body.username);
+
+  
   const pass=bcrypt.hashSync(req.body.newPass, config.saltRounds);
   const entity={
     UserId: req.params.id,
@@ -255,6 +246,15 @@ router.post('/reset', async function(req, res){
   }
   userModel.patch(entity);
   res.redirect('/');
+})
+// forgot pass resset
+router.get('/reset-forgot/:id', async function(req, res){
+  const usersing= await userModel.single(req.params.id);
+  res.render('vwAccount/freset',{
+    layout: false,
+    isEmpty: usersing.length===0,
+    user: usersing[0]
+  })
 })
 
 // //premium

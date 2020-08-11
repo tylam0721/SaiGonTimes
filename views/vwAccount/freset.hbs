@@ -32,8 +32,7 @@
       <div class="col-md-12">
         <div class="card w-50 shadow mx-auto">
           <div class="card-body text-center">
-            <form action="" method="post" id="frmResetPass">
-                {{#if this.isEmpty}}
+            <form action="/account/reset/{{this.user.UserID}}" method="post" id="frmResetPass">
                   <div class="form-group">
                       <label for="txtEmail">Your new password: </label>
                       <input type="text" name="newPass" id="txtNewPass">
@@ -43,22 +42,7 @@
                       <input type="text" name="confirmPass" id="txtConfirmPass">
                   </div>
                   <input type="submit" name="" id="" value="Save" formaction="/account/identify">
-                {{else}}
-                  <div class="form-group">
-                    <label for="txtEmail">Your old password: </label>
-                    <input type="text" name="oldPass" id="txtOldPass">
-                    <input type="hidden" name="userID" id="txtUserId" value="{{this.user.UserID}}">
-                  </div>
-                  <div class="form-group">
-                      <label for="txtEmail">Your new password: </label>
-                      <input type="text" name="newPass" id="txtNewPass">
-                  </div>
-                  <div class="form-group">
-                      <label for="txtEmail">Confirm new password: </label>
-                      <input type="text" name="confirmPass" id="txtConfirmPass">
-                  </div>
-                  <input type="submit" name="" id="" value="Save" formaction="/account/reset/{{this.user.UserID}}">
-                {{/if}}
+                
                 
             </form>
           </div>
@@ -80,7 +64,6 @@
     e.preventDefault();
     // if (validate())
     //   $('#frmRegister').off('submit').submit();
-    senData();
     validate();
   })
 
@@ -93,27 +76,8 @@
       alert('confirm pass and new must be the same');
       return false;
     }
-     const id = $('#txtUserID').val();
-    
+     
     
   }
-  function senData(){
-    var note;
-    var dataSend = {oldPass: $("#txtOldPass").val(), id:$("#txtUserId").val()};
-    dataSend=JSON.stringify({dataSend});
-    $.ajax({
-      url:"http://localhost:3000/account/is-availableoldpass",
-      type:"POST",
-      data: 'info=' + dataSend,
-      success: function(data){
-        note=data;
-        alert(note.message);
-
-        if(note.key==1)
-        {
-          $('#frmVerify').off('submit').submit();
-        }
-      }
-    })
-  }
+  
 </script> 

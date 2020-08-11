@@ -45,7 +45,7 @@ module.exports = {
         return db.load(`SELECT * FROM ${TBL_POSTS} ORDER BY Views DESC LIMIT 10`);
     },
     topLastest: async function() {
-        return db.load(`SELECT * FROM ${TBL_POSTS} ORDER BY PostDate DESC LIMIT 10`);
+        return db.load(`SELECT * FROM ${TBL_POSTS} ORDER BY PostDate asc LIMIT 10`);
     },
     topPostWeek: async function() {
         return db.load(`SELECT * from ${TBL_POSTS} p where TIMESTAMPDIFF(week,p.PostDate,CURDATE()) <= 1`)
