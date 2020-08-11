@@ -44,13 +44,13 @@
       {{!-- Type title --}}
       <div class="form-group">
         <label for="title">Tiêu đề</label>
-        <input type="text" class="form-control" name="title" id="title" placeholder="Nhập tiêu đề cho bài báo">
+        <input type="text" class="form-control" name="title" id="title" placeholder="Nhập tiêu đề cho bài báo" required>
       </div>
 
       {{!-- Select category --}}
       <div class="form-group category">
         <label for="postCat">Thể loại</label>
-        <select class="form-control" name="postCat" id="postCat">
+        <select class="form-control" name="postCat" id="postCat" required>
           {{#each categories}}
             <optgroup label={{this.CatName}}>
               {{#each subCats}}
@@ -63,7 +63,7 @@
 
       <div class="form-group">
         <label for="">Tags</label>
-        <select multiple class="form-control" name="tags" id="">
+        <select multiple class="form-control" name="tags" id="" required>
           {{#each tags}}
             <option value={{this.TagID}}>{{this.Name}}</option>    
           {{/each}}
@@ -73,20 +73,20 @@
       {{!-- adstract --}}
       <div class="form-group adstract">
         <label for="abstract">Mô tả</label>
-        <input type="text" class="form-control" name="abstract" id="abstract" placeholder="Nhập mô tả cho bài báo">
+        <input type="text" class="form-control" name="abstract" id="abstract" placeholder="Nhập mô tả cho bài báo" required>
       </div>
 
       <div class="form-group">
         <label for="avatar">Chọn avatar cho bài viết</label>
         <div class="file-loading">
-          <input id="avatar" name="avatar" type="file">
+          <input id="avatar" name="avatar" type="file" required>
         </div>
       </div>
 
       {{!-- Main content --}}
       <div class="form-group main_content">
         <label for="">Nội dung chính</label>
-        <textarea name="FullDes" id="txtFullDes" class="form-control" cols="30" rows="10"></textarea>
+        <textarea name="FullDes" id="txtFullDes" class="form-control" cols="30" rows="10" required></textarea>
       </div>
     </div>
 
