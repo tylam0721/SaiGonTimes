@@ -1,0 +1,92 @@
+{{#section 'js'}}
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fa/theme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/locales/vi.min.js"></script>
+<script>
+  tinymce.init({
+    selector: '#txtFullDes',
+    height: 450,
+    plugins: 'paste image link autolink lists table media',
+    menubar: false,
+    toolbar: [
+      'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+    ],
+  });
+  $('#avatar').fileinput({
+    theme: 'fa',
+    showCaption: true,
+    dropZoneEnabled: true,
+    allowedFileExtensions: ['png', 'jpg', 'gif'],
+    language: 'vi'
+  });
+</script>
+{{/section}}
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css">
+{{/section}}
+
+<form method="post" class="writer_form" enctype="multipart/form-data" action="">
+  <div class="card">
+    <div class="card-header">
+      <h2>Đăng bài</h2>
+    </div>
+    <div class="card-body">
+      {{!-- Type title --}}
+      <div class="form-group">
+        <label for="title">Tiêu đề</label>
+        <input type="text" class="form-control" name="title" id="title" placeholder="Nhập tiêu đề cho bài báo">
+      </div>
+
+      {{!-- Select category --}}
+      <div class="form-group category">
+        <label for="postCat">Thể loại</label>
+        <select class="form-control" name="postCat" id="postCat">
+          {{#each categories}}
+            <optgroup label={{this.CatName}}>
+              {{#each subCats}}
+                <option value={{this.SubCatID}}>{{this.SubCatName}}</option>
+              {{/each}}
+            </optgroup>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="">Tags</label>
+        <select multiple class="form-control" name="tags" id="">
+          {{#each tags}}
+            <option value={{this.TagID}}>{{this.Name}}</option>    
+          {{/each}}
+        </select>
+      </div>
+
+      {{!-- adstract --}}
+      <div class="form-group adstract">
+        <label for="abstract">Mô tả</label>
+        <input type="text" class="form-control" name="abstract" id="abstract" placeholder="Nhập mô tả cho bài báo">
+      </div>
+
+      <div class="form-group">
+        <label for="avatar">Chọn avatar cho bài viết</label>
+        <div class="file-loading">
+          <input id="avatar" name="avatar" type="file">
+        </div>
+      </div>
+
+      {{!-- Main content --}}
+      <div class="form-group main_content">
+        <label for="">Nội dung chính</label>
+        <textarea name="FullDes" id="txtFullDes" class="form-control" cols="30" rows="10"></textarea>
+      </div>
+    </div>
+
+    {{!-- Submit --}}
+    <div class="card-footer">
+      <button type="submit" class="btn btn-lg btn-success btn-block">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Đăng
+      </button>
+    </div>
+  </div>
+</form>
