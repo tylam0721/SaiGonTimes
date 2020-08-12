@@ -97,7 +97,7 @@ router.get('/posts', async function(req, res) {
 router.post('/posts', async function(req, res) {
   const condition = { PostID: req.body.postID }
   writerModel.updatePost(req.body.title, req.body.adstract, condition);
-  res.redirect();
+  res.redirect('/writer/posts');
 })
 
 router.post('/upload', function (req, res) {
