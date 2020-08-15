@@ -20,7 +20,7 @@ var type = upload.single('avatar');
 const router = express.Router();
 
 router.get('/write', async function (req, res) {
-  if(res.locals.lcAuthUser && res.locals.lcAuthUser.Permission == 3) {
+  if(res.locals.lcAuthUser && (res.locals.lcAuthUser.Permission == 3 || res.locals.lcAuthUser.Permission == 1)) {
     let categories = await categoriesModel.all();
     for(let i  = 0; i < categories.length; i++) {
       const subCats = await categoriesModel.subCatsByCat(categories[i].CatID);
@@ -36,7 +36,7 @@ router.get('/write', async function (req, res) {
 
 router.post('/write', type, async function (req, res) {
   // cần thêm trường hợp permission user
-  if(res.locals.lcAuthUser && res.locals.lcAuthUser.Permission == 3) {
+  if(res.locals.lcAuthUser && (res.locals.lcAuthUser.Permission == 3 || res.locals.lcAuthUser.Permission == 1)) {
     const postDate = new Date();
     const entity = {
       Title: req.body.title,
@@ -65,7 +65,7 @@ router.post('/write', type, async function (req, res) {
 
 router.get('/posts', async function(req, res) {
   // cần thêm trường hợp permission user
-  if(res.locals.lcAuthUser && res.locals.lcAuthUser.Permission == 3) {
+  if(res.locals.lcAuthUser && (res.locals.lcAuthUser.Permission == 3 || res.locals.lcAuthUser.Permission == 1)) {
     let posts = await writerModel.allPostsByAuthor(res.locals.lcAuthUser.UserID);
     for(let i = 0; i < posts.length; i++) {
       if(posts[i].Status == 1) { 
@@ -83,9 +83,17 @@ router.get('/posts', async function(req, res) {
         posts[i].subCatID = cat[0].SubCatID;
       }
     }
+
+    let categories = await categoriesModel.all();
+    for(let i  = 0; i < categories.length; i++) {
+      const subCats = await categoriesModel.subCatsByCat(categories[i].CatID);
+      categories[i].subCats = subCats;
+    }
+
     res.render('vwWriter/posts', { 
       layout: "writerLayout",
-      posts: posts
+      posts: posts,
+      categories: categories
     });
   }
 
@@ -96,8 +104,8 @@ router.get('/posts', async function(req, res) {
 
 router.post('/posts', async function(req, res) {
   const condition = { PostID: req.body.postID }
-  writerModel.updatePost(req.body.title, req.body.adstract, condition);
-  res.redirect();
+  writerModel.updatePost(req.body.title, req.body.adstract, req.body.postCat, condition);
+  res.redirect('/writer/posts');
 })
 
 router.post('/upload', function (req, res) {
