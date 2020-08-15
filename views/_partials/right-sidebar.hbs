@@ -23,6 +23,11 @@
         <ul class="catagory-widgets">
             {{#each lcAllcatdetail }}
                 <li>
+                    {{#each listSub as |alias|}}
+                       {{#if idSUb=idcat}}
+                           
+                       {{/if}} 
+                    {{/each}}
                     <a href="/post/byCat/{{CatID}}"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{CatName}}  </span>
                     {{#if num_of_posts}}
                         <span>
