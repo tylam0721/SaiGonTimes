@@ -76,7 +76,11 @@
       alert('confirm pass and new must be the same');
       return false;
     }
-     
+    else
+    {
+      alert('your new pass has been saved');
+      $('#frmResetPass').off('submit').submit();
+    }
     
   }
   

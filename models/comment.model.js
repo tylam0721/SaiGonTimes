@@ -1,8 +1,9 @@
 const db=require('../utils/db');
+const { single } = require('./posts.model');
 const TBL_Comment='comments';
 module.exports = {
     all: async function(id) {
-        return db.load(`select * from ${TBL_Comment} WHERE PostID=${id}`);
+        return db.load(`SELECT cm.*, us.UserName FROM ${TBL_Comment} cm join Users us ON cm.User=us.UserID WHERE cm.PostID=${id}`);
     },
     patch: async function(entity)
     {
@@ -15,5 +16,9 @@ module.exports = {
     add: async function(entity)
     {
         return db.add(TBL_Comment, entity);
+    },
+    single: async function()
+    {
+        return db.load(`SELECT cm.*, us.UserName FROM ${TBL_Comment} cm join Users us ON cm.User=us.UserID ORDER BY CommentDate DESC limit 1`);
     }
 };

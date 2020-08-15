@@ -5,15 +5,18 @@ const TBL_TAG = 'tag';
 const TBL_POST_TAG = 'post_tag';
 
 module.exports = {
+    search: async function(){
+      return db.load(`SELECT * FROM posts WHERE MATCH (Title,Abtract,PostContent) AGAINST ('chủ quan')`);
+    },
     all: async function() {
         return db.load(`select * from ${TBL_POSTS} limit 10`);
     },
     allByCat: function(catId) {
-        return db.load(`select * from ${TBL_POSTS} where CatID = ${catId}`);
+        return db.load(`select * from ${TBL_POSTS} where CatID = ${catId} limit 10`);
     },
     allPostsDetail: function() {
         return db.load(`select p.*, count(c.PostID) as num_of_com 
-    from ${TBL_POSTS} p left join comments c on p.PostID=c.PostID group by p.PostID`)
+    from ${TBL_POSTS} p left join comments c on p.PostID=c.PostID group by p.PostID limit 10`)
   },
   insert: async function(entity) {
     return db.add(TBL_POSTS, entity);
@@ -45,7 +48,7 @@ module.exports = {
         return db.load(`SELECT * FROM ${TBL_POSTS} ORDER BY Views DESC LIMIT 10`);
     },
     topLastest: async function() {
-        return db.load(`SELECT * FROM ${TBL_POSTS} ORDER BY PostDate asc LIMIT 10`);
+        return db.load(`SELECT * FROM ${TBL_POSTS} ORDER BY PostDate DESC LIMIT 10`);
     },
     topPostWeek: async function() {
         return db.load(`SELECT * from ${TBL_POSTS} p where TIMESTAMPDIFF(week,p.PostDate,CURDATE()) <= 1`)
@@ -58,12 +61,9 @@ module.exports = {
               join tag t on t.tagid=pt.tagid where p.PostID=${id}`)
     },
     allByTag: async function(id) {
-        return db.load(`SELECT p.* FROM ${TBL_POSTS} p join post_tag pt ON pt.PostID=p.PostID 
-    join tag t on t.tagid=pt.tagid where t.tagid=${id}`)
+        return db.load(`SELECT p.* FROM ${TBL_POSTS} p JOIN post_tag pt on pt.PostID=p.PostID where pt.TagID=${id}`)
   },
-  allBySubCat: async function(id){
-      return db.load(`SELECT p.* from ${TBL_POSTS} p join sub_categories sc on sc.CatID = p.CatID where sc.SubCatID=${id}`)
-    },
+  
     allBySubCat: async function(id) {
         return db.load(`SELECT p.* from ${TBL_POSTS} p join sub_categories sc on sc.CatID = p.CatID where sc.SubCatID=${id}`)
     },
@@ -81,9 +81,7 @@ module.exports = {
   allTag: async function() {
     return db.load(`SELECT * from ${TBL_TAG}`);
   },
-  allBySubCat: async function(id) {
-      return db.load(`SELECT p.* from ${TBL_POSTS} p join sub_categories sc on sc.CatID = p.CatID where sc.SubCatID=${id}`)
-  },
+
   loadstatuspost: function() {
       return db.load('select * from status where StatusID=1 or StatusID=3');
   },

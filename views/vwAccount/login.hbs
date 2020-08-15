@@ -1,4 +1,29 @@
 
+{{#section 'js'}}
+<script>
+    $('#frmLogin').on('submit', function (e) {
+        // alert('submit called');
+        e.preventDefault();
+        // if (validate())
+        //   $('#frmRegister').off('submit').submit();
+        validate();
+    })
+
+    function validate() {
+        // ... các lệnh validate khác
+
+        const user = $('#txtUserName').val();
+        $.getJSON(`/account/is-available?userLogin=${user}`, function (data) {
+        if (data === true) {
+            $('#frmLogin').off('submit').submit();
+        } else {
+            alert('user name not available');
+        }
+        })
+    }
+</script>
+
+{{/section}}
 <div class="mag-posts-content mt-30 mb-30 p-30 box-shadow" id="login-area">
     
     <div class="container">
@@ -10,7 +35,7 @@
                         <h5>Great to have you back!</h5>
                     </div>
 
-                    <form action="  " method="post">
+                    <form action="" method="post" id="frmLogin">
                         <div class="form-group">
                             <input type="text" class="form-control" name="username" id="txtUserName" placeholder="Email or User Name">
                         </div>

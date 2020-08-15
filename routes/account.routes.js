@@ -8,8 +8,13 @@ const mailer=require('../misc/mailer');
 const router = express.Router();
 const randomstring=require('randomstring');
 const premium=require('../models/premium.model');
+const pdfMake = require('../pdfmake/pdfmake');
+const vfsFonts = require('../pdfmake/vfs_fonts');
+const reUrl=restrict.restrict;
+const app=express();
 const { route } = require('./home.routes');
 //login area
+
 router.get('/login', function (req, res) {
 
   res.render('vwAccount/login')
@@ -35,7 +40,8 @@ router.post('/login', async function(req, res){
   res.redirect(url);
 })
 //logout area
-router.post('/logout', restrict, function (req, res) {
+
+router.post('/logout', reUrl, function (req, res) {
   req.session.isAuthenticated = false;
   req.session.authUser = null;
   res.redirect(req.headers.referer);
@@ -63,7 +69,7 @@ router.post('/register', async function(req, res){
   
 })
 //profile
-router.get('/profile/:userID', restrict, async function (req, res) {
+router.get('/profile/:userID', reUrl, async function (req, res) {
   const rows=await userModel.single(req.params.userID);
   res.render('vwAccount/profile',{
     user: rows[0]
@@ -80,15 +86,15 @@ router.post('/profile/update', async function(req, res){
     UserName: req.body.username,
     Phone: req.body.phone
   }
-  console.log(entity);
+  // console.log(entity);
   await userModel.patch(entity);
   res.render('vwAccount/profile');
   
 })
 router.get('/is-available', async function (req, res) {
   
-  const useremail=null;
-  const userByEmail=null;
+  
+  var userByEmail=null;
   
   
   if(req.query.user)
@@ -102,14 +108,18 @@ router.get('/is-available', async function (req, res) {
     // }
     
   }
-  
-  // if(req.query.id){
-  //   useremail = await userModel.singleByUserNameorEmail(req.query.id,req.query.id);
-  // }
+
   else if(req.query.userEmail)
   {
     userByEmail = await userModel.singleByUserNameorEmail(req.query.userEmail,req.query.userEmail);
     if(userByEmail){
+      return res.json(true);
+    }
+  }
+  else if(req.query.userLogin)
+  {
+    var userByLogin = await userModel.singleByUserNameorEmail(req.query.userLogin,req.query.userLogin);
+    if(userByLogin){
       return res.json(true);
     }
   }
@@ -131,14 +141,17 @@ router.get('/identify' , function(req,res){
   
 })
 router.post('/identify',async function(req, res){
+  //console.log(req.body);
   const token=randomstring.generate({
     length: 6,
     charset: 'numeric'
   });
+  
   const rowsuser=await userModel.singleByUserNameorEmail(req.body.email,req.body.email);
+  //console.log(rowsuser);
   id=rowsuser.UserID.toString();
   
-  const html = `Dear <br/>
+  const html = `Dear ${rowsuser.UserName}<br/>
                 Please verify your Email  bty typing the following token: <br/>
                 Token: <h3><b>${token}</b></h3></br> on the Follwing page: <br/>
                 <a href="http://localhost:3000/account/verify/${id}">http://localhost:3000/account/verify</a>
@@ -190,7 +203,7 @@ router.get('/verify/:user', async function(req,res){
   
 })
 router.post('/verify/:user', function(req,res){
-  const url='/account/reset/'+req.params.user;
+  const url='/account/reset-forgot/'+req.params.user;
   //console.log('xxxx');
   res.redirect(url);
 })
@@ -205,46 +218,45 @@ router.get('/reset/:id', async function(req, res){
 })
 
 //check old password old user
-router.get('/is-availablepass', async function(req, res){
+router.post('/is-availableoldpass', async function(req, res){
   var info="";
   try {
     info=JSON.parse(req.body.info);
   } catch (error) {
     
   }
-  var message="";
+  var message=true;
   
   const user=await userModel.single(info.dataSend.id);
   //const otpCode=info.dataSend.otpCode;
-  const data={
-    message,
-    key
-  }
+  
+  
   const userri=user[0];
-  const check=bcrypt.compareSync(info.dataSend.oldPass, userri.HashPassword)
+  const check=bcrypt.compareSync(info.dataSend.oldPass, userri.HashPassword);
+  
   if(check==false)
   {
-    data.message="invalid old pass";
+    message=false;
 
   }
   else{
-    message="Your new pass has been saved";
-    data.key=1;
+    message=true;
+    
   }
-  res.status(200).send(data);
+  res.status(200).send(message);
   
 })
 // save new passs
-router.post('/reset/:id', async function(req, res){
+router.post('/reset/:id',async function(req, res){
   // const user=await userModel.singleByUserNameorEmail(req.body.username, req.body.username);
-
-  
   const pass=bcrypt.hashSync(req.body.newPass, config.saltRounds);
   const entity={
-    UserId: req.params.id,
+    UserID: req.params.id,
     HashPassword:pass
   }
-  userModel.patch(entity);
+  // console.log(entity);
+  await userModel.patch(entity);
+  // console.log(req.body);
   res.redirect('/');
 })
 // forgot pass resset
@@ -268,7 +280,38 @@ router.post('/premium', function(req, res){
     UserID: id,
     TimeEnd: date
   }
+  user={
+    UserID: id,
+    Permission: 4
+  }
   premium.insert(entity);
+  userModel.patch(user);
   res.redirect('/');
 })
+//create and download pdf file
+
+pdfMake.vfs = vfsFonts.pdfMake.vfs;
+
+router.post('/pdf', (req, res, next)=>{
+    //res.send('PDF');
+
+    var documentDefinition = {
+        content: [
+            
+        ]        
+    };
+
+    const pdfDoc = pdfMake.createPdf(documentDefinition);
+    pdfDoc.getBase64((data)=>{
+        res.writeHead(200, 
+        {
+            'Content-Type': 'application/pdf',
+            'Content-Disposition':'attachment;filename="filename.pdf"'
+        });
+
+        const download = Buffer.from(data.toString('utf-8'), 'base64');
+        res.end(download);
+    });
+    
+});
 module.exports = router;
