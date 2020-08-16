@@ -6,17 +6,19 @@ const catModel = require('../models/categories.model');
 const router = express.Router();
 
 router.get('/', async function(req, res) {
-    const editor = await editorModel.select(1);
-    let listStatus = await postModel.loadstatuspost();
-    let tag = await editorModel.selectAllTag();
-    let cat = await catModel.all();
-    res.render('vwEditor/home', {
-        layout: "newLayout",
-        editor,
-        listStatus,
-        tag,
-        cat
-    });
+    if (res.locals.lcAuthUser && (res.locals.lcAuthUser.Permission == 3 || res.locals.lcAuthUser.Permission == 2)) {
+        const editor = await editorModel.select(1);
+        let listStatus = await postModel.loadstatuspost();
+        let tag = await editorModel.selectAllTag();
+        let cat = await catModel.all();
+        res.render('vwEditor/home', {
+            layout: "writerLayout",
+            editor,
+            listStatus,
+            tag,
+            cat
+        });
+    } else res.render('vwEditor/error', { layout: false })
 });
 router.post('/', async function(req, res) {
     if (req.body.statusid == 3) {
