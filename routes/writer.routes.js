@@ -84,6 +84,8 @@ router.get('/posts', async function(req, res) {
       }
     }
 
+    posts.sort((a, b) => b.Status - a.Status);
+
     let categories = await categoriesModel.all();
     for(let i  = 0; i < categories.length; i++) {
       const subCats = await categoriesModel.subCatsByCat(categories[i].CatID);

@@ -3,6 +3,7 @@ const { post } = require('../routes/writer.routes');
 
 const TBL_POST = 'posts';
 const SUB_CAT = 'sub_categories';
+const TBL_POST_TAGS = 'post_tag';
 
 module.exports = {
   allPostsByAuthor: function (authorID) {
@@ -11,13 +12,16 @@ module.exports = {
   getCatByPostID: function (postID) {
     return db.load(`select * from ${SUB_CAT} sc where sc.SubCatID = ${postID}`);
   },
-  updatePost: function(title, adstract, postCat, cond) {
+  updatePost: async function(title, adstract, postCat, cond) {
     const entity = {
       Title: title,
       Abtract: adstract,
-      CatID: postCat
+      SubCatID: postCat
     }
-
+    console.log(entity);
     return db.patch(TBL_POST, entity, cond);
+  },
+  allTagsByPost: function(postID) {
+    return db.load(`select * from ${TBL_POST_TAGS} where PostID=${postID}`);
   }
 };

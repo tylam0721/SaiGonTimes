@@ -7,6 +7,7 @@
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    overflow-x: scroll;
   }
 
   .content {
@@ -163,6 +164,7 @@
       const data = {
         title: $("#title").val(),
         adstract: $("#adstract").val(),
+        postCat: $("#postCat").val(),
         postID: $("#id").val()
       }
       updatePost(data);
