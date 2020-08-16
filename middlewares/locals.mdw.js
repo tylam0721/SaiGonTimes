@@ -10,13 +10,15 @@ module.exports = function (app) {
         res.locals.lcAuthUser = req.session.authUser;
         next();
     })
-    app.use(async function (req, res, next) {
-        const list = await catModel.all();
-        const listdetail = await catModel.allWithDetails();
-        const listSubcat = await catModel.AllsubCat();
-        res.locals.lcAllcatdetail = listdetail;
-        res.locals.lcCategories = list;
-        res.locals.lcAllSubCat = listSubcat;
+    app.use(async function(req,res,next){
+        const list= await catModel.all();
+        const listdetail=await catModel.allWithDetails();
+        const listSubcat=await catModel.AllsubCat();
+        const listpostcat=await postModel.newestofcat();
+        res.locals.lcAllcatdetail=listdetail;
+        res.locals.lcCategories=list;
+        res.locals.lcAllSubCat=listSubcat;
+        res.locals.lcNewpostcat=listpostcat;
         next();
     })
     app.use(async function (req, res, next) {

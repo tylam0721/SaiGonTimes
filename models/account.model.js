@@ -6,6 +6,8 @@ module.exports={
     },
     single: function(id){
         return db.load(`select * from ${TBL_USER} where UserId = ${id}`);
+
+        
     },
     add: function(entity){
         return db.add(TBL_USER,entity);
@@ -25,13 +27,31 @@ module.exports={
     },
     patch: function(entity){
         const condition = {
-            id: entity.id
+            UserID: entity.UserID
         }
-        delete entity.id;
+        delete entity.UserID;
         return db.patch(TBL_USER, entity, condition);
     },
     del: function (id) {
         const condition = {id}
         return db.del(TBL_USER, condition);
+    },
+    singleID: async function (username, email) {
+        const rows = await db.load(`select UserID from ${TBL_USER} where UserName = '${username}' or EmailAdress = '${email}'`);
+        if (rows.length === 0)
+            return null;
+        return rows[0];
+    },
+    singleHashPass: async function (username, email) {
+        const rows = await db.load(`select HashPassword from ${TBL_USER} where UserName = '${username}' or EmailAdress = '${email}'`);
+        if (rows.length === 0)
+            return null;
+        return rows[0];
+    },
+    singleOtp: async function (username, email) {
+        const rows = await db.load(`select otpverify from ${TBL_USER} where UserName = '${username}' or EmailAdress = '${email}'`);
+        if (rows.length === 0)
+            return null;
+        return rows[0];
     }
 }

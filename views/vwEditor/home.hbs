@@ -1,0 +1,89 @@
+
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+{{/section}}
+<h1 style="text-align:center;margin-top:10px;margin-bottom:10px">Welcome Editor</h1>
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Writer name</th>
+                <th>Abtract</th>
+                <th>Post date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this.editor}}
+            <tr>
+                <td hidden class="Id">{{PostID}}</td>
+                <td hidden class="statusid">{{Status}}</td>
+                <td hidden class="tagid">{{TagID}}</td>
+                <td hidden class="catid">{{CatID}}</td>
+                <td>{{count @index}}</td>
+                <td>{{UserName}}</td>
+                <td><a style="color:#007bff" href="/post/detail/{{PostID}}">{{Abtract}}</a></td>
+                <td>{{PostDate}}</td>
+                <td><a class="statusname" href="" data-toggle="modal" data-target="#modalStatus">{{StatusName}}</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="modalStatus" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="select-status">Example select</label>
+              <select id="select-status" class="form-control">
+                {{#each listStatus}}
+                  <option value="{{StatusID}}">{{StatusName}}</option>
+                {{/each}}
+              </select>
+          </div>
+          <div class="form-group" hidden id="notAllow">
+            <label for="reason">Reason</label>
+            <textarea class="form-control" id="reason" rows="3"></textarea>
+          </div>
+          <div id="Allow">
+            <div class="form-group">
+              <label for="select-cat">Categories</label>
+              <select id="select-cat" class="form-control">
+                  {{#each cat}}
+                    <option value="{{CatID}}">{{CatName}}</option>
+                  {{/each}}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="select-day">Ngày xuất bản</label>
+              <input type="date" class="form-control" id="select-day">
+            </div>
+            <div class="form-group">
+              <label for="select-tag">Tag</label>
+              <select class="form-control" multiple id="select-tag">
+                  {{#each tag}}
+                    <option value="{{TagID}}">{{Name}}</option>
+                  {{/each}}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveStatus">Save changes</button>
+        </div>
+    </div>
+  </div>
+</div>
+{{#section 'js'}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/public/js/editor.js"></script>
+{{/section}}

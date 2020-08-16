@@ -7,16 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Mag - Video &amp; Magazine HTML Template</title>
+    <title>Saigontimes &amp; Magazine HTML Template</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/public/img/core-img/title.ico">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="/public/style.css" type="text/css">
-
+    
 </head>
-
 <body>
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
@@ -160,16 +159,25 @@
                                 <a href="#">MAY 8, 2018</a>
                                 <a href="archive.html">lifestyle</a>
                             </div>
+                            {{#if lcAuthUser}}
+                                {{#if (isPremium lcAuthUser)}}
+                                    <b>tải về</b>
+                                {{/if}}
+                            {{/if}}
+                            
+                            
                             <h4 class="post-title">{{this.post.Abtract}}</h4>
                             {{!-- tag list --}}
-                            <h4 class="post-title">
-                                {{#each tag as |alias|}}
-                                    
-                                {{/each}}
-                            </h4>
+                            <label for=""> <i>tag:</i> </label>
+                            {{#each this.tag as |alias|}}
+                                <label for="" style="background-color: brown;">
+                                    <a href="/post/byTag/{{TagID}}">{{Name}}</a>
+                                </label> &nbsp;&nbsp;
+                            {{/each}}
 
                             <!-- Post Meta -->
                             <div class="post-meta-2">
+                                <input type="hidden" name="" id="txtPostID" value="{{this.post.PostID}}">
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{this.post.Views}}</a>
                                 <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{this.post.Ranks}}</a>
                                 <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> {{this.post.num_of_com}}</a>
@@ -187,6 +195,7 @@
                                 </div>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-secondary btn-lg">Large button</button>
                     </div>
                     <!-- Comment Area Start -->
                     <div class="comment_area clearfix bg-white mb-30 p-30 box-shadow">
@@ -194,209 +203,193 @@
                         <div class="section-heading">
                             <h5>COMMENTS</h5>
                         </div>
-                        <ol>
+                        <ol id="commentArea">
                             <!-- Single Comment Area -->
-                            <li class="single_comment_area">
+                            
+                            <!-- Single Comment Area -->
+                            {{#each this.comment as |alias|}}
+                                <li class="single_comment_area">
                                 <!-- Comment Content -->
                                 <div class="comment-content d-flex">
                                     <!-- Comment Author -->
                                     <div class="comment-author">
-                                        <img src="/public/img/bg-img/53.jpg" alt="author">
+                                        <img src="/public/img/bg-img/{{User}}.jpg" alt="author">
                                     </div>
                                     <!-- Comment Meta -->
                                     <div class="comment-meta">
-                                        <a href="#" class="comment-date">27 Aug 2019</a>
-                                        <h6>Tomas Mandy</h6>
-                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius</p>
-                                        <div class="d-flex align-items-center">     
-                                            <a href="#" class="like">like</a>
-                                            <a href="#" class="reply">Reply</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </li>
-
-                            <!-- Single Comment Area -->
-                            <li class="single_comment_area">
-                                <!-- Comment Content -->
-                                <div class="comment-content d-flex">
-                                    <!-- Comment Author -->
-                                    <div class="comment-author">
-                                        <img src="/public/img/bg-img/55.jpg" alt="author">
-                                    </div>
-                                    <!-- Comment Meta -->
-                                    <div class="comment-meta">
-                                        <a href="#" class="comment-date">27 Aug 2019</a>
-                                        <h6>Simon Downey</h6>
-                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius</p>
+                                        <a href="#" class="comment-date">{{CommentDate}}</a>
+                                        <h6>{{UserName}}</h6>
+                                        <p>{{CommentContent}}</p>
                                         <div class="d-flex align-items-center">
                                             <a href="#" class="like">like</a>
-                                            <a href="#" class="reply">Reply</a>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </li>
+                            {{/each}}
+                            
                         </ol>
                     </div>
-
+    
                     <!-- Post A Comment Area -->
-                    <div class="post-a-comment-area bg-white mb-30 p-30 box-shadow clearfix">
+                    {{#if lcIsAuthenticated}}
+                        <div class="post-a-comment-area bg-white mb-30 p-30 box-shadow clearfix">
+                        <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>LEAVE A REPLY</h5>
+                            </div>
+                            <!-- Reply Form -->
+                            <div class="contact-form-area">
+                                <form method="POST" id="frmComment">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            
+                                            <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message*" required></textarea>
+                                        </div>
+                                        <input type="hidden" name="" id="txtUser" value="{{lcAuthUser.UserID}}">
+                                    </div>
+                                    <input type="submit" class="btn mag-btn mt-30" value="Submit Comment">
+                                </form>
+                            </div>
+                        </div>
+                    {{else}}
+                        <div class="post-a-comment-area bg-white mb-30 p-30 box-shadow clearfix">
+                            <h5>YOU HAVE TO LOGIN TO LEAVE A REPLY</h5>
+                        </div>
+                    {{/if}}
+                </div>
+           
+                <!-- Sidebar Widget -->
+            {{!-- </div> --}}
+            <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+                <div class="sidebar-area bg-white mb-30 box-shadow">
+                    <!-- Sidebar Widget -->
+                    <div class="single-sidebar-widget p-30">
+                        <!-- Social Followers Info -->
+                        <div class="social-followers-info">
+                            <!-- Facebook -->
+                            <a href="#" class=" book-fans"><i class="fa fa-facebook"></i> 4,360 <span>Fans</span></a>
+                            <!-- Twitter -->
+                            <a href="#" class="twitter-followers"><i class="fa fa-twitter"></i> 3,280 <span>Followers</span></a>
+                            <!-- YouTube -->
+                            <a href="#" class="youtube-subscribers"><i class="fa fa-youtube"></i> 1250 <span>Subscribers</span></a>
+                            <!-- Google -->
+                            <a href="#" class="google-followers"><i class="fa fa-google-plus"></i> 4,230 <span>Followers</span></a>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Widget -->
+                    <div class="single-sidebar-widget p-30">
                         <!-- Section Title -->
                         <div class="section-heading">
-                            <h5>LEAVE A REPLY</h5>
+                            <h5>Categories</h5>
+                        </div>
+                        <ul class="catagory-widgets">
+                            {{#each lcAllcatdetail }}
+                                <li>
+                                    <a href="/post/byCat/{{CatID}}"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{CatName}}  </span>
+                                    {{#if num_of_posts}}
+                                        <span>
+                                            {{num_of_posts}}
+                                        </span>
+                                    {{/if}}
+                                        
+                                    </a>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+
+                    <!-- Sidebar Widget -->
+                    <div class="single-sidebar-widget">
+                        <a href="#" class="add-img"><img src="/public/img/bg-img/add2.png" alt=""></a>
+                    </div>
+
+                    <!-- Sidebar Widget -->
+                    <div class="single-sidebar-widget p-30">
+                        <!-- Section Title -->
+                        <div class="section-heading">
+                            <h5>Hot Channels</h5>
                         </div>
 
-                        <!-- Reply Form -->
-                        <div class="contact-form-area">
-                            <form action="#" method="post">
-                                <div class="row">
-                                    <div class="col-12 col-lg-6">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name*" required>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <input type="email" class="form-control" id="email" placeholder="Your Email*" required>
-                                    </div>
-                                    <div class="col-12">
-                                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message*" required></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn mag-btn mt-30" type="submit">Submit Comment</button>
-                                    </div>
-                                </div>
+                        <!-- Single YouTube Channel -->
+                        <div class="single-youtube-channel d-flex">
+                            <div class="youtube-channel-thumbnail">
+                                <img src="/public/img/bg-img/14.jpg" alt="">
+                            </div>
+                            <div class="youtube-channel-content">
+                                <a href="single-post.html" class="channel-title">TV Show</a>
+                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                            </div>
+                        </div>
+
+                        <!-- Single YouTube Channel -->
+                        <div class="single-youtube-channel d-flex">
+                            <div class="youtube-channel-thumbnail">
+                                <img src="/public/img/bg-img/15.jpg" alt="">
+                            </div>
+                            <div class="youtube-channel-content">
+                                <a href="single-post.html" class="channel-title">Game Channel</a>
+                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                            </div>
+                        </div>
+
+                        <!-- Single YouTube Channel -->
+                        <div class="single-youtube-channel d-flex">
+                            <div class="youtube-channel-thumbnail">
+                                <img src="/public/img/bg-img/16.jpg" alt="">
+                            </div>
+                            <div class="youtube-channel-content">
+                                <a href="single-post.html" class="channel-title">Sport Channel</a>
+                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                            </div>
+                        </div>
+
+                        <!-- Single YouTube Channel -->
+                        <div class="single-youtube-channel d-flex">
+                            <div class="youtube-channel-thumbnail">
+                                <img src="/public/img/bg-img/17.jpg" alt="">
+                            </div>
+                            <div class="youtube-channel-content">
+                                <a href="single-post.html" class="channel-title">Travel Channel</a>
+                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                            </div>
+                        </div>
+
+                        <!-- Single YouTube Channel -->
+                        <div class="single-youtube-channel d-flex">
+                            <div class="youtube-channel-thumbnail">
+                                <img src="/public/img/bg-img/18.jpg" alt="">
+                            </div>
+                            <div class="youtube-channel-content">
+                                <a href="single-post.html" class="channel-title">LifeStyle Channel</a>
+                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Sidebar Widget -->
+                    <div class="single-sidebar-widget p-30">
+                        <!-- Section Title -->
+                        <div class="section-heading">
+                            <h5>Newsletter</h5>
+                        </div>
+
+                        <div class="newsletter-form">
+                            <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
+                            <form action="#" method="get">
+                                <input type="search" name="widget-search" placeholder="Enter your email">
+                                <button type="submit" class="btn mag-btn w-100">Subscribe</button>
                             </form>
                         </div>
                     </div>
                 </div>
-
-                <!-- Sidebar Widget -->
-                <div class="col-12 col-md-6 col-lg-5 col-xl-4">
-                    <div class="sidebar-area bg-white mb-30 box-shadow">
-                        <!-- Sidebar Widget -->
-                        <div class="single-sidebar-widget p-30">
-                            <!-- Social Followers Info -->
-                            <div class="social-followers-info">
-                                <!-- Facebook -->
-                                <a href="#" class="facebook-fans"><i class="fa fa-facebook"></i> 4,360 <span>Fans</span></a>
-                                <!-- Twitter -->
-                                <a href="#" class="twitter-followers"><i class="fa fa-twitter"></i> 3,280 <span>Followers</span></a>
-                                <!-- YouTube -->
-                                <a href="#" class="youtube-subscribers"><i class="fa fa-youtube"></i> 1250 <span>Subscribers</span></a>
-                                <!-- Google -->
-                                <a href="#" class="google-followers"><i class="fa fa-google-plus"></i> 4,230 <span>Followers</span></a>
-                            </div>
-                        </div>
-
-                        <!-- Sidebar Widget -->
-                        <div class="single-sidebar-widget p-30">
-                            <!-- Section Title -->
-                            <div class="section-heading">
-                                <h5>Categories</h5>
-                            </div>
-                            <ul class="catagory-widgets">
-                                {{#each lcAllcatdetail }}
-                                    <li>
-                                        <a href="/post/byCat/{{CatID}}"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{CatName}}  </span>
-                                        {{#if num_of_posts}}
-                                            <span>
-                                                {{num_of_posts}}
-                                            </span>
-                                        {{/if}}
-                                            
-                                        </a>
-                                    </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-
-                        <!-- Sidebar Widget -->
-                        <div class="single-sidebar-widget">
-                            <a href="#" class="add-img"><img src="/public/img/bg-img/add2.png" alt=""></a>
-                        </div>
-
-                        <!-- Sidebar Widget -->
-                        <div class="single-sidebar-widget p-30">
-                            <!-- Section Title -->
-                            <div class="section-heading">
-                                <h5>Hot Channels</h5>
-                            </div>
-
-                            <!-- Single YouTube Channel -->
-                            <div class="single-youtube-channel d-flex">
-                                <div class="youtube-channel-thumbnail">
-                                    <img src="/public/img/bg-img/14.jpg" alt="">
-                                </div>
-                                <div class="youtube-channel-content">
-                                    <a href="single-post.html" class="channel-title">TV Show</a>
-                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                                </div>
-                            </div>
-
-                            <!-- Single YouTube Channel -->
-                            <div class="single-youtube-channel d-flex">
-                                <div class="youtube-channel-thumbnail">
-                                    <img src="/public/img/bg-img/15.jpg" alt="">
-                                </div>
-                                <div class="youtube-channel-content">
-                                    <a href="single-post.html" class="channel-title">Game Channel</a>
-                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                                </div>
-                            </div>
-
-                            <!-- Single YouTube Channel -->
-                            <div class="single-youtube-channel d-flex">
-                                <div class="youtube-channel-thumbnail">
-                                    <img src="/public/img/bg-img/16.jpg" alt="">
-                                </div>
-                                <div class="youtube-channel-content">
-                                    <a href="single-post.html" class="channel-title">Sport Channel</a>
-                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                                </div>
-                            </div>
-
-                            <!-- Single YouTube Channel -->
-                            <div class="single-youtube-channel d-flex">
-                                <div class="youtube-channel-thumbnail">
-                                    <img src="/public/img/bg-img/17.jpg" alt="">
-                                </div>
-                                <div class="youtube-channel-content">
-                                    <a href="single-post.html" class="channel-title">Travel Channel</a>
-                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                                </div>
-                            </div>
-
-                            <!-- Single YouTube Channel -->
-                            <div class="single-youtube-channel d-flex">
-                                <div class="youtube-channel-thumbnail">
-                                    <img src="/public/img/bg-img/18.jpg" alt="">
-                                </div>
-                                <div class="youtube-channel-content">
-                                    <a href="single-post.html" class="channel-title">LifeStyle Channel</a>
-                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Sidebar Widget -->
-                        <div class="single-sidebar-widget p-30">
-                            <!-- Section Title -->
-                            <div class="section-heading">
-                                <h5>Newsletter</h5>
-                            </div>
-
-                            <div class="newsletter-form">
-                                <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
-                                <form action="#" method="get">
-                                    <input type="search" name="widget-search" placeholder="Enter your email">
-                                    <button type="submit" class="btn mag-btn w-100">Subscribe</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
             </div>
         </div>
+        
     </section>
     <!-- ##### Post Details Area End ##### -->
 
@@ -527,7 +520,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </footer>
     <!-- ##### Footer Area End ##### -->
-
+ 
     <!-- ##### All Javascript Script ##### -->
     <!-- jQuery-2.2.4 js -->
     <script src="/public/js/jquery/jquery-2.2.4.min.js"></script>
@@ -542,35 +535,48 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </body>
 
 </html>
-{{#section 'js'}}
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script>
-  $('#txtDOB').datetimepicker({
-    format: 'd/m/Y',
-    timepicker: false,
-    mask: true,
-  });
+ 
 
-  $('#frmRegister').on('submit', function (e) {
-    // alert('submit called');
-    e.preventDefault();
-    // if (validate())
-    //   $('#frmRegister').off('submit').submit();
-    validate();
-  })
-
-  function validate() {
-    // ... 
-
-    const user = $('#txtUserName').val();
-    $.getJSON(`/account/is-available?user=${user}`, function (data) {
-      if (data === true) {
-        $('#frmRegister').off('submit').submit();
-      } else {
-        alert('not available');
-      }
+    $('#frmComment').on('submit', function (e) {
+        
+        e.preventDefault();
+        // if (validate())
+        //   $('#frmRegister').off('submit').submit();
+        
+    // validate();
+        sendComment();
     })
-  }
+
+    
+    function sendComment(){
+        var Comment;
+        var dataSend={comment: $("#message").val(), postID:$("#txtPostID").val(), User: $("#txtUser").val()};
+        dataSend=JSON.stringify({dataSend});
+        $.ajax({
+            url:"http://localhost:3000/post/comment",
+            type:"POST",
+            data: 'info=' + dataSend,
+            success : function(data) {    // Response is the PHP echo
+                Comment=data;
+                $("#commentArea").append('<li class="single_comment_area">' +
+                                        '<div class="comment-content d-flex">' +
+                                            '<div class="comment-author">' +
+                                                '<img src="/public/img/bg-img/'+Comment.User+'.jpg" alt="author">' +
+                                            '</div>'+
+                                            '<div class="comment-meta">'+
+                                                '<a href="#" class="comment-date">'+Comment.CommentDate+'</a>' + 
+                                                '<h6>'+Comment.UserName+'</h6>'+
+                                                '<p>'+Comment.CommentContent'</p>'+
+                                                '<div class="d-flex align-items-center">'+
+                                                    '<a href="#" class="like">like</a>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</li>');
+                $("#message").val("");
+            }
+        });
+    }
 </script>
-{{/section}}
+

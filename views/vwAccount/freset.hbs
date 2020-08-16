@@ -9,7 +9,6 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  
   <style>
     body,
     html {
@@ -24,7 +23,6 @@
       background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8yOS8xMiKqq3kAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABHklEQVRIib2Vyw6EIAxFW5idr///Qx9sfG3pLEyJ3tAwi5EmBqRo7vHawiEEERHS6x7MTMxMVv6+z3tPMUYSkfTM/R0fEaG2bbMv+Gc4nZzn+dN4HAcREa3r+hi3bcuu68jLskhVIlW073tWaYlQ9+F9IpqmSfq+fwskhdO/AwmUTJXrOuaRQNeRkOd5lq7rXmS5InmERKoER/QMvUAPlZDHcZRhGN4CSeGY+aHMqgcks5RrHv/eeh455x5KrMq2yHQdibDO6ncG/KZWL7M8xDyS1/MIO0NJqdULLS81X6/X6aR0nqBSJcPeZnlZrzN477NKURn2Nus8sjzmEII0TfMiyxUuxphVWjpJkbx0btUnshRihVv70Bv8ItXq6Asoi/ZiCbU6YgAAAABJRU5ErkJggg==);
     }
   </style>
-
 </head>
 
 <body>
@@ -34,10 +32,18 @@
       <div class="col-md-12">
         <div class="card w-50 shadow mx-auto">
           <div class="card-body text-center">
-            <form method="POST" id="frmIdentify">
-                <label for="txtEmail">Your email: </label>
-                <input type="email" name="email" id="txtEmail" placeholder="Email: acb@gmail.com" required>
-                <button type="submit">Send</button>
+            <form action="/account/reset/{{this.user.UserID}}" method="post" id="frmResetPass">
+                  <div class="form-group">
+                      <label for="txtEmail">Your new password: </label>
+                      <input type="text" name="newPass" id="txtNewPass">
+                  </div>
+                  <div class="form-group">
+                      <label for="txtEmail">Confirm new password: </label>
+                      <input type="text" name="confirmPass" id="txtConfirmPass">
+                  </div>
+                  <input type="submit" name="" id="" value="Save" formaction="/account/identify">
+                
+                
             </form>
           </div>
         </div>
@@ -51,27 +57,31 @@
 </body>
 
 </html>
-  <script>
- 
- $('#frmIdentify').on('submit', function (e) {
+<script>
+
+  $('#frmResetPass').on('submit', function (e) {
     // alert('submit called');
     e.preventDefault();
+    // if (validate())
+    //   $('#frmRegister').off('submit').submit();
     validate();
   })
 
   function validate() {
-     //
-
-    const user = $('#txtEmail').val();
-    $.getJSON(`/account/is-available?userEmail=${user}`, function (data) {
-      if (data === true) {
-        alert('Please check your email');
-        $('#frmIdentify').off('submit').submit();
-        
-      } else {
-        alert('Email not available');
-     }
-    })
-}
+    // ... các lệnh validate khác
+    const newPass=document.getElementById('txtNewPass').value;
+    const confirm=document.getElementById('txtConfirmPass').value;
+    if(newPass != confirm)
+    {
+      alert('confirm pass and new must be the same');
+      return false;
+    }
+    else
+    {
+      alert('your new pass has been saved');
+      $('#frmResetPass').off('submit').submit();
+    }
+    
+  }
   
-</script>
+</script> 

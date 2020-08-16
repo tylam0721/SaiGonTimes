@@ -1,19 +1,19 @@
 
 <div class="mag-posts-content mt-30 mb-30 p-30 box-shadow">
+ 
     <!-- Trending Now Posts Area -->
     <div class="trending-now-posts mb-30">
         <!-- Section Title -->
         <div class="section-heading">
             <h5>TRENDING NOW</h5>
         </div>
-
         <div class="trending-post-slides owl-carousel">
             <!-- Single Trending Post -->
             {{#each this.posts as |alias|}}
                 <div class="single-trending-post">
-                    <img src="/public/img/bg-img/20.jpg" alt="">
+                    <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
                     <div class="post-content">
-                        <a href="#" class="post-cata">Sức khoẻ</a>
+                        <a href="#" class="post-cata">{{Title}}</a>
                         <a href="/post/detail/{{PostID}}" class="post-title">{{Abtract}}</a>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                 <div class="single-featured-post">
                 <!-- Thumbnail -->
                     <div class="post-thumbnail mb-50">
-                        <img src="/public/img/bg-img/20.jpg" alt="">
+                        <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
                         <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
                     </div>
                     <!-- Post Contetnt -->
@@ -236,10 +236,10 @@
                 <div class="col-12 col-lg-6">
                     <div class="single-blog-post d-flex style-3 mb-30">
                         <div class="post-thumbnail">
-                            <img src="/public/img/bg-img/31.jpg" alt="">
+                            <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
                         </div>
                         <div class="post-content">
-                            <a href="/post/detail/{{PostID}}" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
+                            <a href="/post/detail/{{PostID}}" class="post-title">{{Abtract}}</a>
                             <div class="post-meta d-flex">
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
                                 <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
