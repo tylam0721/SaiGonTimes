@@ -25,16 +25,23 @@
                         <ul>
                             <li class="active"><a href="/">Home</a></li>
                             <li><a href="archive.html">Archive</a></li>
-                            <li><a href="#">Pages</a>
+                            <li><a href="#">Categories</a>
                                 <ul class="dropdown">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="archive.html">Archive</a></li>
-                                    <li><a href="video-post.html">Single Video Post</a></li>
-                                    <li><a href="single-post.html">Single Post</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-
-                                    
+                                    {{#each lcAllcatdetail as |alias|}}
+                                        <li>
+                                            <a href="/byCat/">{{CatName}}</a>
+                                            <ul class="dropdown">
+                                                {{#each lcAllSubCat as |alias|}}
+                                                    {{#if (checkCat)}}
+                                                        
+                                                    {{/if}}
+                                                    <li>
+                                                        <a href=""></a>
+                                                    </li>
+                                                {{/each}}
+                                           </ul>
+                                        </li>
+                                    {{/each}}
                                 </ul>
                             </li>
                             {{#if lcIsAuthenticated}}
@@ -52,9 +59,9 @@
                 <div class="top-meta-data d-flex align-items-center">
                     <!-- Top Search Area -->
                     <div class="top-search-area">
-                        <form action="index.html" method="post">
-                            <input type="search" name="top-search" id="topSearch" placeholder="Search and hit enter...">
-                            <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <form action="" method="get">
+                            <input type="search" name="SearchText" id="topSearch" placeholder="Search and hit enter...">
+                            <button type="submit" class="btn" formaction="/post/search"><i class="fa fa-search" aria-hidden="true"></i></button>
                         </form>
                     </div>
                     <!-- Login -->

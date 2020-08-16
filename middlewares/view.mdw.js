@@ -16,6 +16,9 @@ module.exports = function (app) {
       isEditor: (account) => account.Permission === 2,
       isWriter: (account) => account.Permission === 3,
       isPremium: (account) => account.Permission === 4,
+      checkCatId: function(a,b){
+        return a===b;
+      }
     }
   }));
   app.set('view engine', 'hbs');

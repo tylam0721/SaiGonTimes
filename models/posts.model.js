@@ -5,8 +5,8 @@ const TBL_TAG = 'tag';
 const TBL_POST_TAG = 'post_tag';
 
 module.exports = {
-    search: async function(){
-      return db.load(`SELECT * FROM posts WHERE MATCH (Title,Abtract,PostContent) AGAINST ('chủ quan')`);
+    search: async function(keyword){
+      return db.load(`SELECT * FROM ${TBL_POSTS} WHERE MATCH (Title,Abtract,PostContent) AGAINST ('${keyword}')`);
     },
     all: async function() {
         return db.load(`select * from ${TBL_POSTS} limit 10`);
