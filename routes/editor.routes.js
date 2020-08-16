@@ -6,8 +6,14 @@ const catModel = require('../models/categories.model');
 const router = express.Router();
 
 router.get('/', async function(req, res) {
-    if (res.locals.lcAuthUser && (res.locals.lcAuthUser.Permission == 3 || res.locals.lcAuthUser.Permission == 2)) {
-        const editor = await editorModel.select(1);
+    if (res.locals.lcAuthUser && (res.locals.lcAuthUser.Permission == 1 || res.locals.lcAuthUser.Permission == 2)) {
+        let ecat = await editorModel.selectCat(res.locals.lcAuthUser.UserID);
+        var s = "posts.CatID=" + ecat[0].CatID;
+        for (i = 1; i < ecat.length; i++) {
+            s += " or " + "posts.CatID=" + ecat[i].CatID;
+        }
+        console.log(s);
+        const editor = await editorModel.select(s);
         let listStatus = await postModel.loadstatuspost();
         let tag = await editorModel.selectAllTag();
         let cat = await catModel.all();
