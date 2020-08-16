@@ -3,7 +3,10 @@ const userModel = require('../../models/Admin/admin_qlser.model');
 const router = express.Router();
 
 router.get('/', function(req , res){
-    res.render('vwadmin/home',{layout : "mainAdmin"});
+    if (res.locals.lcAuthUser && (res.locals.lcAuthUser.Permission == 1)) {
+
+    res.render('vwadmin/home', {layout : "mainAdmin"});
+    }else res.render('vwadmin/error', { layout: false })
 })
 
 router.get('/users', async function (req, res) {
@@ -96,17 +99,24 @@ router.post('/users/EditTag', async function(req,res){
 
 router.post('/users/GuestTimeEnd', async function(req,res){
     const condition = {
-        TagID : req.body.tagid
+        UserID : req.body.userid
     }
     const entity = {
-        Name : req.body.tagname
+        TimeEnd : req.body.datetime
     }
     await userModel.GuestTimeEnd(entity,condition);
-    res.redirect('/admin/users');
+    res.redirect('/admin/users/guest');
 })
 
-
-
-
+router.get('/delete/:tagid', async function(req,res){
+    entity ={
+        status : 0
+    }
+    condition ={
+        TagID : req.params.tagid
+    }
+    await userModel.DeleteTag(entity,condition);
+    res.redirect('/admin/users');
+})
 
 module.exports = router;

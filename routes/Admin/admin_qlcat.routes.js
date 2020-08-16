@@ -4,7 +4,10 @@ const { route } = require('./admin_qluser.routes');
 const router = express.Router();
 
 router.get('/', function(req , res){
+    if (res.locals.lcAuthUser && (res.locals.lcAuthUser.Permission == 1|| res.locals.lcAuthUser.Permission == 1)) {
+
     res.render('vwadmin/home', {layout : "mainAdmin"});
+    }else res.render('vwadmin/error', { layout: false })
 })
 
 router.get('/categories/:catid', async function (req, res) {

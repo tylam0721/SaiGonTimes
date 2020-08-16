@@ -247,7 +247,7 @@
                         <td>
                             <button class="btn btn-success" id="edittag" data-toggle="modal" data-target="#edittag"><span
                                     class="fa fa-pencil"></span></button>
-                            <button class="btn btn-danger"><span class="fa fa-times"></span></button>
+                            <a href="/admin/delete/{{TagID}}" class="btn btn-danger"><span class="fa fa-times"></span></a>
                         </td>
                     </tr>
                     {{/each}}
@@ -572,17 +572,13 @@
         }
     });
 
-    $(document).mouseup(function (e){
-        if($(e.target).closest(".tag").length ===0){
-            $(".tag").hide();
+       $(document).mouseup(function (e) {
+        if ($(e.target).closest(".edittag").length
+            === 0) {
+            $(".edittag").hide();
         }
-    })
-    $(document).ready(function(){
-        $('#showmodaltag').click(function(){
-             $(".tag").show();
-        })
-    })
-
+    });
+    
 
 </script>
 

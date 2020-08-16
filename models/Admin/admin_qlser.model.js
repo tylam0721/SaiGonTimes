@@ -35,7 +35,10 @@ module.exports = {
     return db.load(`select users.FullName, users.UserID  from users where Permission= '2'`)
   },
   Tag: function () {
-    return db.load(`select *from tag`);
+    return db.load(`select TagID,Name from tag where status= 1` );
+  },
+  DeleteTag : function(entity,condition){
+    return db.patch(TBL_Tag,entity,condition)
   },
   addtag: function (entity) {
     return db.add(TBL_Tag, entity);
