@@ -17,6 +17,7 @@ router.get('/', async function(req, res) {
         let listStatus = await postModel.loadstatuspost();
         let tag = await editorModel.selectAllTag();
         let cat = await catModel.all();
+        console.log(editor);
         res.render('vwEditor/home', {
             layout: "writerLayout",
             editor,
