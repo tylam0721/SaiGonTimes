@@ -1,0 +1,66 @@
+<style>
+    .sidebar {
+        position: fixed;
+        background-color: black;
+        height: 100%;
+        z-index: 1;
+        left: 0;
+        overflow-x: hidden;
+        width: 250px;
+    }
+
+    .sidebar a {
+
+        margin: 10px;
+        text-decoration: none;
+        font-size: 15px;
+        color: #818181;
+        display: block;
+    }
+
+    .sidebar a:hover {
+        color: #ed3974;
+    }
+
+    .card {
+        margin-left: 255px;
+    }
+</style>
+<div class="sidebar">
+    <h3 style="color: white; text-align:center ;">Menu</h3>
+    <a href="/admin/publish/post1"> <i class="fa fa-check"></i>&nbsp; Đã duyệt</a>
+    <a href="/admin/publish/post2"><i class="fa fa-spinner"></i>&nbsp; Đang chờ duyệt</a>
+    <a href="/admin/publish/post3"><i class="fa fa-times"></i> &nbsp; Không được duyệt</a>
+</div>
+
+<div class="card card">
+    <div class="card-header">
+        <h4 style="text-align: center;">Danh Sách Các Bài Viết Không Được Duyệt</h3>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Abtract</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">PostDate</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Conrol</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this.allpost3}}
+                <tr>
+                    <th scope="row">{{PostID}}</th>
+                    <td>{{Abtract}}</td>
+                    <td>{{FullName}}</td>
+                    <td>{{format_date PostDate}}</td>
+                    <td>{{Status}}</td>
+                    <td><a href="/admin/publish/success3/{{PostID}}" class="btn btn-success">Duyệt</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

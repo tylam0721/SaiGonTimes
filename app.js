@@ -19,6 +19,9 @@ app.use('/',require('./routes/home.routes'));//home route
 app.use('/demo', require('./routes/demo-routes'));//
 app.use('/account', require('./routes/account.routes'));//account route
 app.use('/post', require('./routes/posts.routes'));
+app.use('/admin',require('./routes/Admin/admin_qlcat.routes'));
+app.use('/admin',require('./routes/Admin/admin_qluser.routes'));
+app.use('/admin',require('./routes/Admin/admin_publish.routes'));
 //throw error:
 app.get('/err', function (req, res) {
   throw new Error('beng beng');
@@ -26,6 +29,7 @@ app.get('/err', function (req, res) {
 app.use(function (req, res) {
     res.render('404', { layout: false });
 })
+
 app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).render('500', { layout: false });

@@ -7,11 +7,25 @@ module.exports = function (app) {
     defaultLayout: 'main',
     partialsDir: 'views/_partials',
     extname: '.hbs',
-    helpers:{
+    helpers: {
       section: hbs_sections(),
       format_number: function (value) {
         return numeral(value).format('0,0');
       },
+
+      format_date: function (value) {
+        date = new Date(value);
+        var format = date.getFullYear() + '-' + (date.getMonth()) + '-' + date.getDate();
+        return format;
+      },
+
+      format_datetime: function (value) {
+        date = new Date(value);
+        var format = '0'+ (date.getMonth()-1) + '-' + date.getDate()  + '-' +  date.getFullYear()  + ' '+
+        '0' +(date.getUTCHours()-17) + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds() +'0';
+        return format;
+      },
+
       isAdmin: (account) => account.Permission === 1,
       isEditor: (account) => account.Permission === 2,
       isWriter: (account) => account.Permission === 3,
