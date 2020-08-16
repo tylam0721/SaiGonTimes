@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/public/img/core-img/title.ico">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/public/style.css" type="text/css">
+    <title>Document</title>
+    <style>
+        .update {
+            background-color: #ed3974;
+            position: absolute;
+            font-family: cursive;
+            width: 500px;
+            height: 250px;
+            display: none;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        h3 {
+            text-align: center;
+            font-family: cursive
+        }
+
+        form {
+            margin: 10px;
+        }
+
+        .assign {
+            width: 500px;
+            height: 380px;
+            background-color: #17a2b8;
+            overflow: auto;
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        .tag {
+            width: 500px;
+            height: 380px;
+            background-color: yellowgreen;
+            overflow: auto;
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="mag-main-menu" id="sticker">
+            <div class="classy-nav-container breakpoint-off">
+                <!-- Menu -->
+                <nav class="classy-navbar justify-content-between" id="magNav">
+
+                    <!-- Nav brand -->
+                    <a href="/admin" class="nav-brand"><img src="/public/img/core-img/logo.png" width="50" height="50"
+                            alt=""></a>
+
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <!-- Nav Content -->
+                    <div class="nav-content d-flex align-items-center">
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li class="active"><a href="/admin/users">Users</a></li>
+                                    <li><a href="/admin/categories/1">Categories</a></li>
+                                    <li><a href="/admin/publish">Publish</a></>
+                                </ul>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+
+                        <div class="top-meta-data d-flex align-items-center">
+                            <!-- Top Search Area -->
+                            <div class="top-search-area">
+                                <form action="index.html" method="post">
+                                    <input type="search" name="top-search" id="topSearch"
+                                        placeholder="Search and hit enter...">
+                                    <button type="submit" class="btn"><i class="fa fa-search"
+                                            aria-hidden="true"></i></button>
+                                </form>
+                            </div>
+                            <!-- Login -->
+                            <form id="frmLogout" action="/account/logout" method="POST"></form>
+                            {{#if lcIsAuthenticated}}
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <b>{{lcAuthUser.UserName}}!</b>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="/account/profile/{{lcAuthUser.UserID}}">Profile</a>
+                                    <a class="dropdown-item" href="javascript: $('#frmLogout').submit()">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                        Logout
+                                    </a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                            {{else}}
+                            <a href="/account/login" class="login-btn"><i class="fa fa-user" aria-hidden="true"></i></a>
+                            <a href="/account/register" class="login-btn"><i class="fa fa-plus"
+                                    aria-hidden="true"></i></a>
+                            {{/if}}
+
+
+                            <a href="" class="submit-post"><span><i class="fa fa-cloud-upload"></i></span> <span
+                                    class="video-text">Submit Post</span></a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(/public/img/bg-img/49.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2>Quản Lý Users</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <button class="btn btn-outline-info" onclick="ShowFormAss()" style="float: right;">Phân công chuyên
+                        mục</button>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-success" href="/admin/users/guest" style="float: right;">Gia hạng tài khoản </a>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-warning" onclick="ShowFormTag()" style="float: right;">Quản Lý Tag </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-content">
+        <!-- Modal -->
+        <form action="/admin/users/addtag" method="POST">
+            <div class="modal fade" id="addtag" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add Tag</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Tag Name</label>
+                                <input type="text" class="form-control" id="tagnamee" name="tagname">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="showmodaltag" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" id="showmodaltag" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form action="/admin/users/EditTag" method="POST">
+            <div class="modal fade" id="edittag" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Tag</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">TagID</label>
+                                <input type="text" class="form-control" id="tagid" name="tagid" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Tag Name</label>
+                                <input type="text" class="form-control" id="tagname" name="tagname">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="showmodaltag" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" id="showmodaltag" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="tag" id="tag">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">TagID</th>
+                        <th scope="col">TagName</th>
+                        <th><button class="btn btn-outline-link" data-toggle="modal" data-target="#addtag">Add
+                                Tag</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each Tag}}
+                    <tr>
+                        <th scope="row">{{TagID}}</th>
+                        <td>{{Name}}</td>
+                        <td>
+                            <button class="btn btn-success" id="edittag" data-toggle="modal" data-target="#edittag"><span
+                                    class="fa fa-pencil"></span></button>
+                            <button class="btn btn-danger"><span class="fa fa-times"></span></button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <form method="POST" action="/admin/users/update">
+            <div class="modal fade" id="modalupdate" tabindex="-1" role="dialog" aria-labelledby="modalupdate"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Update Users</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">UserID</label>
+                                <input type="text" class="form-control" id="userid" name="UserID" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">FullName</label>
+                                <input type="text" class="form-control" id="fullname" name="fullname" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Permission</label>
+                                <select name="permission" class="form-control">
+                                    {{#each this.permission}}
+                                    <option value="{{PerID}}" id="permission">{{PermissionName}}</option>
+                                    {{/each}}
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" id="showmodalass" type="submit">Save
+                                changes</button>
+                            <button type="button" id="showmodalass" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form method="POST" action="/admin/users/assign">
+            <div class="modal fade" id="modalassign" tabindex="-1" role="dialog" aria-labelledby="modalupdate"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Assign</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">CatID</label>
+                                <input type="text" class="form-control" id="catidass" name="catidass" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">CatName</label>
+                                <input type="text" class="form-control" id="catnameass" name="catnameass" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Editor</label>
+                                <select name="editorass">
+                                    {{#each editors}}
+                                    <option value="{{UserID}}" id="permission">{{FullName}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="showmodal" class="btn btn-primary" type="submit">Save
+                                changes</button>
+                            <button type="button" class="btn btn-secondary" id="showmodal" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="assign" id="assign">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">CatName</th>
+                        <th scope="col">FullName</th>
+                        <th scope="col">Control</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each assign}}
+                    <tr>
+                        <th scope="row">{{CatID}}</th>
+                        <td>{{CatName}}</td>
+                        <td>
+                            {{FullName}}
+                        </td>
+                        <td><button class="btn btn-success" type="button" role="button" data-toggle="modal"
+                                data-target="#modalassign" id="assign"> <i class="fa fa-pencil"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="table-main">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">FullName</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">DOB</th>
+                        <th scope="col">Permission</th>
+                        <th scope="col">NickName</th>
+                        <th scope="col">Phone</th>
+                        <th scpe="col">Status</th>
+                        <th scope="col">Control</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each this.users}}
+                    <tr>
+                        <th scope="row" name="UserID">{{UserID}}</th>
+                        <td>{{FullName}}</td>
+                        <td>{{EmailAdress}}</td>
+                        <td>{{format_date DOB}}</td>
+                        <td>{{PermissionName}}
+                            <button class="btn btn-primary" type="button" role="button" data-toggle="modal"
+                                data-target="#modalupdate" style="float: right;" style="margin-left: 10px;" id="update">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </td>
+                        <td style="text-align: center;">{{NickName}}</td>
+                        <td>{{Phone}}</td>
+                        <td>{{Status}}</td>
+                        <td style="text-align: center;">
+                            <a class="btn btn-danger" href="/admin/del/{{UserID}}/{{Status}}">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="footer">
+        <footer class="footer-area">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Widget Area -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="footer-widget">
+                            <!-- Logo -->
+                            <a href="/" class="foo-logo"><img src="/public/img/core-img/logo.png" width="50" height="50"
+                                    alt=""></a>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut
+                                labore et dolore magna aliqua.</p>
+                            <div class="footer-social-info">
+                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                                <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Widget Area -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="footer-widget">
+                            <h6 class="widget-title">Categories</h6>
+                            <nav class="footer-widget-nav">
+                                <ul>
+                                    {{#each lcAllcatdetail as |alias|}}
+                                    <li><a href="/post/byCat/{{CatID}}"><i class="fa fa-angle-double-right"
+                                                aria-hidden="true"></i> {{CatName}}</a></li>
+                                    {{/each}}
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Footer Widget Area -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="footer-widget">
+                            <h6 class="widget-title">Sport Posts</h6>
+                            <!-- Single Blog Post -->
+                            <div class="single-blog-post style-2 d-flex">
+                                <div class="post-thumbnail">
+                                    <img src="/public/img/bg-img/12.jpg" alt="">
+                                </div>
+                                <div class="post-content">
+                                    <a href="single-post.html" class="post-title">Take A Romantic Break In A Boutique
+                                        Hotel</a>
+                                    <div class="post-meta d-flex justify-content-between">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
+                                        <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
+                                        <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Single Blog Post -->
+                            <div class="single-blog-post style-2 d-flex">
+                                <div class="post-thumbnail">
+                                    <img src="/public/img/bg-img/13.jpg" alt="">
+                                </div>
+                                <div class="post-content">
+                                    <a href="single-post.html" class="post-title">Travel Prudently Luggage And Carry
+                                        On</a>
+                                    <div class="post-meta d-flex justify-content-between">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
+                                        <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
+                                        <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Widget Area -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="footer-widget">
+                            <h6 class="widget-title">Channels</h6>
+                            <ul class="footer-tags">
+                                {{#each lcAllSubCat as |alias|}}
+                                <li><a href="#">{{SubCatName}}</a></li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copywrite Area -->
+            <div class="copywrite-area">
+                <div class="container">
+                    <div class="row">
+                        <!-- Copywrite Text -->
+                        <div class="col-12 col-sm-6">
+                            <p class="copywrite-text">
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This
+                                template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                                    href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <nav class="footer-nav">
+                                <ul>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">Privacy</a></li>
+                                    <li><a href="#">Advertisement</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function HideForm() {
+        document.getElementById("form").style.display = "none";
+    }
+    function ShowFormAss() {
+        document.getElementById("assign").style.display = "block";
+    }
+     function ShowFormTag() {
+        document.getElementById("tag").style.display = "block";
+    }
+    $('.table tbody').on('click', '#update', function adduser() {
+        var currow = $(this).closest('tr');
+        var col = currow.find('th:eq(0)').text();
+        var colname = currow.find('td:eq(0)').text();
+        var col1 = currow.find('td:eq(3)').text();
+        document.getElementById('userid').value = col;
+        document.getElementById('fullname').value = colname;
+    })
+
+    $('.table tbody').on('click', '#assign', function assign() {
+        var currow = $(this).closest('tr');
+        var colCatID = currow.find('th:eq(0)').text();
+        var colname = currow.find('td:eq(0)').text();
+        document.getElementById('catidass').value = colCatID;
+        document.getElementById('catnameass').value = colname;
+    })
+
+     $('.table tbody').on('click', '#edittag', function () {
+        var currow = $(this).closest('tr');
+        var colTagid = currow.find('th:eq(0)').text();
+        var colTagName = currow.find('td:eq(0)').text();
+        document.getElementById('tagid').value = colTagid;
+        document.getElementById('tagname').value = colTagName;
+    })
+
+    $(document).mouseup(function (e) {
+        if ($(e.target).closest(".assign").length
+            === 0) {
+            $(".assign").hide();
+        }
+    });
+
+    $(document).mouseup(function (e){
+        if($(e.target).closest(".tag").length ===0){
+            $(".tag").hide();
+        }
+    })
+    $(document).ready(function(){
+        $('#showmodaltag').click(function(){
+             $(".tag").show();
+        })
+    })
+
+
+</script>
+
+</html>

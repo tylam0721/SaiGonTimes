@@ -1,0 +1,155 @@
+<div class="post-sidebar-area left-sidebar mt-30 mb-30 bg-white box-shadow">
+    <!-- Sidebar Widget -->
+    <div class="single-sidebar-widget p-30">
+        <!-- Section Title -->
+        <div class="section-heading">
+            <h5>Most Popular</h5>
+        </div>
+        {{#each lcAllpost }}
+        <div class="single-blog-post d-flex">
+            <div class="post-thumbnail">
+                <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
+            </div>
+            <div class="post-content">
+                <a href="/post/detail/{{PostID}}" class="post-title"> {{Abtract}}</a>
+                <div class="post-meta d-flex justify-content-between">
+                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
+                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
+                    <a href="#">
+
+                        <i class="fa fa-comments-o" aria-hidden="true">
+                            {{#if num_of_com}}
+                            {{num_of_com}}
+                            {{/if}}
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <!-- Sidebar Widget -->
+    <div class="single-sidebar-widget">
+        <a href="#" class="add-img"><img src="/public/img/bg-img/add.png" alt=""></a>
+    </div>
+
+    <!-- Sidebar Widget -->
+    <div class="single-sidebar-widget p-30">
+        <!-- Section Title -->
+        <div class="section-heading">
+            <h5>Latest Posts</h5>
+        </div>
+        {{#each lcAllpost }}
+        <div class="single-blog-post d-flex">
+            <div class="post-thumbnail">
+                <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
+            </div>
+            <div class="post-content">
+                <a href="/post/detail/{{PostID}}" class="post-title"> {{Abtract}}</a>
+                <div class="post-meta d-flex justify-content-between">
+                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
+                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
+                    <a href="#">
+
+                        <i class="fa fa-comments-o" aria-hidden="true">
+                            {{#if num_of_com}}
+                            {{num_of_com}}
+                            {{/if}}
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        <!-- Single Blog Post -->
+
+    </div>
+</div>
+
+<div class="mag-posts-content mt-30 mb-30 p-30 box-shadow">
+    <h1>Hello Admin</h1>
+</div>
+
+<div class="post-sidebar-area right-sidebar mt-30 mb-30 box-shadow">
+    <!-- Sidebar Widget -->
+    <div class="single-sidebar-widget p-30">
+        <!-- Social Followers Info -->
+        <div class="social-followers-info">
+            <!-- Facebook -->
+            <a href="#" class="facebook-fans"><i class="fa fa-facebook"></i> 4,360 <span>Fans</span></a>
+            <!-- Twitter -->
+            <a href="#" class="twitter-followers"><i class="fa fa-twitter"></i> 3,280 <span>Followers</span></a>
+            <!-- YouTube -->
+            <a href="#" class="youtube-subscribers"><i class="fa fa-youtube"></i> 1250 <span>Subscribers</span></a>
+            <!-- Google -->
+            <a href="#" class="google-followers"><i class="fa fa-google-plus"></i> 4,230 <span>Followers</span></a>
+        </div>
+    </div>
+
+    <!-- Sidebar Widget -->
+    <div class="single-sidebar-widget p-30">
+        <!-- Section Title -->
+        <div class="section-heading">
+            <h5>Categories</h5>
+        </div>
+        <ul class="catagory-widgets">
+            {{#each lcAllcatdetail }}
+            <li>
+                <a href="/post/byCat/{{CatID}}"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        {{CatName}} </span>
+                    {{#if num_of_posts}}
+                    <span>
+                        {{num_of_posts}}
+                    </span>
+                    {{/if}}
+
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+
+    <!-- Sidebar Widget -->
+    <div class="single-sidebar-widget">
+        <a href="#" class="add-img"><img src="/public/img/bg-img/add2.png" alt=""></a>
+    </div>
+
+    <!-- Sidebar Widget -->
+    <div class="single-sidebar-widget p-30">
+        <!-- Section Title -->
+        <div class="section-heading">
+            <h5>Hot Channels</h5>
+        </div>
+        {{#each lcAllpost as |alias|}}
+        <div class="single-youtube-channel d-flex">
+            <div class="youtube-channel-thumbnail">
+                <img src="/public/img/bg-img/{{CatID}}.jpg" alt="">
+            </div>
+            <div class="youtube-channel-content">
+                <a href="single-post.html" class="channel-title">LifeStyle Channel</a>
+                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i>
+                    Subscribe</a>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+
+    <!-- Sidebar Widget -->
+    <div class="single-sidebar-widget p-30">
+        <!-- Section Title -->
+        <div class="section-heading">
+            <h5>Newsletter</h5>
+        </div>
+
+        <div class="newsletter-form">
+            <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
+            <form action="#" method="get">
+                <input type="search" name="widget-search" placeholder="Enter your email">
+                <button type="submit" class="btn mag-btn w-100">Subscribe</button>
+            </form>
+        </div>
+
+    </div>
+</div>
