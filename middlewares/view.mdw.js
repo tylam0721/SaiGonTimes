@@ -26,14 +26,17 @@ module.exports = function(app) {
                 return format;
             },
 
-            isAdmin: (account) => account.Permission === 1,
-            isEditor: (account) => account.Permission === 2,
-            isWriter: (account) => account.Permission === 3,
-            isPremium: (account) => account.Permission === 4,
-            count: function(index) {
+      isAdmin: (account) => account.Permission === 1,
+      isEditor: (account) => account.Permission === 2,
+      isWriter: (account) => account.Permission === 3,
+      isPremium: (account) => account.Permission === 4,
+      checkCatId: function(a,b){
+        return a===b;
+      },
+      count: function(index) {
                 return index + 1;
             }
-        }
-    }));
+    }
+  }));
     app.set('view engine', 'hbs');
 }

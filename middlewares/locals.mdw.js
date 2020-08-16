@@ -10,6 +10,7 @@ module.exports = function (app) {
         res.locals.lcAuthUser = req.session.authUser;
         next();
     })
+    //lc categories
     app.use(async function(req,res,next){
         const list= await catModel.all();
         const listdetail=await catModel.allWithDetails();
@@ -21,15 +22,16 @@ module.exports = function (app) {
         res.locals.lcNewpostcat=listpostcat;
         next();
     })
-    app.use(async function (req, res, next) {
-        const listview = await postModel.topMostView();
-        const listdate = await postModel.topPostWeek();
-        const listnewest = await postModel.topLastest();
-        const allPost = await postModel.allPostsDetail();
-        res.locals.lcTopviewposts = listview;
-        res.locals.lcTopnewposts = listdate;
-        res.locals.lcLatestpost = listnewest;
-        res.locals.lcAllpost = allPost;
+    //lc post
+    app.use(async function(req,res,next){
+        const listview= await postModel.topMostView();
+        const listdate=await postModel.topPostWeek();
+        const listnewest=await postModel.topLastest();
+        const allPost=await postModel.allPostsDetail();
+        res.locals.lcTopviewposts=listview;
+        res.locals.lcTopnewposts=listdate;
+        res.locals.lcLatestpost=listnewest;
+        res.locals.lcAllpost=allPost;
 
         next();
     })
