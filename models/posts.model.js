@@ -29,19 +29,14 @@ module.exports = {
     console.log(entity);
     return db.add(TBL_POST_TAG, entity);
   },
-//   allByCat: function (catId) {
-//     return db.load(`select * from ${TBL_POSTS} where CatID = ${catId}`);
-//   },
-//   pageByCat: function (catId, limit, offset) {
-//     return db.load(`select * from ${TBL_POSTS} where CatID = ${catId} limit ${limit} offset ${offset}`);
-//   },
+
   countByCat: async function (catId) {
     const rows = await db.load(`select count(*) as total from ${TBL_POSTS} where CatID = ${catId}`);
     return rows[0].total;
   },
   single: async function (id) {
-    return db.load(`select p.*, count(c.PostID) as num_of_com 
-    from ${TBL_POSTS} p join comments c on p.PostID=c.PostID
+    return db.load(`select p.*, count(c.PostID) as num_of_com, u.UserName, u.UserID
+    from ${TBL_POSTS} p join comments c on p.PostID=c.PostID join users u on u.UserID=p.Author
     where p.PostID = ${id}`);
     },
     topMostView: async function() {
@@ -50,8 +45,9 @@ module.exports = {
     topLastest: async function() {
         return db.load(`SELECT * FROM ${TBL_POSTS} ORDER BY PostDate DESC LIMIT 10`);
     },
+    //top of week
     topPostWeek: async function() {
-        return db.load(`SELECT * from ${TBL_POSTS} p where TIMESTAMPDIFF(week,p.PostDate,CURDATE()) <= 1`)
+        return db.load(`SELECT * from ${TBL_POSTS} p where TIMESTAMPDIFF(week,p.PostDate,CURDATE()) <= 1 limit 5`)
     },
     updateViews: function(id) {
         return db.load(`UPDATE ${TBL_POSTS} SET VIEWS=VIEWS+1 WHERE PostID=${id}`)
@@ -88,4 +84,5 @@ module.exports = {
   updateStatus: async function(status, condition) {
       return db.patch(TBL_POSTS, status, condition);
   }
+  
 };

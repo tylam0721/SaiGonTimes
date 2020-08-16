@@ -32,12 +32,12 @@
                                             <a href="/byCat/">{{CatName}}</a>
                                             <ul class="dropdown">
                                                 {{#each lcAllSubCat as |alias|}}
-                                                    {{#if (checkCat)}}
-                                                        
-                                                    {{/if}}
-                                                    <li>
-                                                        <a href=""></a>
+                                                    {{#if (checkCat lcAllcatdetail.CatID lcAllSubCat.CatID)}}
+                                                        <li>
+                                                        <a href="">{{subCatName}}</a>
                                                     </li>
+                                                    {{/if}}
+                                                    
                                                 {{/each}}
                                            </ul>
                                         </li>

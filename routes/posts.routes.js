@@ -80,7 +80,7 @@ router.post('/comment',async function(req,res){
     res.status(200).send(Comment);
 })
 router.get('/search', async function(req,res){
-    console.log('hhah');
+    console.log(req.body.searchText);
     const listPost=await postModel.search(req.body.searchText);
     res.render('vwPosts/search',{
         posts: listPost

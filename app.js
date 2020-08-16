@@ -23,6 +23,9 @@ app.use('/account', require('./routes/account.routes'));//account route
 app.use('/writer', require('./routes/writer.routes'));
 
 app.use('/post', require('./routes/posts.routes'));
+app.use('/admin',require('./routes/Admin/admin_qlcat.routes'));
+app.use('/admin',require('./routes/Admin/admin_qluser.routes'));
+app.use('/admin',require('./routes/Admin/admin_publish.routes'));
 app.use('/editor', require('./routes/editor.routes'));
 //throw error:
 app.get('/err', function(req, res) {

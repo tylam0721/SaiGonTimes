@@ -11,10 +11,11 @@ module.exports = {
   getCatByPostID: function (postID) {
     return db.load(`select * from ${SUB_CAT} sc where sc.SubCatID = ${postID}`);
   },
-  updatePost: function(title, adstract, cond) {
+  updatePost: function(title, adstract, postCat, cond) {
     const entity = {
       Title: title,
-      Abtract: adstract
+      Abtract: adstract,
+      CatID: postCat
     }
 
     return db.patch(TBL_POST, entity, cond);

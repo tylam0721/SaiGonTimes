@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categories` (
   `CatID` int(11) NOT NULL,
-  `CatName` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+  `CatName` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `Editor` int(10)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -57,6 +58,13 @@ CREATE TABLE `cat_editor` (
   `CatID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `cat_editor`(`UserID`,`CatID`) VALUES ('2','1');
+INSERT INTO `cat_editor`(`UserID`,`CatID`) VALUES ('3','2');
+INSERT INTO `cat_editor`(`UserID`,`CatID`) VALUES ('2','3');
+INSERT INTO `cat_editor`(`UserID`,`CatID`) VALUES ('3','4');
+INSERT INTO `cat_editor`(`UserID`,`CatID`) VALUES ('2','5');
+INSERT INTO `cat_editor`(`UserID`,`CatID`) VALUES ('3','6');
+INSERT INTO `cat_editor`(`UserID`,`CatID`) VALUES ('2','7');
 -- --------------------------------------------------------
 
 --
@@ -263,7 +271,7 @@ CREATE TABLE `premiumusers` (
 --
 
 INSERT INTO `premiumusers` (`UserID`, `TimeEnd`) VALUES
-(2, '2020-07-31 00:00:00');
+(5, '2020-07-31 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -401,8 +409,8 @@ ALTER TABLE `categories`
 -- Chỉ mục cho bảng `cat_editor`
 --
 ALTER TABLE `cat_editor`
-  ADD PRIMARY KEY (`UserID`,`CatID`),
-  ADD KEY `fk_categories` (`CatID`);
+  ADD PRIMARY KEY (`UserID`,`CatID`);
+
 
 --
 -- Chỉ mục cho bảng `censorship`
@@ -517,6 +525,11 @@ ALTER TABLE `tag`
 ALTER TABLE `users`
   MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
+
+-- AUTO_INCREMENT cho bảng `sub_cat`
+ALTER TABLE `sub_categories`
+  MODIFY `SubCatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+--
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
