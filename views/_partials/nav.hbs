@@ -68,7 +68,7 @@
                     <form id="frmLogout" action="/account/logout" method="POST"></form>
                     {{#if lcIsAuthenticated}}
                         <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle user-name" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <b>{{lcAuthUser.UserName}}!</b>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -91,7 +91,7 @@
                     {{/if}}
             {{#if lcIsAuthenticated}}
                 {{#if (isWriter lcAuthUser)}}
-                    <a href="" class="submit-post"><span><i class="fa fa-cloud-upload"></i></span> <span class="video-text">Submit Post</span></a>
+                    <a href="writer/posts" class="submit-post"><span><i class="fa fa-cloud-upload"></i></span> <span class="video-text">Submit Post</span></a>
                 {{/if}}
             {{/if}}
                 
@@ -101,3 +101,9 @@
         </nav>
     </div>
 </div>
+
+<style>
+    .user-name {
+        margin: 0 10px;
+    }
+</style>

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/public/style.css" type="text/css">
     
 </head>
+
 <body>
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
@@ -239,7 +240,7 @@
                             </div>
                             <!-- Reply Form -->
                             <div class="contact-form-area">
-                                <form method="POST" id="frmComment">
+                                <form id="frmComment" method="POST">
                                     <div class="row">
                                         <div class="col-12">
                                             
@@ -533,11 +534,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </body>
 
 </html>
+
 <script>
- 
 
     $('#frmComment').on('submit', function (e) {
-        
+       
         e.preventDefault();
         // if (validate())
         //   $('#frmRegister').off('submit').submit();
@@ -548,6 +549,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     
     function sendComment(){
+        
         var Comment;
         var dataSend={comment: $("#message").val(), postID:$("#txtPostID").val(), User: $("#txtUser").val()};
         dataSend=JSON.stringify({dataSend});
@@ -557,24 +559,23 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             data: 'info=' + dataSend,
             success : function(data) {    // Response is the PHP echo
                 Comment=data;
-                $("#commentArea").append('<li class="single_comment_area">' +
-                                        '<div class="comment-content d-flex">' +
-                                            '<div class="comment-author">' +
-                                                '<img src="/public/img/bg-img/'+Comment.User+'.jpg" alt="author">' +
-                                            '</div>'+
-                                            '<div class="comment-meta">'+
-                                                '<a href="#" class="comment-date">'+Comment.CommentDate+'</a>' + 
-                                                '<h6>'+Comment.UserName+'</h6>'+
-                                                '<p>'+Comment.CommentContent'</p>'+
-                                                '<div class="d-flex align-items-center">'+
-                                                    '<a href="#" class="like">like</a>'+
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>'+
-                                    '</li>');
+
+                $("#commentArea").append('<li class="single_comment_area">< <div class="comment-content d-flex">'+
+                                    '<div class="comment-author">'+
+                                        '<img src="/public/img/bg-img/5.jpg" alt="author">'+
+                                   ' </div>'+
+                                    '<div class="comment-meta">'+
+                                        '<a href="#" class="comment-date">date</a>'+
+                                        '<h6>'+data.CommentContent+'</h6>'+
+                                        '<p></p>'+
+                                        '<div class="d-flex align-items-center">'+
+                                            '<a href="#" class="like">like</a>'+
+                                       ' </div>'+
+                                   ' </div>'+
+                                '</div>'+
+                               '</li>');
                 $("#message").val("");
             }
         });
     }
 </script>
-

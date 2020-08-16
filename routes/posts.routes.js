@@ -73,10 +73,11 @@ router.post('/comment',async function(req,res){
         CommentDate: currendate
     }
     
-
+    console.log(entity);
     commentModel.add(entity);
-
+   
     const Comment=await commentModel.single();
+    console.log(Comment);
     res.status(200).send(Comment);
 })
 router.get('/search', async function(req,res){
