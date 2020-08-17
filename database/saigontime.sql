@@ -341,26 +341,25 @@ INSERT INTO `sub_categories` (`SubCatID`, `CatID`, `SubCatName`) VALUES
 CREATE TABLE `tag` (
   `TagID` int(11) NOT NULL,
   `Name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(2)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tag`
 --
 
-INSERT INTO `tag` (`TagID`, `Name`,`status`) VALUES
-(1, 'Báo gia đình',1),
-(2, 'Chính trị Việt nam',1),
-(3, 'bóng đá thế giới',1),
-(4, 'ronaldo',1),
-(5, 'đồ ăn dinh dưỡng cho bé',1),
-(6, 'hoai linh',1),
-(7, 'công dụng của mật ong',1),
-(8, 'luật hôn nhân',1),
-(9, 'luật lao động',1),
-(10, 'Sức khỏe',1),
-(11, 'showbiz',1),
-(12, 'thế giới',1);
+INSERT INTO `tag` (`TagID`, `Name`) VALUES
+(1, 'Báo gia đình'),
+(2, 'Chính trị Việt nam'),
+(3, 'bóng đá thế giới'),
+(4, 'ronaldo'),
+(5, 'đồ ăn dinh dưỡng cho bé'),
+(6, 'hoai linh'),
+(7, 'công dụng của mật ong'),
+(8, 'luật hôn nhân'),
+(9, 'luật lao động'),
+(10, 'Sức khỏe'),
+(11, 'showbiz'),
+(12, 'thế giới');
 
 -- --------------------------------------------------------
 
