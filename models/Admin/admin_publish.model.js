@@ -1,27 +1,17 @@
 const db = require('../../utils/db');
-const TBL_Posts = "posts";
-const TBL_Censor = "censorship"
-
-module.exports= {
-    allPost1 : function(){
-        return db.load(`select p.* , u.FullName from posts p join users u on p.Author=u.UserID  where p.Status= 1`);
+module.exports = {
+    select: function(catid) {
+        return db.load(`select posts.*,users.UserName,status.StatusName
+        from users,posts,status
+        where posts.CatID=${catid} and posts.Status=2 and posts.Author=users.UserId and posts.Status=status.StatusID`);
     },
-    allPost2 : function(){
-        return db.load(`select p.* , u.FullName from posts p join users u on p.Author=u.UserID  where p.Status= 2`);
+    updatereason: function(entity) {
+        return db.add('censorship', entity);
     },
-    allPost3 : function(){
-        return db.load(`select p.*,u.FullName from posts p JOIN censorship c on p.PostID=c.PostID JOIN users u ON c.UserID=u.UserID`);
+    selectAllTag: function() {
+        return db.load(`select * from tag`);
     },
-    patch : function(entity,condition){
-        return db.patch(TBL_Posts, entity ,condition)
-    },
-    delPosts : function(postid){
-        return db.del(TBL_Posts,postid)
-    },
-    addCensor : function(entity){
-        return db.add(TBL_Censor, entity);
-    },
-    delcensor : function(postsid){
-        return db.del(TBL_Censor, postsid);
+    updateposts: function(entity, con) {
+        return db.patch('posts', entity, con);
     }
 }

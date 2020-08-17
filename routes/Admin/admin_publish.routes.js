@@ -1,74 +1,48 @@
 const express = require('express');
-const publish = require('../../models/Admin/admin_publish.model');
-const { addCensor } = require('../../models/Admin/admin_publish.model');
-
+const config = require('../../config/default.json');
+const  postModel = require('../../models/posts.model');
+const  catModel = require('../../models/categories.model');
+const editorModel = require('../../models/Admin/admin_publish.model');
 const router = express.Router();
 
-router.get('/', function(req , res){
-    res.render('vwadmin/home',{layout : "mainAdmin"});
-})
+router.get('/publish', async function(req, res) {
+    if (res.locals.lcAuthUser && (res.locals.lcAuthUser.Permission == 1)) {
+        const editor = await editorModel.select(1);
+        let listStatus = await postModel.loadstatuspost();
+        let tag = await editorModel.selectAllTag();
+        let cat = await catModel.all();
+        res.render('vwadmin/publish', {
+            layout: "newLayout",
+            editor,
+            listStatus,
+            tag,
+            cat
+        });
+    } else res.render('vwadmin/error', { layout: false })
+});
 
-router.get('/publish/post1', async function(req , res){
-    const allposts = await publish.allPost1();
-    res.render('vwadmin/Publish/QLPublish1', {
-        allpost1 : allposts,  
-    });
-})
-
-router.get('/publish/post2', async function(req , res){
-    const allposts = await publish.allPost2();
-    res.render('vwadmin/Publish/QLPublish2', {
-        allpost2 : allposts,  
-    });
-})
-
-router.get('/publish/post3', async function(req , res){
-    const allposts = await publish.allPost3();
-    res.render('vwadmin/Publish/QLPublish3', {
-        allpost3 : allposts,  
-    });
-})
-
-router.post('/publish/cancel', async function(req , res){
-    const condition ={
-        PostID : req.body.postid
+router.post('/', async function(req, res) {
+    if (req.body.statusid == 3) {
+        await postModel.updateStatus({ Status: req.body.statusid }, { PostID: req.body.postid });
+        var d = new Date();
+        console.log(req.body);
+        today = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + (d.getHours() + 1) + ':' + (d.getMinutes() + 1) + ':' + ((d.getSeconds() + 1));
+        var data = {
+            StatusID: req.body.statusid,
+            UserID: 3,
+            PostID: req.body.postid,
+            Reason: req.body.reason,
+            Date: today
+        }
+        console.log(data);
+        await editorModel.updatereason(data);
+        res.render('vwadmin/publish');
+    } else {
+        let entity = { CatID: req.body.cat, TagID: req.body.tag.toString(), Status: req.body.statusid };
+        let con = { PostID: req.body.postid }
+        console.log(req.body);
+        await editorModel.updateposts(entity, con);
+        res.render('vwadmin/publish');
     }
-    const entityy ={
-        Status : 3
-    }
-    const entity = {
-        PostID : req.body.postid,
-        UserID : req.body.userid,
-        StatusID : 3,
-        Date : req.body.postdate,   
-        Reason : req.body.reason
-    }
-    await publish.patch(entityy,condition);
-    await publish.addCensor(entity);
-    res.redirect('/admin/publish/post1');
-})
-
-router.get('/publish/success2/:postid', async function(req , res){
-    const condition ={
-        PostID : req.params.postid
-    }
-    const entityy ={
-        Status : 1
-    }
-    await publish.patch(entityy,condition);
-    res.redirect('/admin/publish/post2');
-})
-
-
-router.get('/publish/success3/:postid', async function(req , res){
-    const condition ={
-        PostID : req.params.postid
-    }
-    const entityy ={
-        Status : 1
-    }
-    await publish.patch(entityy,condition);
-    await publish.delcensor(condition);
-    res.redirect('/admin/publish/post3');
-})
+});
 module.exports = router;

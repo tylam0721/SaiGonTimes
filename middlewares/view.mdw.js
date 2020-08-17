@@ -19,12 +19,15 @@ module.exports = function(app) {
                 return format;
             },
 
-            format_datetime: function(value) {
-                date = new Date(value);
-                var format = '0' + (date.getMonth() - 1) + '-' + date.getDate() + '-' + date.getFullYear() + ' ' +
-                    '0' + (date.getUTCHours() - 17) + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds() + '0';
-                return format;
-            },
+      format_datetime: function (value) {
+        date = new Date(value);
+        var format = (date.getMonth()+1) + '-' + date.getDate()  + '-' +  date.getFullYear()  + ' '+
+        (date.getUTCHours()+7) + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds() ;
+        return format;
+      },
+      count: function(index) {
+        return index + 1;
+    },
 
       isAdmin: (account) => account.Permission === 1,
       isEditor: (account) => account.Permission === 2,

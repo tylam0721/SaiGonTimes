@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    {{#section 'css'}}
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    {{/section}}
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="mag-main-menu" id="sticker">
+            <div class="classy-nav-container breakpoint-off">
+                <!-- Menu -->
+                <nav class="classy-navbar justify-content-between" id="magNav">
+
+                    <!-- Nav brand -->
+                    <a href="/admin" class="nav-brand"><img src="/public/img/core-img/logo.png" width="50" height="50"
+                            alt=""></a>
+
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <!-- Nav Content -->
+                    <div class="nav-content d-flex align-items-center">
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li class="active"><a href="/admin/users">Users</a></li>
+                                    <li><a href="/admin/categories/1">Categories</a></li>
+                                    <li><a href="/admin/publish">Publish</a></>
+                                </ul>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+
+                        <div class="top-meta-data d-flex align-items-center">
+                            <!-- Top Search Area -->
+                            <div class="top-search-area">
+                                <form action="index.html" method="post">
+                                    <input type="search" name="top-search" id="topSearch"
+                                        placeholder="Search and hit enter...">
+                                    <button type="submit" class="btn"><i class="fa fa-search"
+                                            aria-hidden="true"></i></button>
+                                </form>
+                            </div>
+                            <!-- Login -->
+                            <form id="frmLogout" action="/account/logout" method="POST"></form>
+                            {{#if lcIsAuthenticated}}
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <b>{{lcAuthUser.UserName}}!</b>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="/account/profile/{{lcAuthUser.UserID}}">Profile</a>
+                                    <a class="dropdown-item" href="javascript: $('#frmLogout').submit()">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                        Logout
+                                    </a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                            {{else}}
+                            <a href="/account/login" class="login-btn"><i class="fa fa-user" aria-hidden="true"></i></a>
+                            <a href="/account/register" class="login-btn"><i class="fa fa-plus"
+                                    aria-hidden="true"></i></a>
+                            {{/if}}
+
+
+                            <a href="" class="submit-post"><span><i class="fa fa-cloud-upload"></i></span> <span
+                                    class="video-text">Submit Post</span></a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(/public/img/bg-img/49.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2>Duyệt bài viết</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Writer name</th>
+                    <th>Abtract</th>
+                    <th>Post date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this.editor}}
+                <tr>
+                    <td hidden class="Id">{{PostID}}</td>
+                    <td hidden class="statusid">{{Status}}</td>
+                    <td hidden class="tagid">{{TagID}}</td>
+                    <td hidden class="catid">{{CatID}}</td>
+                    <td>{{count @index}}</td>
+                    <td>{{UserName}}</td>
+                    <td><a style="color:#007bff" href="/post/detail/{{PostID}}">{{Abtract}}</a></td>
+                    <td>{{PostDate}}</td>
+                    <td><a class="statusname" href="" data-toggle="modal" data-target="#modalStatus">{{StatusName}}</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="modalStatus" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="select-status">Example select</label>
+                        <select id="select-status" class="form-control">
+                            {{#each listStatus}}
+                            <option value="{{StatusID}}">{{StatusName}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group" hidden id="notAllow">
+                        <label for="reason">Reason</label>
+                        <textarea class="form-control" id="reason" rows="3"></textarea>
+                    </div>
+                    <div id="Allow">
+                        <div class="form-group">
+                            <label for="select-cat">Categories</label>
+                            <select id="select-cat" class="form-control">
+                                {{#each cat}}
+                                <option value="{{CatID}}">{{CatName}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="select-day">Ngày xuất bản</label>
+                            <input type="date" class="form-control" id="select-day">
+                        </div>
+                        <div class="form-group">
+                            <label for="select-tag">Tag</label>
+                            <select class="form-control" multiple id="select-tag">
+                                {{#each tag}}
+                                <option value="{{TagID}}">{{Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveStatus">Save
+                        changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+{{#section 'js'}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/public/js/editor.js"></script>
+{{/section}}
+
+</html>
