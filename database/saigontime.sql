@@ -340,7 +340,7 @@ INSERT INTO `sub_categories` (`SubCatID`, `CatID`, `SubCatName`) VALUES
 
 CREATE TABLE `tag` (
   `TagID` int(11) NOT NULL,
-  `Name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `Name` varchar(30) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
