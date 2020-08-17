@@ -20,5 +20,8 @@
       },
       selectCat: function(userId) {
           return db.load(`select * from categories where Editor=${userId}`);
-      }
+      },
+      selectList: function(userId) {
+          return db.load(`select posts.*,status.StatusName from posts,status where Editor=${userId} and posts.Status=status.StatusID`);
+      },
   }

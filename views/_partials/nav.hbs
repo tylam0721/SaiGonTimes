@@ -23,6 +23,16 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                         <ul>
+                            {{#if lcIsAuthenticated}}
+                                {{#if (isEditor lcAuthUser)}}
+                                    <li><a href="#">Editor</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/editor/">List posts await approval</a></li>
+                                            <li><a href="/editor/list">processed post list</a></li>
+                                        </ul>
+                                    </li>
+                                {{/if}}
+                            {{/if}}
                             <li class="active"><a href="/">Home</a></li>
                             <li><a href="archive.html">Archive</a></li>
                             <li><a href="#">Categories</a>
@@ -44,7 +54,9 @@
                                     {{/each}}
                                 </ul>
                             </li>
+                                                       
                             {{#if lcIsAuthenticated}}
+                            
                                 <li><a href="/account/premium">premium</a></li>
                             {{else}}
                                 <li><a href="/account/register">premium</a></li>
