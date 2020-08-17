@@ -1,9 +1,13 @@
   const db = require('../utils/db');
   module.exports = {
       select: function(catid) {
+          var sql = `select posts.*,users.UserName,status.StatusName
+          from users,posts,status
+          where (` + catid + `) and posts.Status=2 and posts.Author=users.UserId and posts.Status=status.StatusID`
+          console.log(sql);
           return db.load(`select posts.*,users.UserName,status.StatusName
           from users,posts,status
-          where posts.CatID=${catid} and posts.Status=2 and posts.Author=users.UserId and posts.Status=status.StatusID`);
+          where (` + catid + `) and posts.Status=2 and posts.Author=users.UserId and posts.Status=status.StatusID`);
       },
       updatereason: function(entity) {
           return db.add('censorship', entity);
@@ -13,5 +17,11 @@
       },
       updateposts: function(entity, con) {
           return db.patch('posts', entity, con);
-      }
+      },
+      selectCat: function(userId) {
+          return db.load(`select * from categories where Editor=${userId}`);
+      },
+      selectList: function(userId) {
+          return db.load(`select posts.*,status.StatusName from posts,status where Editor=${userId} and posts.Status=status.StatusID`);
+      },
   }

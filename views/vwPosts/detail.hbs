@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/public/style.css" type="text/css">
     
 </head>
+
 <body>
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
@@ -156,8 +157,8 @@
                         </div>
                         <div class="blog-content">
                             <div class="post-meta">
-                                <a href="#">MAY 8, 2018</a>
-                                <a href="archive.html">lifestyle</a>
+                                <a href="#">{{this.post.PostDate}}</a>
+                                
                             </div>
                             {{#if lcAuthUser}}
                                 {{#if (isPremium lcAuthUser)}}
@@ -190,12 +191,10 @@
                                     <img src="/public/img/bg-img/52.jpg" alt="">
                                 </div>
                                 <div class="post-author-desc pl-4">
-                                    <a href="#" class="author-name">Alan Shaerer</a>
-                                    <p>Duis tincidunt turpis sodales, tincidunt nisi et, auctor nisi. Curabitur vulputate sapien eu metus ultricies fermentum nec vel augue. Maecenas eget lacinia est.</p>
+                                    <a href="#" class="author-name">{{this.post.UserName}}</a>
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-secondary btn-lg">Large button</button>
                     </div>
                     <!-- Comment Area Start -->
                     <div class="comment_area clearfix bg-white mb-30 p-30 box-shadow">
@@ -241,7 +240,7 @@
                             </div>
                             <!-- Reply Form -->
                             <div class="contact-form-area">
-                                <form method="POST" id="frmComment">
+                                <form id="frmComment" method="POST">
                                     <div class="row">
                                         <div class="col-12">
                                             
@@ -299,75 +298,6 @@
                                 </li>
                             {{/each}}
                         </ul>
-                    </div>
-
-                    <!-- Sidebar Widget -->
-                    <div class="single-sidebar-widget">
-                        <a href="#" class="add-img"><img src="/public/img/bg-img/add2.png" alt=""></a>
-                    </div>
-
-                    <!-- Sidebar Widget -->
-                    <div class="single-sidebar-widget p-30">
-                        <!-- Section Title -->
-                        <div class="section-heading">
-                            <h5>Hot Channels</h5>
-                        </div>
-
-                        <!-- Single YouTube Channel -->
-                        <div class="single-youtube-channel d-flex">
-                            <div class="youtube-channel-thumbnail">
-                                <img src="/public/img/bg-img/14.jpg" alt="">
-                            </div>
-                            <div class="youtube-channel-content">
-                                <a href="single-post.html" class="channel-title">TV Show</a>
-                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                            </div>
-                        </div>
-
-                        <!-- Single YouTube Channel -->
-                        <div class="single-youtube-channel d-flex">
-                            <div class="youtube-channel-thumbnail">
-                                <img src="/public/img/bg-img/15.jpg" alt="">
-                            </div>
-                            <div class="youtube-channel-content">
-                                <a href="single-post.html" class="channel-title">Game Channel</a>
-                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                            </div>
-                        </div>
-
-                        <!-- Single YouTube Channel -->
-                        <div class="single-youtube-channel d-flex">
-                            <div class="youtube-channel-thumbnail">
-                                <img src="/public/img/bg-img/16.jpg" alt="">
-                            </div>
-                            <div class="youtube-channel-content">
-                                <a href="single-post.html" class="channel-title">Sport Channel</a>
-                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                            </div>
-                        </div>
-
-                        <!-- Single YouTube Channel -->
-                        <div class="single-youtube-channel d-flex">
-                            <div class="youtube-channel-thumbnail">
-                                <img src="/public/img/bg-img/17.jpg" alt="">
-                            </div>
-                            <div class="youtube-channel-content">
-                                <a href="single-post.html" class="channel-title">Travel Channel</a>
-                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                            </div>
-                        </div>
-
-                        <!-- Single YouTube Channel -->
-                        <div class="single-youtube-channel d-flex">
-                            <div class="youtube-channel-thumbnail">
-                                <img src="/public/img/bg-img/18.jpg" alt="">
-                            </div>
-                            <div class="youtube-channel-content">
-                                <a href="single-post.html" class="channel-title">LifeStyle Channel</a>
-                                <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
-                            </div>
-                        </div>
-
                     </div>
 
                     <!-- Sidebar Widget -->
@@ -535,11 +465,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </body>
 
 </html>
+
 <script>
- 
 
     $('#frmComment').on('submit', function (e) {
-        
+       
         e.preventDefault();
         // if (validate())
         //   $('#frmRegister').off('submit').submit();
@@ -550,6 +480,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     
     function sendComment(){
+        
         var Comment;
         var dataSend={comment: $("#message").val(), postID:$("#txtPostID").val(), User: $("#txtUser").val()};
         dataSend=JSON.stringify({dataSend});
@@ -559,24 +490,23 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             data: 'info=' + dataSend,
             success : function(data) {    // Response is the PHP echo
                 Comment=data;
-                $("#commentArea").append('<li class="single_comment_area">' +
-                                        '<div class="comment-content d-flex">' +
-                                            '<div class="comment-author">' +
-                                                '<img src="/public/img/bg-img/'+Comment.User+'.jpg" alt="author">' +
-                                            '</div>'+
-                                            '<div class="comment-meta">'+
-                                                '<a href="#" class="comment-date">'+Comment.CommentDate+'</a>' + 
-                                                '<h6>'+Comment.UserName+'</h6>'+
-                                                '<p>'+Comment.CommentContent'</p>'+
-                                                '<div class="d-flex align-items-center">'+
-                                                    '<a href="#" class="like">like</a>'+
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>'+
-                                    '</li>');
+
+                $("#commentArea").append('<li class="single_comment_area">< <div class="comment-content d-flex">'+
+                                    '<div class="comment-author">'+
+                                        '<img src="/public/img/bg-img/5.jpg" alt="author">'+
+                                   ' </div>'+
+                                    '<div class="comment-meta">'+
+                                        '<a href="#" class="comment-date">date</a>'+
+                                        '<h6>'+data.CommentContent+'</h6>'+
+                                        '<p></p>'+
+                                        '<div class="d-flex align-items-center">'+
+                                            '<a href="#" class="like">like</a>'+
+                                       ' </div>'+
+                                   ' </div>'+
+                                '</div>'+
+                               '</li>');
                 $("#message").val("");
             }
         });
     }
 </script>
-

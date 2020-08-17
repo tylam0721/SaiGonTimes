@@ -23,21 +23,40 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                         <ul>
+                            {{#if lcIsAuthenticated}}
+                                {{#if (isEditor lcAuthUser)}}
+                                    <li><a href="#">Editor</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/editor/">List posts await approval</a></li>
+                                            <li><a href="/editor/list">processed post list</a></li>
+                                        </ul>
+                                    </li>
+                                {{/if}}
+                            {{/if}}
                             <li class="active"><a href="/">Home</a></li>
                             <li><a href="archive.html">Archive</a></li>
-                            <li><a href="#">Pages</a>
+                            <li><a href="#">Categories</a>
                                 <ul class="dropdown">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="archive.html">Archive</a></li>
-                                    <li><a href="video-post.html">Single Video Post</a></li>
-                                    <li><a href="single-post.html">Single Post</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-
-                                    
+                                    {{#each lcAllcatdetail as |alias|}}
+                                        <li>
+                                            <a href="/byCat/">{{CatName}}</a>
+                                            <ul class="dropdown">
+                                                {{#each lcAllSubCat as |alias|}}
+                                                    {{#if (checkCatId CatID lcAllcatdetail.CatID)}}
+                                                        <li>
+                                                        <a href="">{{SubCatName}}</a>
+                                                    </li>
+                                                    {{/if}}
+                                                    
+                                                {{/each}}
+                                           </ul>
+                                        </li>
+                                    {{/each}}
                                 </ul>
                             </li>
+                                                       
                             {{#if lcIsAuthenticated}}
+                            
                                 <li><a href="/account/premium">premium</a></li>
                             {{else}}
                                 <li><a href="/account/register">premium</a></li>
@@ -52,16 +71,16 @@
                 <div class="top-meta-data d-flex align-items-center">
                     <!-- Top Search Area -->
                     <div class="top-search-area">
-                        <form action="index.html" method="post">
-                            <input type="search" name="top-search" id="topSearch" placeholder="Search and hit enter...">
-                            <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <form action="" method="get">
+                            <input type="search" name="SearchText" id="topSearch" placeholder="Search and hit enter...">
+                            <button type="submit" class="btn" formaction="/post/search"><i class="fa fa-search" aria-hidden="true"></i></button>
                         </form>
                     </div>
                     <!-- Login -->
                     <form id="frmLogout" action="/account/logout" method="POST"></form>
                     {{#if lcIsAuthenticated}}
                         <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle user-name" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <b>{{lcAuthUser.UserName}}!</b>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -84,7 +103,7 @@
                     {{/if}}
             {{#if lcIsAuthenticated}}
                 {{#if (isWriter lcAuthUser)}}
-                    <a href="" class="submit-post"><span><i class="fa fa-cloud-upload"></i></span> <span class="video-text">Submit Post</span></a>
+                    <a href="writer/posts" class="submit-post"><span><i class="fa fa-cloud-upload"></i></span> <span class="video-text">Submit Post</span></a>
                 {{/if}}
             {{/if}}
                 
@@ -94,3 +113,9 @@
         </nav>
     </div>
 </div>
+
+<style>
+    .user-name {
+        margin: 0 10px;
+    }
+</style>

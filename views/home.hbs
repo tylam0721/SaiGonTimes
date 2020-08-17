@@ -25,7 +25,7 @@
     <div class="feature-video-posts mb-30">
         <!-- Section Title -->
         <div class="section-heading">
-            <h5>Featured Videos</h5>
+            <h5>Featured posts of week</h5>
         </div>
 
         <div class="featured-video-posts">
@@ -75,7 +75,7 @@
                     <div class="featured-video-posts-slide owl-carousel">
 
                         <div class="single--slide">
-                            {{#each this.posts as |alias|}}
+                            {{#each this.postofweek as |alias|}}
                                 <div class="single-blog-post d-flex style-3">
                                     <div class="post-thumbnail">
                                         <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
@@ -135,7 +135,7 @@
     <div class="most-viewed-videos mb-30">
         <!-- Section Title -->
         <div class="section-heading">
-            <h5>Most Viewed Videos</h5>
+            <h5>Most Viewed Posts</h5>
         </div>
 
         <div class="most-viewed-videos-slide owl-carousel">
@@ -170,94 +170,5 @@
     </div>
 
     <!-- Sports Videos -->
-    <div class="sports-videos-area">
-        <!-- Section Title -->
-        <div class="section-heading">
-            <h5>Sports Videos</h5>
-        </div>
 
-        <div class="sports-videos-slides owl-carousel mb-30">
-            {{#each this.posts}}
-                <div class="single-featured-post">
-                <!-- Thumbnail -->
-                    <div class="post-thumbnail mb-50">
-                        <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
-                        <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
-                    </div>
-                    <!-- Post Contetnt -->
-                    <div class="post-content">
-                        <div class="post-meta">
-                            <a href="#">MAY 8, 2018</a>
-                            <a href="archive.html">lifestyle</a>
-                        </div>
-                        <a href="/post/detail/{{PostID}}" class="post-title">A Closer Look At Our Front Porch Items From Lowe’s</a>
-                        <p>{{Abtract}}</p>
-                    </div>
-                    <!-- Post Share Area -->
-                    <div class="post-share-area d-flex align-items-center justify-content-between">
-                        <!-- Post Meta -->
-                        <div class="post-meta pl-3">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
-                            <a href="#">
-                                
-                                <i class="fa fa-comments-o" aria-hidden="true">
-                                    {{#if num_of_com}}
-                                        {{num_of_com}}
-                                {{/if}}
-                                </i> 
-                            </a>
-                        </div>
-                        <!-- Share Info -->
-                        <div class="share-info">
-                            <a href="#" class="sharebtn"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                            <!-- All Share Buttons -->
-                            <div class="all-share-btn d-flex">
-                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
-                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
-                                <a href="#">
-                                    
-                                    <i class="fa fa-comments-o" aria-hidden="true">
-                                        {{#if num_of_com}}
-                                            {{num_of_com}}
-                                    {{/if}}
-                                    </i> 
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{/each}}
-        </div>
-
-        <div class="row">
-            <!-- Single Blog Post -->
-            {{#each this.posts as |alias|}}
-                <div class="col-12 col-lg-6">
-                    <div class="single-blog-post d-flex style-3 mb-30">
-                        <div class="post-thumbnail">
-                            <img src="/public/img/bg-img/{{PostID}}.jpg" alt="">
-                        </div>
-                        <div class="post-content">
-                            <a href="/post/detail/{{PostID}}" class="post-title">{{Abtract}}</a>
-                            <div class="post-meta d-flex">
-                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Views}}</a>
-                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{Ranks}}</a>
-                                <a href="#">
-                                    
-                                    <i class="fa fa-comments-o" aria-hidden="true">
-                                        {{#if num_of_com}}
-                                            {{num_of_com}}
-                                    {{/if}}
-                                    </i> 
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{/each}}
-            
-        </div>
-
-    </div>
 </div>
